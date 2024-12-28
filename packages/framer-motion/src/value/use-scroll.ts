@@ -4,8 +4,8 @@ import { useConstant } from "../utils/use-constant"
 import { useEffect } from "react"
 import { useIsomorphicLayoutEffect } from "../three-entry"
 import { warning } from "motion-utils"
-import { scroll } from "../render/dom/scroll"
-import { ScrollInfoOptions } from "../render/dom/scroll/types"
+import { scroll } from "../../../motion-dom/src/scroll"
+import { ScrollInfoOptions } from "../../../motion-dom/src/scroll/types"
 
 export interface UseScrollOptions
     extends Omit<ScrollInfoOptions, "container" | "target"> {

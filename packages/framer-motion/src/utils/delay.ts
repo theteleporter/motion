@@ -1,7 +1,5 @@
-import { frame, cancelFrame } from "../frameloop"
-import { time } from "../frameloop/sync-time"
-import { FrameData } from "../frameloop/types"
-import { secondsToMilliseconds } from "./time-conversion"
+import { frame, cancelFrame, time, FrameData } from "motion-utils"
+import { secondsToMilliseconds } from "../../../motion-utils/src/time-conversion"
 
 export type DelayedFunction = (overshoot: number) => void
 

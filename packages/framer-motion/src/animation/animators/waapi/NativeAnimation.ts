@@ -1,15 +1,15 @@
 import { startWaapiAnimation } from "."
 import { createGeneratorEasing } from "../../../easing/utils/create-generator-easing"
-import { ProgressTimeline } from "../../../render/dom/scroll/observe"
+import { ProgressTimeline } from "../../../../../motion-dom/src/scroll/observe"
 import { browserNumberValueTypes } from "../../../render/dom/value-types/number-browser"
 import { noop, invariant } from "motion-utils"
+import { AnimationPlaybackControls } from "motion-dom"
 import {
     millisecondsToSeconds,
     secondsToMilliseconds,
-} from "../../../utils/time-conversion"
-import { isGenerator } from "../../generators/utils/is-generator"
+} from "../../../../../motion-utils/src/time-conversion"
+import { isGenerator } from "../../../../../motion-utils/src/generators/utils/is-generator"
 import {
-    AnimationPlaybackControls,
     UnresolvedValueKeyframe,
     ValueAnimationOptions,
     ValueKeyframe,

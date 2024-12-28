@@ -1,7 +1,7 @@
 import { Feature } from "../motion/features/Feature"
 import { press } from "motion-dom"
 import { VisualElement } from "../render/VisualElement"
-import { frame } from "../frameloop"
+import { frame } from "motion-utils"
 import { extractEventInfo } from "../events/event-info"
 
 function handlePressEvent(

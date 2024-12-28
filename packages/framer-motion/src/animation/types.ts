@@ -4,13 +4,13 @@ import { Easing } from "../easing/types"
 import { Driver } from "./animators/drivers/types"
 import { SVGPathProperties, VariantLabels } from "../motion/types"
 import { SVGAttributes } from "../render/svg/types-attributes"
-import { ProgressTimeline } from "../render/dom/scroll/observe"
+import { ProgressTimeline } from "../../../motion-dom/src/scroll/observe"
 import type { MotionValue } from "../value"
 import {
     KeyframeResolver,
     OnKeyframesResolved,
 } from "../render/utils/KeyframesResolver"
-import { KeyframeGenerator } from "./generators/types"
+import { KeyframeGenerator } from "../../../motion-utils/src/generators/types"
 
 export interface AnimationPlaybackLifecycles<V> {
     onUpdate?: (latest: V) => void
@@ -98,35 +98,6 @@ export type AnimationOptionsWithValueOverrides<V = any> = StyleTransitions &
 export interface DynamicAnimationOptions
     extends Omit<AnimationOptionsWithValueOverrides, "delay"> {
     delay?: number | DynamicOption<number>
-}
-
-/**
- * @public
- */
-export interface AnimationPlaybackControls {
-    time: number
-    speed: number
-    startTime: number | null
-    state?: AnimationPlayState
-
-    /*
-     * The duration is the duration of time calculated for the active part
-     * of the animation without delay or repeat,
-     * which may be added as an extra prop at a later date.
-     */
-    duration: number
-
-    stop: () => void
-    play: () => void
-    pause: () => void
-    complete: () => void
-    cancel: () => void
-    then: (onResolve: VoidFunction, onReject?: VoidFunction) => Promise<void>
-    attachTimeline?: (
-        timeline: ProgressTimeline,
-        fallback?: (animation: AnimationPlaybackControls) => VoidFunction
-    ) => VoidFunction
-    flatten: () => void
 }
 
 export type DynamicOption<T> = (i: number, total: number) => T

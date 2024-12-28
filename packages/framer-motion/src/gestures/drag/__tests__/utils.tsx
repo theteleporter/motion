@@ -1,5 +1,5 @@
 import * as React from "react"
-import { frame } from "../../../frameloop"
+import { frame } from "motion-utils"
 import { MotionConfig } from "../../../components/MotionConfig"
 import { pointerDown, pointerMove, pointerUp } from "../../../../jest.setup"
 

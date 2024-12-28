@@ -7,8 +7,8 @@ import {
     ObjectTarget,
     SequenceOptions,
 } from "../sequence/types"
+import { AnimationPlaybackControls } from "motion-dom"
 import {
-    AnimationPlaybackControls,
     DOMKeyframesDefinition,
     DynamicAnimationOptions,
     ValueAnimationTransition,

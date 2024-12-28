@@ -32,7 +32,7 @@ import { mixNumber } from "../../utils/mix/number"
 import { percent } from "../../value/types/numbers/units"
 import { animateMotionValue } from "../../animation/interfaces/motion-value"
 import { getContextWindow } from "../../utils/get-context-window"
-import { frame } from "../../frameloop"
+import { frame } from "motion-utils"
 import { addValueToWillChange } from "../../value/use-will-change/add-will-change"
 
 export const elementDragControls = new WeakMap<

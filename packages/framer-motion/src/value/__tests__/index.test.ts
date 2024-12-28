@@ -1,8 +1,6 @@
 import { motionValue } from "../"
 import { animate } from "../../animation/animate"
-import { frame, frameData } from "../../frameloop"
-import { time } from "../../frameloop/sync-time"
-import { MotionGlobalConfig } from "../../utils/GlobalConfig"
+import { frame, frameData, time, MotionGlobalConfig } from "motion-utils"
 
 async function wait(time: number) {
     return new Promise<void>((resolve) => {

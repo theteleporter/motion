@@ -1,7 +1,7 @@
 import { circOut } from "../../easing/circ"
 import { EasingFunction } from "../../easing/types"
 import { ResolvedValues } from "../../render/types"
-import { progress as calcProgress } from "../../utils/progress"
+import { progress as calcProgress } from "motion-utils"
 import { mixNumber } from "../../utils/mix/number"
 import { noop } from "motion-utils"
 import { percent, px } from "../../value/types/numbers/units"

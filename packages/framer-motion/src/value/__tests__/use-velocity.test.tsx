@@ -3,12 +3,15 @@ import { useEffect } from "react"
 import { useVelocity } from "../use-velocity"
 import { useMotionValue } from "../use-motion-value"
 import { animate } from "../../animation/animate"
-import { frame, frameSteps } from "../../frameloop"
-import { frameData } from "../../frameloop"
+import {
+    frame,
+    frameData,
+    time,
+    frameSteps,
+    MotionGlobalConfig,
+} from "motion-utils"
 import { useMotionValueEvent } from "../../utils/use-motion-value-event"
 import { mirrorEasing } from "../../easing/modifiers/mirror"
-import { time } from "../../frameloop/sync-time"
-import { MotionGlobalConfig } from "../../utils/GlobalConfig"
 
 MotionGlobalConfig.useManualTiming = true
 

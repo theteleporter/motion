@@ -1,6 +1,6 @@
 import { isNone } from "../../animation/utils/is-none"
 import { getVariableValue } from "./utils/css-variables-conversion"
-import { isCSSVariableToken } from "./utils/is-css-variable"
+import { isCSSVariableToken } from "motion-utils"
 import {
     isNumOrPxType,
     positionalKeys,

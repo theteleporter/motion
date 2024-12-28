@@ -1,5 +1,5 @@
-import { supportsScrollTimeline } from "../render/dom/scroll/supports"
-import { AnimationPlaybackControls } from "./types"
+import { supportsScrollTimeline } from "../../../motion-dom/src/scroll/supports"
+import { AnimationPlaybackControls } from "motion-dom"
 
 type PropNames = "time" | "speed" | "duration" | "attachTimeline" | "startTime"
 

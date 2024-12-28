@@ -1,6 +1,6 @@
 import { EasingFunction } from "../easing/types"
 import { CustomValueType } from "../types"
-import { interpolate } from "./interpolate"
+import { interpolate } from "../../../motion-utils/src/interpolate"
 
 /**
  * @public

@@ -1,4 +1,4 @@
-import { progress as calcProgress } from "../../../utils/progress"
+import { progress as calcProgress, clamp, mixNumber } from "motion-utils"
 import { calcLength } from "../../../projection/geometry/delta-calc"
 import {
     Axis,
@@ -6,8 +6,6 @@ import {
     Box,
     Point,
 } from "../../../projection/geometry/types"
-import { clamp } from "../../../utils/clamp"
-import { mixNumber } from "../../../utils/mix/number"
 import { DragElastic, ResolvedConstraints } from "../types"
 
 /**

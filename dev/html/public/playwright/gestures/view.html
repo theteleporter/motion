@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+            }
+
+            .box {
+                width: 100px;
+                height: 100px;
+                background-color: #0077ff;
+                position: relative;
+                left: -100px;
+            }
+
+            main {
+                width: 600px;
+                height: 600px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="box" id="hover">test</div>
+            <button>switch</button>
+        </main>
+        <script type="module" src="/src/inc.js"></script>
+        <script type="module">
+            const { press, view } = window.MotionDOM
+
+            let state = false
+            document.addEventListener("click", async () => {
+                // press(document, () => () => {
+                state = !state
+
+                const update = () => {
+                    document.querySelector(".box").style.left = state
+                        ? "100px"
+                        : "-100px"
+
+                    document.body.style.backgroundColor = state ? "red" : "blue"
+                }
+
+                const controls = await view(update, { duration: 1 })
+                    .enter({ opacity: 1 })
+                    .exit({ opacity: 0 })
+
+                console.log(controls)
+            })
+        </script>
+    </body>
+</html>

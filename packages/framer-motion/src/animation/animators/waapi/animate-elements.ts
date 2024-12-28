@@ -1,11 +1,12 @@
-import { resolveElements, ElementOrSelector, AnimationScope } from "motion-dom"
-import { invariant } from "motion-utils"
-import { secondsToMilliseconds } from "../../../utils/time-conversion"
 import {
+    resolveElements,
     AnimationPlaybackControls,
-    DOMKeyframesDefinition,
-    DynamicAnimationOptions,
-} from "../../types"
+    ElementOrSelector,
+    AnimationScope,
+} from "motion-dom"
+import { invariant } from "motion-utils"
+import { secondsToMilliseconds } from "../../../../../motion-utils/src/time-conversion"
+import { DOMKeyframesDefinition, DynamicAnimationOptions } from "../../types"
 import { getValueTransition } from "../../utils/get-value-transition"
 import { NativeAnimation } from "./NativeAnimation"
 

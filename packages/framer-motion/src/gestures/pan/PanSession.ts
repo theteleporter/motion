@@ -1,15 +1,14 @@
 import { EventInfo } from "../../events/types"
 import { extractEventInfo } from "../../events/event-info"
-import { frame, cancelFrame } from "../../frameloop"
+import { frame, cancelFrame, frameData } from "motion-utils"
 import {
     millisecondsToSeconds,
     secondsToMilliseconds,
-} from "../../utils/time-conversion"
+} from "../../../../motion-utils/src/time-conversion"
 import { addPointerEvent } from "../../events/add-pointer-event"
 import { Point, TransformPoint } from "../../projection/geometry/types"
-import { pipe } from "../../utils/pipe"
+import { pipe } from "../../../../motion-utils/src/pipe"
 import { distance2D } from "../../utils/distance"
-import { frameData } from "../../frameloop"
 import { isPrimaryPointer } from "motion-dom"
 
 /**

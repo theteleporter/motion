@@ -1,6 +1,6 @@
 import type { VisualElement } from "../render/VisualElement"
 import { Feature } from "../motion/features/Feature"
-import { frame } from "../frameloop"
+import { frame } from "motion-utils"
 import { hover } from "motion-dom"
 import { extractEventInfo } from "../events/event-info"
 

@@ -1,4 +1,4 @@
-import { frame } from "../../frameloop"
+import { frame } from "motion-utils"
 import { MotionValue } from "../../value"
 import type { VisualElement } from "../VisualElement"
 import { removeNonTranslationalTransform } from "../dom/utils/unit-conversion"

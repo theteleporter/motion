@@ -1,6 +1,6 @@
 import { MotionValue } from "."
 import { useMotionValue } from "./use-motion-value"
-import { frame, cancelFrame } from "../frameloop"
+import { frame, cancelFrame } from "motion-utils"
 import { useIsomorphicLayoutEffect } from "../utils/use-isomorphic-effect"
 
 export function useCombineMotionValues<R>(

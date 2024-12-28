@@ -1,4 +1,4 @@
-import { frame, cancelFrame } from "../frameloop"
+import { frame, cancelFrame } from "motion-utils"
 import {
     MotionConfigContext,
     ReducedMotionConfig,
@@ -40,7 +40,7 @@ import { findValueType } from "./dom/value-types/find"
 import { complex } from "../value/types/complex"
 import { getAnimatableNone } from "./dom/value-types/animatable-none"
 import { createBox } from "../projection/geometry/models"
-import { time } from "../frameloop/sync-time"
+import { time } from "motion-utils"
 
 const propEventHandlers = [
     "AnimationStart",

@@ -1,6 +1,5 @@
-import { invariant } from "motion-utils"
+import { invariant, isCSSVariableToken, CSSVariableToken } from "motion-utils"
 import { isNumericalString } from "../../../utils/is-numerical-string"
-import { isCSSVariableToken, CSSVariableToken } from "./is-css-variable"
 
 /**
  * Parse Framer's special CSS variable format into a CSS token and a fallback.

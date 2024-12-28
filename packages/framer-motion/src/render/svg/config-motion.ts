@@ -6,7 +6,7 @@ import { makeUseVisualState } from "../../motion/utils/use-visual-state"
 import { createSvgRenderState } from "./utils/create-render-state"
 import { buildSVGAttrs } from "./utils/build-attrs"
 import { isSVGTag } from "./utils/is-svg-tag"
-import { frame } from "../../frameloop/frame"
+import { frame } from "motion-utils"
 
 export const svgMotionConfig: Partial<
     MotionComponentConfig<SVGElement, SVGRenderState>

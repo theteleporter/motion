@@ -1,4 +1,4 @@
-import { frame } from "../frameloop"
+import { frame } from "motion-utils"
 import { useState, useCallback } from "react"
 import { useIsMounted } from "./use-is-mounted"
 

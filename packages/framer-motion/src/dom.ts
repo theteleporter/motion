@@ -1,5 +1,17 @@
-export { noop, invariant } from "motion-utils"
-export { isDragActive } from "motion-dom"
+export {
+    noop,
+    invariant,
+    frame,
+    cancelFrame,
+    frameData,
+    frameSteps,
+    time,
+    sync,
+    cancelSync,
+    progress,
+    MotionGlobalConfig,
+} from "motion-utils"
+export { scroll, scrollInfo, isDragActive } from "motion-dom"
 
 export { motionValue, MotionValue } from "./value"
 export type { PassiveEffect, Subscriber } from "./value"
@@ -9,8 +21,6 @@ export type {
 } from "./animation/types"
 export { animate, createScopedAnimate } from "./animation/animate"
 export { animateMini } from "./animation/animators/waapi/animate-style"
-export { scroll } from "./render/dom/scroll"
-export { scrollInfo } from "./render/dom/scroll/track"
 export { inView } from "./render/dom/viewport"
 
 /**
@@ -34,27 +44,19 @@ export * from "./easing/types"
 /**
  * Animation generators
  */
-export { spring } from "./animation/generators/spring"
-export { inertia } from "./animation/generators/inertia"
-export { keyframes } from "./animation/generators/keyframes"
+export { spring } from "../../motion-utils/src/generators/spring"
+export { inertia } from "../../motion-utils/src/generators/inertia"
+export { keyframes } from "../../motion-utils/src/generators/keyframes"
 
 /**
  * Utils
  */
 export { stagger } from "./animation/utils/stagger"
 export { transform } from "./utils/transform"
-export { clamp } from "./utils/clamp"
+export { clamp } from "../../motion-utils/src/clamp"
 export { delayInSeconds as delay, DelayedFunction } from "./utils/delay"
 export * from "./utils/distance"
-export * from "./utils/interpolate"
+export * from "../../motion-utils/src/interpolate"
 export { mix } from "./utils/mix"
-export { pipe } from "./utils/pipe"
-export { progress } from "./utils/progress"
-export { wrap } from "./utils/wrap"
-export * from "./frameloop"
-export { time } from "./frameloop/sync-time"
-
-/**
- * Deprecated
- */
-export { sync, cancelSync } from "./frameloop/index-legacy"
+export { pipe } from "../../motion-utils/src/pipe"
+export { wrap } from "../../motion-utils/src/wrap"

@@ -1,6 +1,6 @@
 import { render } from "../../../jest.setup"
 import { motion } from "../../"
-import { frame } from "../../frameloop"
+import { frame } from "motion-utils"
 import { nextMicrotask } from "../../gestures/__tests__/utils"
 
 describe("transformTemplate", () => {

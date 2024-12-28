@@ -93,7 +93,6 @@ export { color } from "./value/types/color"
 export { complex } from "./value/types/complex"
 export { px } from "./value/types/numbers/units"
 export { ValueType } from "./value/types/types"
-export { MotionGlobalConfig } from "./utils/GlobalConfig"
 export { AcceleratedAnimation } from "./animation/animators/AcceleratedAnimation"
 
 /**
@@ -101,8 +100,8 @@ export { AcceleratedAnimation } from "./animation/animators/AcceleratedAnimation
  */
 export { startOptimizedAppearAnimation } from "./animation/optimized-appear/start"
 export { optimizedAppearDataAttribute } from "./animation/optimized-appear/data-id"
-export { spring } from "./animation/generators/spring"
-export { findSpring } from "./animation/generators/spring/find"
+export { spring } from "../../motion-utils/src/generators/spring"
+export { findSpring } from "../../motion-utils/src/generators/spring/find"
 
 /**
  * Contexts

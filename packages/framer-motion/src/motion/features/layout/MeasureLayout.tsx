@@ -1,6 +1,6 @@
 "use client"
 
-import { frame } from "../../../frameloop"
+import { frame, microtask } from "motion-utils"
 import { Component, useContext } from "react"
 import { usePresence } from "../../../components/AnimatePresence/use-presence"
 import {
@@ -14,7 +14,6 @@ import { correctBoxShadow } from "../../../projection/styles/scale-box-shadow"
 import { addScaleCorrector } from "../../../projection/styles/scale-correction"
 import { MotionProps } from "../../types"
 import { VisualElement } from "../../../render/VisualElement"
-import { microtask } from "../../../frameloop/microtask"
 
 interface MeasureContextProps {
     layoutGroup: LayoutGroupContextProps

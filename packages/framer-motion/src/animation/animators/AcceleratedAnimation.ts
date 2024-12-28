@@ -8,9 +8,9 @@ import { noop } from "motion-utils"
 import {
     millisecondsToSeconds,
     secondsToMilliseconds,
-} from "../../utils/time-conversion"
+} from "../../../../motion-utils/src/time-conversion"
 import { MotionValue } from "../../value"
-import { isGenerator } from "../generators/utils/is-generator"
+import { isGenerator } from "../../../../motion-utils/src/generators/utils/is-generator"
 import {
     ValueAnimationOptions,
     ValueAnimationOptionsWithRenderContext,

@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react"
-import { wrap } from "./wrap"
+import { wrap } from "../../../motion-utils/src/wrap"
 
 export type Cycle = (i?: number) => void
 

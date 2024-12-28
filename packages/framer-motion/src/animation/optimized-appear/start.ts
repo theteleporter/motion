@@ -9,7 +9,7 @@ import "./types"
 import { getOptimisedAppearId } from "./get-appear-id"
 import { MotionValue } from "../../value"
 import type { WithAppearProps } from "./types"
-import { Batcher } from "../../frameloop/types"
+import { Batcher } from "motion-utils"
 
 /**
  * A single time to use across all animations to manually set startTime
