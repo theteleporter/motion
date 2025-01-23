@@ -59,7 +59,7 @@ export class SVGVisualElement extends DOMVisualElement<
         }
     }
 
-    onBindTransform = () => {
+    onBindTransform() {
         if (this.current && !this.renderState.dimensions) {
             frame.postRender(this.updateDimensions)
         }
