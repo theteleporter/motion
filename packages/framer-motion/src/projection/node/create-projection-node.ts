@@ -13,6 +13,7 @@ import { microtask } from "../../frameloop/microtask"
 import { time } from "../../frameloop/sync-time"
 import { Process } from "../../frameloop/types"
 import { MotionStyle } from "../../motion/types"
+import { HTMLVisualElement } from "../../projection"
 import { isSVGElement } from "../../render/dom/utils/is-svg-element"
 import { ResolvedValues } from "../../render/types"
 import { FlatTree } from "../../render/utils/flat-tree"
@@ -826,6 +827,14 @@ export function createProjectionNode<I>({
             if (this.snapshot || !this.instance) return
 
             this.snapshot = this.measure()
+
+            if (
+                this.snapshot &&
+                !calcLength(this.snapshot.measuredBox.x) &&
+                !calcLength(this.snapshot.measuredBox.y)
+            ) {
+                this.snapshot = undefined
+            }
         }
 
         updateLayout() {
@@ -1948,7 +1957,7 @@ export function createProjectionNode<I>({
             for (const key in scaleCorrectors) {
                 if (valuesToRender[key] === undefined) continue
 
-                const { correct, applyTo } = scaleCorrectors[key]
+                const { correct, applyTo, isCSSVariable } = scaleCorrectors[key]
 
                 /**
                  * Only apply scale correction to the value if we have an
@@ -1967,7 +1976,16 @@ export function createProjectionNode<I>({
                         styles[applyTo[i]] = corrected
                     }
                 } else {
-                    styles[key] = corrected
+                    // If this is a CSS variable, set it directly on the instance.
+                    // Replacing this function from creating styles to setting them
+                    // would be a good place to remove per frame object creation
+                    if (isCSSVariable) {
+                        ;(
+                            this.options.visualElement as HTMLVisualElement
+                        ).renderState.vars[key] = corrected
+                    } else {
+                        styles[key] = corrected
+                    }
                 }
             }
 
