@@ -14,6 +14,7 @@ import { anticipate } from "../../easing/anticipate"
 import { backInOut } from "../../easing/back"
 import { circInOut } from "../../easing/circ"
 import { EasingDefinition } from "../../easing/types"
+import { time } from "../../frameloop/sync-time"
 import { DOMKeyframesResolver } from "../../render/dom/DOMKeyframesResolver"
 import { ResolvedKeyframes } from "../../render/utils/KeyframesResolver"
 import { MotionValue } from "../../value"
@@ -27,6 +28,8 @@ import { acceleratedValues } from "./utils/accelerated-values"
 import { startWaapiAnimation } from "./waapi"
 import { getFinalKeyframe } from "./waapi/utils/get-final-keyframe"
 import { supportsWaapi } from "./waapi/utils/supports-waapi"
+
+let numAnimations = 0
 
 /**
  * 10ms is chosen here as it strikes a balance between smooth
@@ -133,6 +136,9 @@ export class AcceleratedAnimation<
 
     constructor(options: ValueAnimationOptionsWithRenderContext<T>) {
         super(options)
+
+        numAnimations++
+        console.log("adding animation for ", time.now())
 
         const { name, motionValue, element, keyframes } = this.options
 
@@ -416,6 +422,13 @@ export class AcceleratedAnimation<
     }
 
     cancel() {
+        numAnimations = numAnimations - 1
+        console.log(
+            "cancelling animation for ",
+            this.options.name,
+            this.state,
+            numAnimations
+        )
         const { resolved } = this
         if (!resolved) return
         resolved.animation.cancel()

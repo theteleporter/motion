@@ -1,37 +1,37 @@
 import {
     animate,
     frame,
+    //motion,
     scroll,
     transform,
     useMotionValue,
-    useMotionValueEvent,
-} from "motion/react"
-import * as motion from "motion/react-client"
+} from "framer-motion"
+import * as motion from "framer-motion/client"
 import React from "react"
-import "./styles.css"
 
 export function App() {
     const ref = React.useRef(null)
     const animation = React.useRef()
     const progress = React.useRef(0)
     const opacityMotionValue = useMotionValue(0)
-    useMotionValueEvent(opacityMotionValue, "change", console.log)
+    const backgroundColor = useMotionValue("#ff0088")
+    // useMotionValueEvent(opacityMotionValue, "change", console.log)
 
     const startAnimation = React.useCallback(() => {
         const rotate = transform(progress.current, [0, 1], [0, 180])
-        const opacity = transform(progress.current, [0, 1], [0.9, 1])
+        const opacity = transform(progress.current, [0, 1], [0.5, 1])
         const scaleX = transform(progress.current, [0, 1], [1, 2])
         const scaleY = transform(progress.current, [0, 1], [1, 2])
         const translateX = transform(progress.current, [0, 1], [0, 20])
         const translateY = transform(progress.current, [0, 1], [0, 20])
-
+        console.log({ opacity })
         animate(opacityMotionValue, opacity)
-
+        // animation.current?.stop()
         animation.current = animate(
             ref.current,
             {
-                rotate,
                 opacity,
+                rotate,
                 scaleX,
                 scaleY,
                 translateX,
@@ -67,7 +67,7 @@ export function App() {
         <>
             <p>scroll horizontally to see the choppiness</p>
             <div style={container}>
-                <motion.div style={box} ref={ref}>
+                <motion.div style={{ ...box, backgroundColor }} ref={ref}>
                     <span style={{ color: "white" }}>NEW</span>
                 </motion.div>
                 {Array(80)
@@ -124,7 +124,6 @@ function isOverflowing(node) {
 const box = {
     width: 100,
     height: 100,
-    backgroundColor: "#ff0088",
     borderRadius: 5,
     position: "fixed",
     top: 100,

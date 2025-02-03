@@ -390,6 +390,8 @@ export class MotionValue<V = any> {
 
     hasAnimated = false
 
+    pendingAnimation: Promise<void> | undefined
+
     /**
      * Registers a new animation to control this `MotionValue`. Only one
      * animation can drive a `MotionValue` at one time.
@@ -405,9 +407,15 @@ export class MotionValue<V = any> {
     start(startAnimation: StartAnimation) {
         this.stop()
 
+        const isOpacity =
+            this.owner && (this.owner as any).getValue("opacity") === this
+
+        if (isOpacity) console.log("fire value.start at", time.now())
         return new Promise<void>((resolve) => {
             this.hasAnimated = true
+
             this.animation = startAnimation(resolve)
+            if (isOpacity) console.log("assign animation at", time.now())
 
             if (this.events.animationStart) {
                 this.events.animationStart.notify()
@@ -416,6 +424,7 @@ export class MotionValue<V = any> {
             if (this.events.animationComplete) {
                 this.events.animationComplete.notify()
             }
+
             this.clearAnimation()
         })
     }
@@ -426,6 +435,10 @@ export class MotionValue<V = any> {
      * @public
      */
     stop() {
+        const isOpacity =
+            this.owner && (this.owner as any).getValue("opacity") === this
+
+        if (isOpacity) console.log(Boolean(this.animation), time.now())
         if (this.animation) {
             this.animation.stop()
             if (this.events.animationCancel) {
