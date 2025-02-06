@@ -1,5 +1,5 @@
+import { act, useEffect, useRef } from "react"
 import { render } from "../../../jest.setup"
-import { act, useRef, useEffect } from "react"
 import { useInView } from "../use-in-view"
 import { getActiveObserver } from "./mock-intersection-observer"
 
@@ -16,6 +16,30 @@ describe("useInView", () => {
         const Component = () => {
             const ref = useRef(null)
             const isInView = useInView(ref)
+
+            useEffect(() => {
+                if (results[results.length - 1] !== isInView)
+                    results.push(isInView)
+            }, [isInView])
+
+            return <div ref={ref} />
+        }
+
+        const { rerender } = render(<Component />)
+        rerender(<Component />)
+        rerender(<Component />)
+        rerender(<Component />)
+        rerender(<Component />)
+
+        expect(results).toEqual([false])
+    })
+
+    test("Can change default", () => {
+        const results: boolean[] = []
+
+        const Component = () => {
+            const ref = useRef(null)
+            const isInView = useInView(ref, { initial: true })
 
             useEffect(() => {
                 if (results[results.length - 1] !== isInView)
