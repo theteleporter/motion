@@ -34,7 +34,7 @@ describe("useInView", () => {
         expect(results).toEqual([false])
     })
 
-    test("Can change default", () => {
+    test("Can change initial value", () => {
         const results: boolean[] = []
 
         const Component = () => {
@@ -55,7 +55,7 @@ describe("useInView", () => {
         rerender(<Component />)
         rerender(<Component />)
 
-        expect(results).toEqual([false])
+        expect(results).toEqual([true])
     })
 
     test("Returns true when element enters the viewport", async () => {
