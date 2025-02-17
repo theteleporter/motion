@@ -41,12 +41,12 @@ export interface PointerEventOptions extends EventOptions {
  * @public
  */
 export function press(
-    elementOrSelector: ElementOrSelector,
+    targetOrSelector: ElementOrSelector,
     onPressStart: OnPressStartEvent,
     options: PointerEventOptions = {}
 ): VoidFunction {
-    const [elements, eventOptions, cancelEvents] = setupGesture(
-        elementOrSelector,
+    const [targets, eventOptions, cancelEvents] = setupGesture(
+        targetOrSelector,
         options
     )
 
@@ -92,11 +92,28 @@ export function press(
         }
 
         const onPointerUp = (upEvent: PointerEvent) => {
-            onPointerEnd(
-                upEvent,
-                options.useGlobalTarget ||
-                    isNodeOrChild(target, upEvent.target as Element)
-            )
+            let isOutside = false
+
+            console.log(target, target instanceof Element)
+
+            if (upEvent.isTrusted && target instanceof Element) {
+                const rect = target.getBoundingClientRect()
+                isOutside =
+                    upEvent.clientX < rect.left ||
+                    upEvent.clientX > rect.right ||
+                    upEvent.clientY < rect.top ||
+                    upEvent.clientY > rect.bottom
+            }
+
+            if (isOutside) {
+                onPointerEnd(upEvent, false)
+            } else {
+                onPointerEnd(
+                    upEvent,
+                    options.useGlobalTarget ||
+                        isNodeOrChild(target, upEvent.target as Element)
+                )
+            }
         }
 
         const onPointerCancel = (cancelEvent: PointerEvent) => {
@@ -112,23 +129,30 @@ export function press(
         )
     }
 
-    elements.forEach((element: Element) => {
-        if (
-            !isElementKeyboardAccessible(element) &&
-            element.getAttribute("tabindex") === null
-        ) {
-            ;(element as HTMLElement).tabIndex = 0
+    targets.forEach((target: EventTarget) => {
+        target = options.useGlobalTarget ? window : target
+
+        let canAddKeyboardAccessibility = false
+
+        if (target instanceof HTMLElement) {
+            canAddKeyboardAccessibility = true
+
+            if (
+                !isElementKeyboardAccessible(target) &&
+                target.getAttribute("tabindex") === null
+            ) {
+                target.tabIndex = 0
+            }
         }
 
-        const target = options.useGlobalTarget ? window : element
         target.addEventListener(
             "pointerdown",
             startPress as EventListener,
             eventOptions
         )
 
-        if (!options.useGlobalTarget) {
-            element.addEventListener(
+        if (canAddKeyboardAccessibility) {
+            target.addEventListener(
                 "focus",
                 (event) =>
                     enableKeyboardPress(event as FocusEvent, eventOptions),

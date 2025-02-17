@@ -163,7 +163,50 @@ test.describe("press events", () => {
         // Text should still not have changed
         await expect(pressDiv).not.toHaveText("end")
     })
+
+    test("press handles window events correctly", async ({ page }) => {
+        const windowOutput = page.locator("#window-output")
+
+        // Start press on window
+        await page.dispatchEvent("body", "pointerdown", { isPrimary: true })
+        await expect(windowOutput).toHaveValue("start")
+
+        // Release pointer inside window - should trigger press end
+        await page.dispatchEvent("body", "pointerup", { isPrimary: true })
+        await expect(windowOutput).toHaveValue("end")
+
+        // Start another press
+        await page.dispatchEvent("body", "pointerdown", { isPrimary: true })
+        await expect(windowOutput).toHaveValue("start")
+
+        // Move pointer outside window and release - should cancel press
+        await page.mouse.move(-10, -10)
+        await page.mouse.up()
+        await expect(windowOutput).toHaveValue("cancel")
+    })
+
+    test("press handles document events correctly", async ({ page }) => {
+        const documentOutput = page.locator("#document-output")
+
+        // Start press on document
+        await page.dispatchEvent("body", "pointerdown", { isPrimary: true })
+        await expect(documentOutput).toHaveValue("start")
+
+        // Release pointer inside document - should trigger press end
+        await page.dispatchEvent("body", "pointerup", { isPrimary: true })
+        await expect(documentOutput).toHaveValue("end")
+
+        // Start another press
+        await page.dispatchEvent("body", "pointerdown", { isPrimary: true })
+        await expect(documentOutput).toHaveValue("start")
+
+        // Move pointer outside document and release - should cancel press
+        await page.mouse.move(-10, -10)
+        await page.mouse.up()
+        await expect(documentOutput).toHaveValue("cancel")
+    })
 })
+
 test.describe("press accessibility", () => {
     test("button", async ({ page }) => {
         const button = page.locator("#press-no-tab-index-1")
