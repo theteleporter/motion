@@ -51,23 +51,40 @@ export function press(
     )
 
     const startPress = (startEvent: PointerEvent) => {
-        const element = startEvent.currentTarget as Element
+        const target = startEvent.currentTarget as Element
 
-        if (!isValidPressEvent(startEvent) || isPressing.has(element)) return
+        if (!target || !isValidPressEvent(startEvent) || isPressing.has(target))
+            return
 
-        isPressing.add(element)
+        isPressing.add(target)
 
-        const onPressEnd = onPressStart(element, startEvent)
+        if (target.setPointerCapture && startEvent.pointerId !== undefined) {
+            try {
+                target.setPointerCapture(startEvent.pointerId)
+            } catch (e) {}
+        }
+
+        const onPressEnd = onPressStart(target, startEvent)
 
         const onPointerEnd = (endEvent: PointerEvent, success: boolean) => {
-            window.removeEventListener("pointerup", onPointerUp)
-            window.removeEventListener("pointercancel", onPointerCancel)
+            target.removeEventListener("pointerup", onPointerUp)
+            target.removeEventListener("pointercancel", onPointerCancel)
+            target.removeEventListener("lostpointercapture", onPointerCancel)
 
-            if (!isValidPressEvent(endEvent) || !isPressing.has(element)) {
+            if (
+                target.releasePointerCapture &&
+                endEvent.pointerId !== undefined
+            ) {
+                try {
+                    target.releasePointerCapture(endEvent.pointerId)
+                } catch (e) {}
+            }
+
+            if (!isValidPressEvent(endEvent) || !isPressing.has(target)) {
                 return
             }
 
-            isPressing.delete(element)
+            isPressing.delete(target)
 
             if (typeof onPressEnd === "function") {
                 onPressEnd(endEvent, { success })
@@ -78,7 +95,7 @@ export function press(
             onPointerEnd(
                 upEvent,
                 options.useGlobalTarget ||
-                    isNodeOrChild(element, upEvent.target as Element)
+                    isNodeOrChild(target, upEvent.target as Element)
             )
         }
 
@@ -86,8 +103,13 @@ export function press(
             onPointerEnd(cancelEvent, false)
         }
 
-        window.addEventListener("pointerup", onPointerUp, eventOptions)
-        window.addEventListener("pointercancel", onPointerCancel, eventOptions)
+        target.addEventListener("pointerup", onPointerUp, eventOptions)
+        target.addEventListener("pointercancel", onPointerCancel, eventOptions)
+        target.addEventListener(
+            "lostpointercapture",
+            onPointerCancel,
+            eventOptions
+        )
     }
 
     elements.forEach((element: Element) => {
@@ -105,11 +127,14 @@ export function press(
             eventOptions
         )
 
-        element.addEventListener(
-            "focus",
-            (event) => enableKeyboardPress(event as FocusEvent, eventOptions),
-            eventOptions
-        )
+        if (!options.useGlobalTarget) {
+            element.addEventListener(
+                "focus",
+                (event) =>
+                    enableKeyboardPress(event as FocusEvent, eventOptions),
+                eventOptions
+            )
+        }
     })
 
     return cancelEvents
