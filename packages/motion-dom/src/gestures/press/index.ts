@@ -69,7 +69,6 @@ export function press(
         const onPointerEnd = (endEvent: PointerEvent, success: boolean) => {
             target.removeEventListener("pointerup", onPointerUp)
             target.removeEventListener("pointercancel", onPointerCancel)
-            target.removeEventListener("lostpointercapture", onPointerCancel)
 
             if (
                 target.releasePointerCapture &&
@@ -92,25 +91,26 @@ export function press(
         }
 
         const onPointerUp = (upEvent: PointerEvent) => {
-            let isOutside = false
-
-            console.log(target, target instanceof Element)
-
-            if (upEvent.isTrusted && target instanceof Element) {
-                const rect = target.getBoundingClientRect()
-                isOutside =
-                    upEvent.clientX < rect.left ||
-                    upEvent.clientX > rect.right ||
-                    upEvent.clientY < rect.top ||
-                    upEvent.clientY > rect.bottom
-            }
+            const isOutside = !upEvent.isTrusted
+                ? false
+                : checkOutside(
+                      upEvent,
+                      target instanceof Element
+                          ? target.getBoundingClientRect()
+                          : {
+                                left: 0,
+                                top: 0,
+                                right: window.innerWidth,
+                                bottom: window.innerHeight,
+                            }
+                  )
 
             if (isOutside) {
                 onPointerEnd(upEvent, false)
             } else {
                 onPointerEnd(
                     upEvent,
-                    options.useGlobalTarget ||
+                    !(target instanceof Element) ||
                         isNodeOrChild(target, upEvent.target as Element)
                 )
             }
@@ -162,4 +162,16 @@ export function press(
     })
 
     return cancelEvents
+}
+
+function checkOutside(
+    event: PointerEvent,
+    rect: { left: number; top: number; right: number; bottom: number }
+) {
+    return (
+        event.clientX < rect.left ||
+        event.clientX > rect.right ||
+        event.clientY < rect.top ||
+        event.clientY > rect.bottom
+    )
 }
