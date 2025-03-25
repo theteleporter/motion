@@ -4,6 +4,16 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.6.0] 2025-03-25
+
+### Changed
+
+-   Renamed `view` to `animateView`.
+
+### Added
+
+-   New `interrupt: "wait"` mode as `animateView` default.
+
 ## [12.5.0] 2025-03-11
 
 ### Added
