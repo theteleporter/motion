@@ -264,7 +264,7 @@ describe("press", () => {
     })
 
     // Replaced with end to end test but ideally would also run here
-    test.skip("press cancel fires if press released outside element", async () => {
+    test("press cancel fires if press released outside element", async () => {
         const pressCancel = jest.fn()
         const Component = () => (
             <motion.div>

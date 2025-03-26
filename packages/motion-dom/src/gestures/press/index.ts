@@ -93,26 +93,25 @@ export function press(
     }
 
     targets.forEach((target: EventTarget) => {
-        if (
-            target instanceof HTMLElement &&
-            !isElementKeyboardAccessible(target) &&
-            target.getAttribute("tabindex") === null
-        ) {
-            target.tabIndex = 0
-            target.addEventListener(
-                "focus",
-                (event) =>
-                    enableKeyboardPress(event as FocusEvent, eventOptions),
-                eventOptions
-            )
-        }
-
         const pointerDownTarget = options.useGlobalTarget ? window : target
         pointerDownTarget.addEventListener(
             "pointerdown",
             startPress as EventListener,
             eventOptions
         )
+
+        if (target instanceof HTMLElement) {
+            target.addEventListener("focus", (event) =>
+                enableKeyboardPress(event as FocusEvent, eventOptions)
+            )
+
+            if (
+                !isElementKeyboardAccessible(target) &&
+                target.tabIndex === null
+            ) {
+                target.tabIndex = 0
+            }
+        }
     })
 
     return cancelEvents
