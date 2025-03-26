@@ -77,7 +77,9 @@ export function press(
         const onPointerUp = (upEvent: PointerEvent) => {
             onPointerEnd(
                 upEvent,
-                options.useGlobalTarget ||
+                (target as any) === window ||
+                    (target as any) === document ||
+                    options.useGlobalTarget ||
                     isNodeOrChild(target, upEvent.target as Element)
             )
         }
@@ -91,16 +93,18 @@ export function press(
     }
 
     targets.forEach((target: EventTarget) => {
-        let canAddKeyboardAccessibility = false
-
-        if (target instanceof HTMLElement) {
-            canAddKeyboardAccessibility = true
-            if (
-                !isElementKeyboardAccessible(target) &&
-                target.getAttribute("tabindex") === null
-            ) {
-                ;(target as HTMLElement).tabIndex = 0
-            }
+        if (
+            target instanceof HTMLElement &&
+            !isElementKeyboardAccessible(target) &&
+            target.getAttribute("tabindex") === null
+        ) {
+            target.tabIndex = 0
+            target.addEventListener(
+                "focus",
+                (event) =>
+                    enableKeyboardPress(event as FocusEvent, eventOptions),
+                eventOptions
+            )
         }
 
         const pointerDownTarget = options.useGlobalTarget ? window : target
@@ -109,15 +113,6 @@ export function press(
             startPress as EventListener,
             eventOptions
         )
-
-        if (canAddKeyboardAccessibility) {
-            target.addEventListener(
-                "focus",
-                (event) =>
-                    enableKeyboardPress(event as FocusEvent, eventOptions),
-                eventOptions
-            )
-        }
     })
 
     return cancelEvents
