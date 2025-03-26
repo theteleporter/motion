@@ -11,6 +11,10 @@ import {
 import "../../animation/animators/waapi/__tests__/setup"
 import { nextFrame } from "../../gestures/__tests__/utils"
 
+/**
+ * TODO: Add test for different color types
+ */
+
 describe("WAAPI animations", () => {
     test("opacity animates with WAAPI at default settings", async () => {
         const ref = createRef<HTMLDivElement>()
