@@ -23,7 +23,6 @@ export * from "./gestures/hover"
 export * from "./gestures/press"
 export * from "./gestures/press/types"
 export * from "./gestures/types"
-export * from "./gestures/utils/capture-pointer"
 export * from "./gestures/utils/is-node-or-child"
 export * from "./gestures/utils/is-primary-pointer"
 

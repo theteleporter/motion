@@ -10,7 +10,6 @@ import { act, Fragment, StrictMode } from "react"
  */
 const pointerEventProps = ["isPrimary", "pointerType", "button"]
 class PointerEventFake extends Event {
-    pointerId?: number = 1
     constructor(type: any, props: any) {
         super(type, props)
         if (!props) return

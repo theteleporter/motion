@@ -1,7 +1,6 @@
 import { ElementOrSelector } from "../../utils/resolve-elements"
 import { isDragActive } from "../drag/state/is-active"
 import { EventOptions } from "../types"
-import { capturePointer } from "../utils/capture-pointer"
 import { isNodeOrChild } from "../utils/is-node-or-child"
 import { isPrimaryPointer } from "../utils/is-primary-pointer"
 import { setupGesture } from "../utils/setup"
@@ -54,20 +53,15 @@ export function press(
     const startPress = (startEvent: PointerEvent) => {
         const target = startEvent.currentTarget as Element
 
-        if (!target || !isValidPressEvent(startEvent) || isPressing.has(target))
-            return
+        if (!isValidPressEvent(startEvent) || isPressing.has(target)) return
 
         isPressing.add(target)
-
-        capturePointer(startEvent, "set")
 
         const onPressEnd = onPressStart(target, startEvent)
 
         const onPointerEnd = (endEvent: PointerEvent, success: boolean) => {
-            target.removeEventListener("pointerup", onPointerUp)
-            target.removeEventListener("pointercancel", onPointerCancel)
-
-            capturePointer(endEvent, "release")
+            window.removeEventListener("pointerup", onPointerUp)
+            window.removeEventListener("pointercancel", onPointerCancel)
 
             if (!isValidPressEvent(endEvent) || !isPressing.has(target)) {
                 return
@@ -81,87 +75,44 @@ export function press(
         }
 
         const onPointerUp = (upEvent: PointerEvent) => {
-            const isOutside = !upEvent.isTrusted
-                ? false
-                : checkOutside(
-                      upEvent,
-                      target instanceof Element
-                          ? target.getBoundingClientRect()
-                          : {
-                                left: 0,
-                                top: 0,
-                                right: window.innerWidth,
-                                bottom: window.innerHeight,
-                            }
-                  )
-
-            if (isOutside) {
-                onPointerEnd(upEvent, false)
-            } else {
-                onPointerEnd(
-                    upEvent,
-                    !(target instanceof Element) ||
-                        isNodeOrChild(target, upEvent.target as Element)
-                )
-            }
+            onPointerEnd(
+                upEvent,
+                (target as any) === window ||
+                    (target as any) === document ||
+                    options.useGlobalTarget ||
+                    isNodeOrChild(target, upEvent.target as Element)
+            )
         }
 
         const onPointerCancel = (cancelEvent: PointerEvent) => {
             onPointerEnd(cancelEvent, false)
         }
 
-        target.addEventListener("pointerup", onPointerUp, eventOptions)
-        target.addEventListener("pointercancel", onPointerCancel, eventOptions)
-        target.addEventListener(
-            "lostpointercapture",
-            onPointerCancel,
-            eventOptions
-        )
+        window.addEventListener("pointerup", onPointerUp, eventOptions)
+        window.addEventListener("pointercancel", onPointerCancel, eventOptions)
     }
 
     targets.forEach((target: EventTarget) => {
-        target = options.useGlobalTarget ? window : target
-
-        let canAddKeyboardAccessibility = false
-
-        if (target instanceof HTMLElement) {
-            canAddKeyboardAccessibility = true
-
-            if (
-                !isElementKeyboardAccessible(target) &&
-                target.getAttribute("tabindex") === null
-            ) {
-                target.tabIndex = 0
-            }
-        }
-
-        target.addEventListener(
+        const pointerDownTarget = options.useGlobalTarget ? window : target
+        pointerDownTarget.addEventListener(
             "pointerdown",
             startPress as EventListener,
             eventOptions
         )
 
-        if (canAddKeyboardAccessibility) {
-            target.addEventListener(
-                "focus",
-                (event) =>
-                    enableKeyboardPress(event as FocusEvent, eventOptions),
-                eventOptions
+        if (target instanceof HTMLElement) {
+            target.addEventListener("focus", (event) =>
+                enableKeyboardPress(event as FocusEvent, eventOptions)
             )
+
+            if (
+                !isElementKeyboardAccessible(target) &&
+                target.tabIndex === null
+            ) {
+                target.tabIndex = 0
+            }
         }
     })
 
     return cancelEvents
-}
-
-function checkOutside(
-    event: PointerEvent,
-    rect: { left: number; top: number; right: number; bottom: number }
-) {
-    return (
-        event.clientX < rect.left ||
-        event.clientX > rect.right ||
-        event.clientY < rect.top ||
-        event.clientY > rect.bottom
-    )
 }
