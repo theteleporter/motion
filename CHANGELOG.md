@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.6.2] 2025-03-26
+
+### Fixed
+
+-   Fixing hardware acceleration for non-`transform` values when a `motion` component has a defined `transformTemplate`.
+
 ## [12.6.1] 2025-03-26
 
 ### Fixed
