@@ -1034,6 +1034,42 @@ describe("WAAPI animations", () => {
         expect(ref.current!.animate).not.toBeCalled()
     })
 
+    test("Doesn't animate transform values with WAAPI if transformTemplate is defined", async () => {
+        const ref = createRef<HTMLDivElement>()
+        const Component = () => (
+            <motion.div
+                ref={ref}
+                initial={{ transform: "translate(0px)" }}
+                animate={{ transform: "translate(100px)" }}
+                transformTemplate={(_, t) => t}
+            />
+        )
+        const { rerender } = render(<Component />)
+        rerender(<Component />)
+
+        await nextFrame()
+
+        expect(ref.current!.animate).not.toBeCalled()
+    })
+
+    test("Does animate non-transform values with WAAPI even if transformTemplate is defined", async () => {
+        const ref = createRef<HTMLDivElement>()
+        const Component = () => (
+            <motion.div
+                ref={ref}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transformTemplate={(_, t) => t}
+            />
+        )
+        const { rerender } = render(<Component />)
+        rerender(<Component />)
+
+        await nextFrame()
+
+        expect(ref.current!.animate).toBeCalled()
+    })
+
     test("Doesn't animate with WAAPI if external motion value is defined", async () => {
         const ref = createRef<HTMLDivElement>()
         const Component = () => (
