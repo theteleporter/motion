@@ -29,6 +29,8 @@ export const animateMotionValue =
     (onComplete): AnimationPlaybackControls => {
         const valueTransition = getValueTransition(transition, name) || {}
 
+        console.log("animate motion value")
+
         /**
          * Most transition values are currently completely overwritten by value-specific
          * transitions. In the future it'd be nicer to blend these transitions. But for now
