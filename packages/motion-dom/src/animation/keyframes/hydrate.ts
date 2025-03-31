@@ -6,9 +6,13 @@ import { supportsPartialKeyframes } from "../waapi/supports/partial-keyframes"
 export function hydrateKeyframes(
     element: HTMLElement | SVGElement,
     name: string,
-    keyframes: ValueKeyframe[] | UnresolvedValueKeyframe[],
+    keyframes: ValueKeyframe | ValueKeyframe[] | UnresolvedValueKeyframe[],
     pseudoElement?: string
-) {
+): ValueKeyframe[] {
+    if (!Array.isArray(keyframes)) {
+        keyframes = [keyframes]
+    }
+
     for (let i = 0; i < keyframes.length; i++) {
         if (keyframes[i] === null) {
             keyframes[i] =
@@ -25,4 +29,6 @@ export function hydrateKeyframes(
     if (!pseudoElement && !supportsPartialKeyframes() && keyframes.length < 2) {
         keyframes.unshift(style.get(element, name))
     }
+
+    return keyframes as ValueKeyframe[]
 }

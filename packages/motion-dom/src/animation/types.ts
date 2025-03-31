@@ -68,11 +68,6 @@ export interface AnimationPlaybackControls {
     cancel: () => void
 
     /**
-     * Allows the animation to be awaited.
-     */
-    then: (onResolve: VoidFunction, onReject?: VoidFunction) => Promise<void>
-
-    /**
      * Attaches a timeline to the animation, for instance the `ScrollTimeline`.
      *
      * This is currently for internal use only.
@@ -114,7 +109,7 @@ export interface KeyframeGenerator<V> {
 
 export interface DOMValueAnimationOptions<V extends string | number = number> {
     element: HTMLElement | SVGElement
-    keyframes: V[]
+    keyframes: ValueKeyframesDefinition
     name: string
     pseudoElement?: string
     allowFlatten?: boolean

@@ -1,4 +1,5 @@
-export * from "./animation/controls/Group"
+export * from "./animation/GroupAnimation"
+export * from "./animation/NativeAnimation"
 export * from "./animation/types"
 export * from "./animation/utils/get-value-transition"
 
@@ -6,7 +7,7 @@ export * from "./animation/generators/utils/calc-duration"
 export * from "./animation/generators/utils/create-generator-easing"
 export * from "./animation/generators/utils/is-generator"
 
-export { startWaapiAnimation } from "./animation/waapi/start-waapi-animation"
+export * from "./animation/waapi/start-waapi-animation"
 export * from "./animation/waapi/utils/attach-timeline"
 export * from "./animation/waapi/utils/easing"
 export * from "./animation/waapi/utils/linear"

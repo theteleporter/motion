@@ -1,12 +1,12 @@
 import { activeAnimations } from "../../stats/animation-count"
 import { statsBuffer } from "../../stats/buffer"
-import { Transition } from "../types"
+import { Transition, ValueKeyframesDefinition } from "../types"
 import { mapEasingToNativeEasing } from "./utils/easing"
 
 export function startWaapiAnimation(
     element: Element,
     valueName: string,
-    keyframes: string | number | string[] | number[],
+    keyframes: ValueKeyframesDefinition,
     {
         delay = 0,
         duration = 300,
@@ -17,7 +17,9 @@ export function startWaapiAnimation(
     }: Transition = {},
     pseudoElement: string | undefined = undefined
 ) {
-    const keyframeOptions: PropertyIndexedKeyframes = { [valueName]: keyframes }
+    const keyframeOptions: PropertyIndexedKeyframes = {
+        [valueName]: keyframes as string[],
+    }
     if (times) keyframeOptions.offset = times
 
     const easing = mapEasingToNativeEasing(ease, duration)

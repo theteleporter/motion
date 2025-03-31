@@ -18,6 +18,7 @@ import {
     ValueAnimationTransition,
     ValueKeyframe,
 } from "./types"
+import { startWaapiAnimation } from "./waapi/start-waapi-animation"
 
 const defaultEasing = "easeOut"
 const defaultDuration = 300
@@ -54,7 +55,7 @@ export class NativeAnimation implements AnimationPlaybackControls {
     constructor({
         element,
         name,
-        keyframes,
+        keyframes: unresolvedKeyframes,
         pseudoElement,
         transition,
         allowFlatten = false,
@@ -81,10 +82,13 @@ export class NativeAnimation implements AnimationPlaybackControls {
          * TODO: If these keyframes aren't correctly hydrated then we want to throw
          * run an instant animation.
          */
-        if (!Array.isArray(keyframes)) {
-            keyframes = [keyframes]
-        }
-        hydrateKeyframes(element, name, keyframes, pseudoElement)
+
+        const keyframes = hydrateKeyframes(
+            element,
+            name,
+            unresolvedKeyframes,
+            pseudoElement
+        )
 
         if (isGenerator(transition.type)) {
             transition = this.handleGenerator(transition, keyframes)
