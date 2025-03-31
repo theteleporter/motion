@@ -112,6 +112,15 @@ export interface KeyframeGenerator<V> {
     toString: () => string
 }
 
+export interface DOMValueAnimationOptions<V extends string | number = number> {
+    element: HTMLElement | SVGElement
+    keyframes: V[]
+    name: string
+    pseudoElement?: string
+    allowFlatten?: boolean
+    transition: ValueAnimationTransition<V>
+}
+
 export interface ValueAnimationOptions<V extends string | number = number>
     extends ValueAnimationTransition {
     keyframes: V[]

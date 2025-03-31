@@ -1,5 +1,5 @@
-import { AnimationPlaybackControls } from "../../types"
-import { GroupPlaybackControls } from "../Group"
+import { GroupAnimation } from "../GroupAnimation"
+import { AnimationPlaybackControls } from "../types"
 
 function createTestAnimationControls(
     partialControls?: Partial<AnimationPlaybackControls>
@@ -22,11 +22,11 @@ function createTestAnimationControls(
     }
 }
 
-describe("GroupPlaybackControls", () => {
+describe("GroupAnimation", () => {
     test("Filters undefined animations", () => {
         const a: AnimationPlaybackControls = createTestAnimationControls()
 
-        const controls = new GroupPlaybackControls([undefined, a])
+        const controls = new GroupAnimation([undefined, a])
 
         expect(controls.animations[0]).toBe(a)
     })
@@ -36,7 +36,7 @@ describe("GroupPlaybackControls", () => {
             time: 5,
         })
 
-        const controls = new GroupPlaybackControls([a])
+        const controls = new GroupAnimation([a])
 
         expect(controls.time).toBe(5)
     })
@@ -50,7 +50,7 @@ describe("GroupPlaybackControls", () => {
             time: 5,
         })
 
-        const controls = new GroupPlaybackControls([a, b])
+        const controls = new GroupAnimation([a, b])
 
         controls.time = 1
 
@@ -69,7 +69,7 @@ describe("GroupPlaybackControls", () => {
             play: jest.fn(),
         })
 
-        const controls = new GroupPlaybackControls([a, b])
+        const controls = new GroupAnimation([a, b])
 
         controls.play()
 
@@ -88,7 +88,7 @@ describe("GroupPlaybackControls", () => {
             pause: jest.fn(),
         })
 
-        const controls = new GroupPlaybackControls([a, b])
+        const controls = new GroupAnimation([a, b])
 
         controls.pause()
 
@@ -97,7 +97,7 @@ describe("GroupPlaybackControls", () => {
     })
 
     test(".then() returns Promise", () => {
-        const controls = new GroupPlaybackControls([])
+        const controls = new GroupAnimation([])
         controls.then(() => {}).then(() => {})
     })
 
@@ -111,7 +111,7 @@ describe("GroupPlaybackControls", () => {
         a.then(() => aOnComplete())
         b.then(() => bOnComplete())
 
-        const controls = new GroupPlaybackControls([a, b])
+        const controls = new GroupAnimation([a, b])
 
         await controls
 
@@ -129,7 +129,7 @@ describe("GroupPlaybackControls", () => {
         a.then(() => aOnComplete())
         b.then(() => bOnComplete())
 
-        const controls = new GroupPlaybackControls([a, b])
+        const controls = new GroupAnimation([a, b])
 
         await controls
 
@@ -145,7 +145,7 @@ describe("GroupPlaybackControls", () => {
             cancel: jest.fn(),
         })
 
-        const controls = new GroupPlaybackControls([a, b])
+        const controls = new GroupAnimation([a, b])
 
         controls.cancel()
 
@@ -161,7 +161,7 @@ describe("GroupPlaybackControls", () => {
             complete: jest.fn(),
         })
 
-        const controls = new GroupPlaybackControls([a, b])
+        const controls = new GroupAnimation([a, b])
 
         controls.complete()
 
@@ -177,7 +177,7 @@ describe("GroupPlaybackControls", () => {
             speed: 2,
         })
 
-        const controls = new GroupPlaybackControls([a, b])
+        const controls = new GroupAnimation([a, b])
 
         expect(controls.speed).toEqual(2)
     })
@@ -190,7 +190,7 @@ describe("GroupPlaybackControls", () => {
             speed: 2,
         })
 
-        const controls = new GroupPlaybackControls([a, b])
+        const controls = new GroupAnimation([a, b])
 
         controls.speed = -1
         expect(a.speed).toEqual(-1)
@@ -205,7 +205,7 @@ describe("GroupPlaybackControls", () => {
             startTime: 2,
         })
 
-        const controls = new GroupPlaybackControls([a, b])
+        const controls = new GroupAnimation([a, b])
 
         expect(controls.startTime).toEqual(2)
     })
@@ -221,13 +221,13 @@ describe("GroupPlaybackControls", () => {
             duration: 1,
         })
 
-        const controls = new GroupPlaybackControls([a, b, c])
+        const controls = new GroupAnimation([a, b, c])
 
         expect(controls.duration).toEqual(3)
     })
 
     test("Returns zero for no animations", async () => {
-        const controls = new GroupPlaybackControls([])
+        const controls = new GroupAnimation([])
 
         expect(controls.duration).toEqual(0)
     })

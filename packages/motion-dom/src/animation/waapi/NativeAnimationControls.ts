@@ -1,8 +1,4 @@
-import {
-    millisecondsToSeconds,
-    noop,
-    secondsToMilliseconds,
-} from "motion-utils"
+import { noop } from "motion-utils"
 import {
     AnimationPlaybackControlsWithFinished,
     ValueAnimationOptions,
@@ -18,52 +14,6 @@ export class NativeAnimationControls
 
     constructor(animation?: Animation) {
         this.animation = animation
-    }
-
-    get duration() {
-        const durationInMs =
-            this.animation?.effect?.getComputedTiming().duration ||
-            this.options?.duration ||
-            300
-
-        return millisecondsToSeconds(Number(durationInMs))
-    }
-
-    get time() {
-        if (this.animation) {
-            return millisecondsToSeconds(
-                (this.animation?.currentTime as number) || 0
-            )
-        }
-        return 0
-    }
-
-    set time(newTime: number) {
-        if (this.animation) {
-            this.animation.currentTime = secondsToMilliseconds(newTime)
-        }
-    }
-
-    get speed() {
-        return this.animation ? this.animation.playbackRate : 1
-    }
-
-    set speed(newSpeed: number) {
-        if (this.animation) {
-            this.animation.playbackRate = newSpeed
-        }
-    }
-
-    get state() {
-        return this.animation ? this.animation.playState : "finished"
-    }
-
-    get startTime() {
-        return this.animation ? (this.animation.startTime as number) : null
-    }
-
-    get finished() {
-        return this.animation ? this.animation.finished : Promise.resolve()
     }
 
     play() {
