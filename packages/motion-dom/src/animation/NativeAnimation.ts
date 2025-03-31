@@ -4,9 +4,11 @@ import {
     noop,
     secondsToMilliseconds,
 } from "motion-utils"
+import { style } from "../render/dom/style"
 import { supportsLinearEasing } from "../utils/supports/linear-easing"
 import { createGeneratorEasing } from "./generators/utils/create-generator-easing"
 import { isGenerator } from "./generators/utils/is-generator"
+import { getFinalKeyframe } from "./keyframes/get-final"
 import { hydrateKeyframes } from "./keyframes/hydrate"
 import {
     AnimationPlaybackControls,
@@ -19,6 +21,17 @@ import {
 
 const defaultEasing = "easeOut"
 const defaultDuration = 300
+
+const animationMaps = new WeakMap<Element, Map<string, NativeAnimation>>()
+const animationMapKey = (name: string, pseudoElement: string) =>
+    `${name}:${pseudoElement}`
+
+function getAnimationMap(element: Element) {
+    const map = animationMaps.get(element) || new Map()
+    animationMaps.set(element, map)
+
+    return map
+}
 
 export interface NativeAnimationOptions<V extends string | number = number>
     extends DOMValueAnimationOptions<V> {
@@ -36,6 +49,8 @@ export class NativeAnimation implements AnimationPlaybackControls {
 
     private allowFlatten: boolean
 
+    private removeAnimation: VoidFunction
+
     constructor({
         element,
         name,
@@ -52,10 +67,15 @@ export class NativeAnimation implements AnimationPlaybackControls {
         this.allowFlatten = allowFlatten
 
         /**
-         * TODO: Handle existing animations on the element. We want to run this
-         * here so if we need to read from the element then the value is
-         * already rendered.
+         * Stop any existing animations on the element before reading existing keyframes.
+         *
+         * TODO: Check for VisualElement before using animation state. This is a fallback
+         * for mini animate(). Do this when implementing NativeAnimationExtended.
          */
+        const animationMap = getAnimationMap(element)
+        const key = animationMapKey(name, pseudoElement || "")
+        const animation = animationMap.get(key)
+        animation && animation.stop()
 
         /**
          * TODO: If these keyframes aren't correctly hydrated then we want to throw
@@ -70,7 +90,29 @@ export class NativeAnimation implements AnimationPlaybackControls {
             transition = this.handleGenerator(transition, keyframes)
         }
 
-        // TODO: Create animation
+        this.animation = startWaapiAnimation(
+            element,
+            name,
+            keyframes,
+            transition,
+            pseudoElement
+        )
+
+        if (transition.autoplay === false) {
+            this.animation.pause()
+        }
+
+        this.removeAnimation = () => animationMap.delete(key)
+
+        this.animation.onfinish = () => {
+            style.set(element, name, getFinalKeyframe(keyframes, transition))
+            this.cancel()
+        }
+
+        /**
+         * TODO: Check for VisualElement before using animation state.
+         */
+        animationMap.set(key, this)
     }
 
     /**
@@ -118,6 +160,8 @@ export class NativeAnimation implements AnimationPlaybackControls {
         try {
             this.animation.cancel()
         } catch (e) {}
+
+        this.removeAnimation()
     }
 
     stop() {

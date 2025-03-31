@@ -11,6 +11,7 @@ import {
     noop,
     secondsToMilliseconds,
 } from "motion-utils"
+import { startWaapiAnimation } from "../../../../motion-dom/src/animation/waapi/start-waapi-animation"
 import { anticipate } from "../../easing/anticipate"
 import { backInOut } from "../../easing/back"
 import { circInOut } from "../../easing/circ"
@@ -24,7 +25,6 @@ import {
 } from "./BaseAnimation"
 import { MainThreadAnimation } from "./MainThreadAnimation"
 import { acceleratedValues } from "./utils/accelerated-values"
-import { startWaapiAnimation } from "./waapi"
 import { getFinalKeyframe } from "./waapi/utils/get-final-keyframe"
 import { supportsWaapi } from "./waapi/utils/supports-waapi"
 

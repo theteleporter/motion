@@ -1,9 +1,7 @@
-import {
-    activeAnimations,
-    mapEasingToNativeEasing,
-    statsBuffer,
-} from "motion-dom"
-import { NativeAnimationOptions } from "./types"
+import { activeAnimations } from "../../stats/animation-count"
+import { statsBuffer } from "../../stats/buffer"
+import { Transition } from "../types"
+import { mapEasingToNativeEasing } from "./utils/easing"
 
 export function startWaapiAnimation(
     element: Element,
@@ -16,7 +14,8 @@ export function startWaapiAnimation(
         repeatType = "loop",
         ease = "easeInOut",
         times,
-    }: NativeAnimationOptions = {}
+    }: Transition = {},
+    pseudoElement: string | undefined = undefined
 ) {
     const keyframeOptions: PropertyIndexedKeyframes = { [valueName]: keyframes }
     if (times) keyframeOptions.offset = times
@@ -39,6 +38,7 @@ export function startWaapiAnimation(
         fill: "both",
         iterations: repeat + 1,
         direction: repeatType === "reverse" ? "alternate" : "normal",
+        pseudoElement,
     })
 
     if (statsBuffer.value) {

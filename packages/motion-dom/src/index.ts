@@ -6,7 +6,7 @@ export * from "./animation/generators/utils/calc-duration"
 export * from "./animation/generators/utils/create-generator-easing"
 export * from "./animation/generators/utils/is-generator"
 
-export * from "./animation/waapi/NativeAnimationControls"
+export { startWaapiAnimation } from "./animation/waapi/start-waapi-animation"
 export * from "./animation/waapi/utils/attach-timeline"
 export * from "./animation/waapi/utils/easing"
 export * from "./animation/waapi/utils/linear"

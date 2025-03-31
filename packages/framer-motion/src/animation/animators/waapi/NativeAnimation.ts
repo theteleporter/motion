@@ -10,7 +10,7 @@ import {
     ValueKeyframesDefinition,
 } from "motion-dom"
 import { invariant, secondsToMilliseconds } from "motion-utils"
-import { startWaapiAnimation } from "."
+import { startWaapiAnimation } from "../../../../../motion-dom/src/animation/waapi/start-waapi-animation"
 import { browserNumberValueTypes } from "../../../render/dom/value-types/number-browser"
 import { getFinalKeyframe } from "./utils/get-final-keyframe"
 import { setCSSVar, setStyle } from "./utils/style"

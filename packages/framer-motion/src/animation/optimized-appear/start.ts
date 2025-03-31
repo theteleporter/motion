@@ -1,6 +1,6 @@
 import { Batcher, MotionValue } from "motion-dom"
 import { noop } from "motion-utils"
-import { startWaapiAnimation } from "../animators/waapi"
+import { startWaapiAnimation } from "../../../../motion-dom/src/animation/waapi/start-waapi-animation"
 import { NativeAnimationOptions } from "../animators/waapi/types"
 import { optimizedAppearDataId } from "./data-id"
 import { getOptimisedAppearId } from "./get-appear-id"
