@@ -1,8 +1,5 @@
-import { mixNumber as mixNumberImmediate } from "./number"
-import { mixColor } from "./color"
-import { pipe } from "../pipe"
 import { warning } from "motion-utils"
-import { HSLA, RGBA } from "../../value/types/types"
+import { isCSSVariableToken } from "../../render/dom/utils/is-css-variable"
 import { color } from "../../value/types/color"
 import {
     ComplexValueInfo,
@@ -10,13 +7,16 @@ import {
     analyseComplexValue,
     complex,
 } from "../../value/types/complex"
-import { isCSSVariableToken } from "../../render/dom/utils/is-css-variable"
-import { invisibleValues, mixVisibility } from "./visibility"
+import { HSLA, P3, RGBA } from "../../value/types/types"
+import { pipe } from "../pipe"
+import { mixColor } from "./color"
 import { mixImmediate } from "./immediate"
+import { mixNumber as mixNumberImmediate } from "./number"
+import { invisibleValues, mixVisibility } from "./visibility"
 
-type MixableArray = Array<number | RGBA | HSLA | string>
+type MixableArray = Array<number | RGBA | HSLA | P3 | string>
 type MixableObject = {
-    [key: string]: string | number | RGBA | HSLA
+    [key: string]: string | number | RGBA | HSLA | P3
 }
 
 function mixNumber(a: number, b: number) {
@@ -27,6 +27,7 @@ export function getMixer<T>(a: T) {
     if (typeof a === "number") {
         return mixNumber
     } else if (typeof a === "string") {
+        console.log(a, color.test(a))
         return isCSSVariableToken(a)
             ? mixImmediate
             : color.test(a)

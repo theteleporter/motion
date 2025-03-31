@@ -27,4 +27,12 @@ export type HSLA = {
     alpha: number
 }
 
-export type Color = HSLA | RGBA
+// Display P3 color space
+export type P3 = {
+    p3_r: number
+    p3_g: number
+    p3_b: number
+    alpha: number
+}
+
+export type Color = HSLA | RGBA | P3
