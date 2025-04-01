@@ -34,6 +34,7 @@
         </div>
         <div class="box" id="autoplay">autoplay</div>
         <div class="box" id="time">time</div>
+        <div class="box" id="custom-easing">custom easing</div>
         <script type="module" src="/src/inc.js"></script>
         <script type="module">
             const { animateMini, spring } = window.Motion
@@ -150,6 +151,16 @@
             timeAnimation.pause()
             timeAnimation.time = 0.1
             timeAnimation.stop()
+
+            const customEasingFunction = animateMini(
+                "#custom-easing",
+                { opacity: [0, 1] },
+                { duration: 0.2, ease: () => 0.25 }
+            )
+
+            customEasingFunction.pause()
+            customEasingFunction.time = 0.1
+            customEasingFunction.stop()
         </script>
     </body>
 </html>

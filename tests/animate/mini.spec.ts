@@ -57,4 +57,9 @@ test.describe("animateMini", () => {
         const element = page.locator("#time")
         await expect(element).toHaveCSS("opacity", "0.5")
     })
+
+    test("custom easing function", async ({ page }) => {
+        const element = page.locator("#custom-easing")
+        await expect(element).toHaveCSS("opacity", "0.25")
+    })
 })

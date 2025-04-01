@@ -6,7 +6,7 @@ test.describe("view", () => {
         if (process.env.CI) {
             test.skip()
         }
-        await page.goto("gestures/view-pause.html")
+        await page.goto("animate/view-pause.html")
         await page.waitForTimeout(200)
         await expect(page).toHaveScreenshot()
     })
