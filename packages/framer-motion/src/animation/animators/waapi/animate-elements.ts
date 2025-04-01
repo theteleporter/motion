@@ -5,10 +5,10 @@ import {
     AnimationOptions as DynamicAnimationOptions,
     ElementOrSelector,
     getValueTransition,
+    NativeAnimation,
     resolveElements,
 } from "motion-dom"
 import { invariant, secondsToMilliseconds } from "motion-utils"
-import { NativeAnimation } from "./NativeAnimation"
 
 export function animateElements(
     elementOrSelector: ElementOrSelector,
@@ -16,7 +16,9 @@ export function animateElements(
     options?: DynamicAnimationOptions,
     scope?: AnimationScope
 ) {
-    const elements = resolveElements(elementOrSelector, scope)
+    const elements = resolveElements(elementOrSelector, scope) as Array<
+        HTMLElement | SVGElement
+    >
     const numElements = elements.length
 
     invariant(Boolean(numElements), "No valid element provided.")
@@ -41,22 +43,22 @@ export function animateElements(
                 ...getValueTransition(elementTransition as any, valueName),
             }
 
-            valueOptions.duration = valueOptions.duration
-                ? secondsToMilliseconds(valueOptions.duration)
-                : valueOptions.duration
+            valueOptions.duration &&= secondsToMilliseconds(
+                valueOptions.duration
+            )
 
-            valueOptions.delay = secondsToMilliseconds(valueOptions.delay || 0)
+            valueOptions.delay &&= secondsToMilliseconds(valueOptions.delay)
 
             valueOptions.allowFlatten =
                 !elementTransition.type && !elementTransition.ease
 
             animations.push(
-                new NativeAnimation(
+                new NativeAnimation({
                     element,
-                    valueName,
-                    valueKeyframes,
-                    valueOptions
-                )
+                    name: valueName,
+                    keyframes: valueKeyframes,
+                    transition: valueOptions,
+                })
             )
         }
     }

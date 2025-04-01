@@ -1,7 +1,7 @@
 import { style } from "../../render/dom/style"
-import { browserNumberTypes } from "../../value/handlers/collections/browser-number"
 import { UnresolvedValueKeyframe, ValueKeyframe } from "../types"
 import { supportsPartialKeyframes } from "../waapi/supports/partial-keyframes"
+import { pxValues } from "../waapi/utils/px-values"
 
 export function hydrateKeyframes(
     element: HTMLElement | SVGElement,
@@ -21,8 +21,8 @@ export function hydrateKeyframes(
                     : keyframes[i - 1]
         }
 
-        if (typeof keyframes[i] === "number" && browserNumberTypes[name]) {
-            keyframes[i] = browserNumberTypes[name].transform!(keyframes[i])
+        if (typeof keyframes[i] === "number" && pxValues.has(name)) {
+            keyframes[i] = keyframes[i] + "px"
         }
     }
 

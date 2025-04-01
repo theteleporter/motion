@@ -3,8 +3,8 @@ import { GroupAnimation } from "../animation/GroupAnimation"
 import { NativeAnimation } from "../animation/NativeAnimation"
 import { AnimationPlaybackControls } from "../animation/types"
 import { getValueTransition } from "../animation/utils/get-value-transition"
-import { applyGeneratorOptions } from "../animation/waapi/utils/convert-options"
-import { mapEasingToNativeEasing } from "../animation/waapi/utils/easing"
+import { mapEasingToNativeEasing } from "../animation/waapi/easing/map-easing"
+import { applyGeneratorOptions } from "../animation/waapi/utils/apply-generator"
 import type { ViewTransitionBuilder } from "./index"
 import { ViewTransitionTarget } from "./types"
 import { chooseLayerType } from "./utils/choose-layer-type"
@@ -173,7 +173,7 @@ export function startViewAnimation(
                         easing,
                     })
 
-                    animations.push(new NativeAnimationControls(animation))
+                    animations.push(new NativeAnimation({ animation }))
                 } else if (
                     hasOpacity(targetDefinition, "enter") &&
                     hasOpacity(targetDefinition, "exit") &&
@@ -181,7 +181,7 @@ export function startViewAnimation(
                         .getKeyframes()
                         .some((keyframe) => keyframe.mixBlendMode)
                 ) {
-                    animations.push(new NativeAnimationControls(animation))
+                    animations.push(new NativeAnimation({ animation }))
                 } else {
                     animation.cancel()
                 }

@@ -1,6 +1,7 @@
+import { animate, animateMini, motion } from "../.."
 import { render } from "../../../jest.setup"
-import { motion, animate, animateMini } from "../.."
 import { parseCSSVariable } from "../../render/dom/utils/css-variables-conversion"
+import "../animators/waapi/__tests__/polyfill"
 
 const fromName = "--from"
 const toName = "--to"

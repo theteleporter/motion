@@ -1,63 +1,79 @@
-import { AnimationPlaybackControls, ProgressTimeline } from "./types"
+import { supportsScrollTimeline } from "../utils/supports/scroll-timeline"
+import { AnimationPlaybackControls } from "./types"
 
-/**
- * GroupAnimation implements AnimationPlaybackControls for a group of animations.
- */
+type PropNames = "time" | "speed" | "duration" | "attachTimeline" | "startTime"
+
+export type AcceptedAnimations = AnimationPlaybackControls
+
+export type GroupedAnimations = AcceptedAnimations[]
+
 export class GroupAnimation implements AnimationPlaybackControls {
-    /**
-     * Array of animations in this group
-     */
-    animations: AnimationPlaybackControls[] = []
+    animations: GroupedAnimations
 
-    /**
-     * The current time of the animation, in seconds.
-     */
-    get time(): number {
-        return this.animations.length > 0 ? this.animations[0].time : 0
+    constructor(animations: Array<AcceptedAnimations | undefined>) {
+        this.animations = animations.filter(Boolean) as GroupedAnimations
     }
 
-    set time(newTime: number) {
-        this.animations.forEach((animation) => {
-            if ("time" in animation) {
-                animation.time = newTime
+    get finished() {
+        return Promise.all(
+            this.animations.map((animation) => animation.finished)
+        )
+    }
+
+    /**
+     * TODO: Filter out cancelled or stopped animations before returning
+     */
+    private getAll(propName: PropNames) {
+        return this.animations[0][propName] as any
+    }
+
+    private setAll(propName: PropNames, newValue: any) {
+        for (let i = 0; i < this.animations.length; i++) {
+            this.animations[i][propName] = newValue
+        }
+    }
+
+    attachTimeline(
+        timeline: any,
+        fallback?: (animation: AnimationPlaybackControls) => VoidFunction
+    ) {
+        const subscriptions = this.animations.map((animation) => {
+            if (supportsScrollTimeline() && animation.attachTimeline) {
+                return animation.attachTimeline(timeline)
+            } else if (typeof fallback === "function") {
+                return fallback(animation)
             }
         })
+
+        return () => {
+            subscriptions.forEach((cancel, i) => {
+                cancel && cancel()
+                this.animations[i].stop()
+            })
+        }
     }
 
-    /**
-     * The playback speed of the animation.
-     * 1 = normal speed, 2 = double speed, 0.5 = half speed.
-     */
-    get speed(): number {
-        return this.animations.length > 0 ? this.animations[0].speed : 1
+    get time() {
+        return this.getAll("time")
     }
 
-    set speed(newSpeed: number) {
-        this.animations.forEach((animation) => {
-            if ("speed" in animation) {
-                animation.speed = newSpeed
-            }
-        })
+    set time(time: number) {
+        this.setAll("time", time)
     }
 
-    /**
-     * The start time of the animation, in milliseconds.
-     */
-    get startTime(): number | null {
-        return this.animations.length > 0 ? this.animations[0].startTime : null
+    get speed() {
+        return this.getAll("speed")
     }
 
-    /**
-     * The state of the animation.
-     */
-    get state(): "idle" | "running" | "paused" | "finished" | undefined {
-        return this.animations.length > 0 ? this.animations[0].state : "idle"
+    set speed(speed: number) {
+        this.setAll("speed", speed)
     }
 
-    /**
-     * Duration of the animation, in seconds.
-     */
-    get duration(): number {
+    get startTime() {
+        return this.getAll("startTime")
+    }
+
+    get duration() {
         let max = 0
         for (let i = 0; i < this.animations.length; i++) {
             max = Math.max(max, this.animations[i].duration)
@@ -65,83 +81,35 @@ export class GroupAnimation implements AnimationPlaybackControls {
         return max
     }
 
-    /**
-     * Promise that resolves when the animation is finished
-     */
-    get finished(): Promise<any> {
-        return Promise.all(
-            this.animations.map((animation) =>
-                "finished" in animation ? animation.finished : animation
-            )
-        )
+    private runAll(
+        methodName: keyof Omit<
+            AnimationPlaybackControls,
+            PropNames | "then" | "state" | "finished"
+        >
+    ) {
+        this.animations.forEach((controls) => controls[methodName]())
     }
 
-    /**
-     * Stops the animation at its current state, and prevents it from
-     * resuming when the animation is played again.
-     */
-    stop(): void {
-        this.animations.forEach((animation) => animation.stop())
+    flatten() {
+        this.runAll("flatten")
     }
 
-    /**
-     * Plays the animation.
-     */
-    play(): void {
-        this.animations.forEach((animation) => animation.play())
+    play() {
+        this.runAll("play")
     }
 
-    /**
-     * Pauses the animation.
-     */
-    pause(): void {
-        this.animations.forEach((animation) => animation.pause())
+    pause() {
+        this.runAll("pause")
     }
 
-    /**
-     * Completes the animation and applies the final state.
-     */
-    complete(): void {
-        this.animations.forEach((animation) => animation.complete())
+    // Bound to accomodate common `return animation.stop` pattern
+    stop = () => this.runAll("stop")
+
+    cancel() {
+        this.runAll("cancel")
     }
 
-    /**
-     * Cancels the animation and applies the initial state.
-     */
-    cancel(): void {
-        this.animations.forEach((animation) => animation.cancel())
-    }
-
-    /**
-     * Allows the animation to be awaited.
-     */
-    then(onResolve: VoidFunction, onReject?: VoidFunction): Promise<void> {
-        return Promise.all(this.animations).then(onResolve).catch(onReject)
-    }
-
-    /**
-     * Attaches a timeline to the animation, for instance the `ScrollTimeline`.
-     */
-    attachTimeline?(
-        timeline: ProgressTimeline,
-        fallback?: (animation: AnimationPlaybackControls) => VoidFunction
-    ): VoidFunction {
-        // Stub implementation for attaching timeline to all animations
-        const detachers = this.animations
-            .map(
-                (animation) =>
-                    animation.attachTimeline &&
-                    animation.attachTimeline(timeline, fallback)
-            )
-            .filter(Boolean) as VoidFunction[]
-
-        return () => detachers.forEach((detach) => detach())
-    }
-
-    /**
-     * Flattens the animation's easing curve to linear.
-     */
-    flatten(): void {
-        this.animations.forEach((animation) => animation.flatten())
+    complete() {
+        this.runAll("complete")
     }
 }

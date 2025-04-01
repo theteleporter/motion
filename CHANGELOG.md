@@ -4,6 +4,16 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.6.3] 2025-03-26
+
+### Changed
+
+-   Refactored mini `animate` and `animateView` to share the same `NativeAnimation`. Mini `animate` down to `2.3kb`.
+
+### Fixed
+
+-   Fixed keyboard accessibility of press events.
+
 ## [12.6.2] 2025-03-26
 
 ### Fixed

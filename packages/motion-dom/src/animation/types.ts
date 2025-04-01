@@ -74,11 +74,7 @@ export interface AnimationPlaybackControls {
      */
     attachTimeline?: (
         timeline: ProgressTimeline,
-        fallback?: (
-            animation:
-                | AnimationPlaybackControls
-                | ThennableAnimationPlaybackControls
-        ) => VoidFunction
+        fallback?: (animation: AnimationPlaybackControls) => VoidFunction
     ) => VoidFunction
 
     /**
@@ -92,7 +88,7 @@ export interface AnimationPlaybackControls {
     finished: Promise<any>
 }
 
-export type ThennableAnimationPlaybackControls = AnimationPlaybackControls & {
+export type AnimationPlaybackControlsWithThen = AnimationPlaybackControls & {
     then: (onResolve: VoidFunction, onReject?: VoidFunction) => Promise<void>
 }
 
@@ -125,9 +121,13 @@ export interface ValueAnimationOptions<V extends string | number = number>
     allowFlatten?: boolean
 }
 
-export type GeneratorFactory = (
+export type GeneratorFactoryFunction = (
     options: ValueAnimationOptions<any>
 ) => KeyframeGenerator<any>
+
+export interface GeneratorFactory extends GeneratorFactoryFunction {
+    applyToOptions: (options: Transition) => Transition
+}
 
 export type AnimationGeneratorType =
     | GeneratorFactory

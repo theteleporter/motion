@@ -5,23 +5,15 @@ import {
     secondsToMilliseconds,
 } from "motion-utils"
 import { style } from "../render/dom/style"
-import { supportsLinearEasing } from "../utils/supports/linear-easing"
-import { createGeneratorEasing } from "./generators/utils/create-generator-easing"
-import { isGenerator } from "./generators/utils/is-generator"
 import { getFinalKeyframe } from "./keyframes/get-final"
 import { hydrateKeyframes } from "./keyframes/hydrate"
 import {
     AnimationPlaybackControls,
     DOMValueAnimationOptions,
-    GeneratorFactory,
     ProgressTimeline,
-    ValueAnimationTransition,
-    ValueKeyframe,
 } from "./types"
 import { startWaapiAnimation } from "./waapi/start-waapi-animation"
-
-const defaultEasing = "easeOut"
-const defaultDuration = 300
+import { applyGeneratorOptions } from "./waapi/utils/apply-generator"
 
 const animationMaps = new WeakMap<Element, Map<string, NativeAnimation>>()
 const animationMapKey = (name: string, pseudoElement: string) =>
@@ -39,6 +31,10 @@ export interface NativeAnimationOptions<V extends string | number = number>
     pseudoElement?: string
 }
 
+export interface NativeControlsOptions {
+    animation: Animation
+}
+
 /**
  * NativeAnimation implements AnimationPlaybackControls for the browser's Web Animations API.
  */
@@ -52,18 +48,24 @@ export class NativeAnimation implements AnimationPlaybackControls {
 
     private removeAnimation: VoidFunction
 
-    constructor({
-        element,
-        name,
-        keyframes: unresolvedKeyframes,
-        pseudoElement,
-        transition,
-        allowFlatten = false,
-    }: NativeAnimationOptions) {
-        invariant(
-            typeof transition.type !== "string",
-            `animateMini doesn't support "type" as a string. Did you mean to import { spring } from "motion"?`
-        )
+    constructor(options: NativeAnimationOptions | NativeControlsOptions) {
+        /**
+         * If we already have an animation, we don't need to instantiate one
+         * and can just use this as a controls interface.
+         */
+        if ("animation" in options) {
+            this.animation = options.animation
+            return
+        }
+
+        const {
+            element,
+            name,
+            keyframes: unresolvedKeyframes,
+            pseudoElement,
+            allowFlatten = false,
+        } = options
+        let { transition } = options
 
         this.allowFlatten = allowFlatten
 
@@ -75,8 +77,8 @@ export class NativeAnimation implements AnimationPlaybackControls {
          */
         const animationMap = getAnimationMap(element)
         const key = animationMapKey(name, pseudoElement || "")
-        const animation = animationMap.get(key)
-        animation && animation.stop()
+        const currentAnimation = animationMap.get(key)
+        currentAnimation && currentAnimation.stop()
 
         /**
          * TODO: If these keyframes aren't correctly hydrated then we want to throw
@@ -90,9 +92,11 @@ export class NativeAnimation implements AnimationPlaybackControls {
             pseudoElement
         )
 
-        if (isGenerator(transition.type)) {
-            transition = this.handleGenerator(transition, keyframes)
-        }
+        invariant(
+            typeof transition.type !== "string",
+            `animateMini doesn't support "type" as a string. Did you mean to import { spring } from "motion"?`
+        )
+        transition = applyGeneratorOptions(transition)
 
         this.animation = startWaapiAnimation(
             element,
@@ -109,7 +113,16 @@ export class NativeAnimation implements AnimationPlaybackControls {
         this.removeAnimation = () => animationMap.delete(key)
 
         this.animation.onfinish = () => {
-            style.set(element, name, getFinalKeyframe(keyframes, transition))
+            if (!pseudoElement) {
+                style.set(
+                    element,
+                    name,
+                    getFinalKeyframe(keyframes, transition)
+                )
+            } else {
+                this.commitStyles()
+            }
+
             this.cancel()
         }
 
@@ -117,35 +130,6 @@ export class NativeAnimation implements AnimationPlaybackControls {
          * TODO: Check for VisualElement before using animation state.
          */
         animationMap.set(key, this)
-    }
-
-    /**
-     * Convert the generator into a JS easing function. In a later step
-     * this JS easing function will be converted into a linear() easing
-     * function along with those defined by the user.
-     *
-     * This method is written to be inherited by NativeAnimationExtended,
-     * which will also offer the ability to run the generator with keyframes
-     * and velocity.
-     */
-    private handleGenerator(
-        transition: ValueAnimationTransition,
-        _keyframes: ValueKeyframe[]
-    ): ValueAnimationTransition {
-        const generatorOptions = createGeneratorEasing(
-            transition,
-            100,
-            transition.type as GeneratorFactory
-        )
-
-        return {
-            ...transition,
-            type: "keyframes",
-            ease: supportsLinearEasing()
-                ? generatorOptions.ease
-                : defaultEasing,
-            duration: secondsToMilliseconds(generatorOptions.duration),
-        }
     }
 
     play() {
@@ -193,15 +177,14 @@ export class NativeAnimation implements AnimationPlaybackControls {
      * while deferring the commit until the next animation frame.
      */
     private commitStyles() {
-        if (this.animation.commitStyles) {
-            this.animation.commitStyles()
-        }
+        this.animation.commitStyles?.()
     }
 
     get duration() {
+        console.log(this.animation.effect?.getComputedTiming())
+
         const duration =
-            this.animation.effect?.getComputedTiming().duration ||
-            defaultDuration
+            this.animation.effect?.getComputedTiming().duration || 0
 
         return millisecondsToSeconds(Number(duration))
     }

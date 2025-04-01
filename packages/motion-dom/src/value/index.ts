@@ -1,6 +1,6 @@
 import { SubscriptionManager, velocityPerSecond, warnOnce } from "motion-utils"
 import {
-    AnimationPlaybackControls,
+    AnimationPlaybackControlsWithThen,
     TransformProperties,
 } from "../animation/types"
 import { frame } from "../frameloop"
@@ -20,7 +20,7 @@ export type PassiveEffect<T> = (v: T, safeSetter: (v: T) => void) => void
 
 export type StartAnimation = (
     complete: () => void
-) => AnimationPlaybackControls | undefined
+) => AnimationPlaybackControlsWithThen | undefined
 
 export interface MotionValueEventCallbacks<V> {
     animationStart: () => void
@@ -121,7 +121,7 @@ export class MotionValue<V = any> {
     /**
      * A reference to the currently-controlling animation.
      */
-    animation?: AnimationPlaybackControls
+    animation?: AnimationPlaybackControlsWithThen
 
     /**
      * Tracks whether this value can output a velocity. Currently this is only true

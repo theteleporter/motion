@@ -1,19 +1,17 @@
+const isCSSVar = (name: string) => name.startsWith("--")
+
 export const style = {
     set: (
         element: HTMLElement | SVGElement,
         name: string,
         value: string | number
     ) => {
-        const isCSSVar = name.startsWith("--")
-
-        isCSSVar
+        isCSSVar(name)
             ? element.style.setProperty(name, value as string)
             : (element.style[name as any] = value as string)
     },
     get: (element: HTMLElement | SVGElement, name: string) => {
-        const isCSSVar = name.startsWith("--")
-
-        return isCSSVar
+        return isCSSVar(name)
             ? element.style.getPropertyValue(name)
             : element.style[name as any]
     },

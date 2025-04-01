@@ -556,6 +556,10 @@ export class MainThreadAnimation<
         this.startTime = 0
         return this.tick(time, true)
     }
+
+    get finished() {
+        return this.currentFinishedPromise
+    }
 }
 
 // Legacy interface

@@ -1,4 +1,4 @@
-import { AnimationPlaybackControls, AnimationScope } from "motion-dom"
+import { AnimationPlaybackControlsWithThen, AnimationScope } from "motion-dom"
 import { spring } from "../generators/spring"
 import { createAnimationsFromSequence } from "../sequence/create"
 import { AnimationSequence, SequenceOptions } from "../sequence/types"
@@ -9,7 +9,7 @@ export function animateSequence(
     options?: SequenceOptions,
     scope?: AnimationScope
 ) {
-    const animations: AnimationPlaybackControls[] = []
+    const animations: AnimationPlaybackControlsWithThen[] = []
 
     const animationDefinitions = createAnimationsFromSequence(
         sequence,

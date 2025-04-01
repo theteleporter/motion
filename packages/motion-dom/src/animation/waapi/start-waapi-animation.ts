@@ -1,7 +1,7 @@
 import { activeAnimations } from "../../stats/animation-count"
 import { statsBuffer } from "../../stats/buffer"
 import { Transition, ValueKeyframesDefinition } from "../types"
-import { mapEasingToNativeEasing } from "./utils/easing"
+import { mapEasingToNativeEasing } from "./easing/map-easing"
 
 export function startWaapiAnimation(
     element: Element,

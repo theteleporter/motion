@@ -3,6 +3,7 @@ import {
     isGenerator,
     isWaapiSupportedEasing,
     MotionValue,
+    startWaapiAnimation,
     supportsLinearEasing,
     ValueAnimationOptions,
 } from "motion-dom"
@@ -11,7 +12,6 @@ import {
     noop,
     secondsToMilliseconds,
 } from "motion-utils"
-import { startWaapiAnimation } from "../../../../motion-dom/src/animation/waapi/start-waapi-animation"
 import { anticipate } from "../../easing/anticipate"
 import { backInOut } from "../../easing/back"
 import { circInOut } from "../../easing/circ"
@@ -283,6 +283,10 @@ export class AcceleratedAnimation<
 
         const { animation } = resolved
         return animation.playbackRate
+    }
+
+    get finished() {
+        return this.resolved!.animation.finished as unknown as Promise<void>
     }
 
     set speed(newSpeed: number) {

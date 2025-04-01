@@ -1,5 +1,5 @@
 import {
-    AnimationPlaybackControls,
+    AnimationPlaybackControlsWithThen,
     AnimationScope,
     DOMKeyframesDefinition,
     AnimationOptions as DynamicAnimationOptions,
@@ -41,7 +41,7 @@ export function animateSubject(
     value: string | MotionValue<string>,
     keyframes: string | GenericKeyframesTarget<string>,
     options?: ValueAnimationTransition<string>
-): AnimationPlaybackControls[]
+): AnimationPlaybackControlsWithThen[]
 /**
  * Animate a number
  */
@@ -49,7 +49,7 @@ export function animateSubject(
     value: number | MotionValue<number>,
     keyframes: number | GenericKeyframesTarget<number>,
     options?: ValueAnimationTransition<number>
-): AnimationPlaybackControls[]
+): AnimationPlaybackControlsWithThen[]
 /**
  * Animate a Element
  */
@@ -58,7 +58,7 @@ export function animateSubject(
     keyframes: DOMKeyframesDefinition,
     options?: DynamicAnimationOptions,
     scope?: AnimationScope
-): AnimationPlaybackControls[]
+): AnimationPlaybackControlsWithThen[]
 /**
  * Animate a object
  */
@@ -66,7 +66,7 @@ export function animateSubject<O extends Object>(
     object: O | O[],
     keyframes: ObjectTarget<O>,
     options?: DynamicAnimationOptions
-): AnimationPlaybackControls[]
+): AnimationPlaybackControlsWithThen[]
 /**
  * Implementation
  */
@@ -91,8 +91,8 @@ export function animateSubject<O extends Object>(
         | ValueAnimationTransition<string>
         | DynamicAnimationOptions,
     scope?: AnimationScope
-): AnimationPlaybackControls[] {
-    const animations: AnimationPlaybackControls[] = []
+): AnimationPlaybackControlsWithThen[] {
+    const animations: AnimationPlaybackControlsWithThen[] = []
 
     if (isSingleValue(subject, keyframes)) {
         animations.push(
