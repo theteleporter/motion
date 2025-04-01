@@ -162,4 +162,3 @@ workflows:
             - test
             - test-react
             - test-html
-            - test-playwright

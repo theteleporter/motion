@@ -20,7 +20,7 @@
         "measure": "turbo run measure && node dev/inc/bundlesize.mjs",
         "version": "yarn install && git stage yarn.lock",
         "prepare": "make check-status && turbo run build measure",
-        "new": "lerna publish from-package",
+        "new": "yarn test-playwright && lerna publish from-package",
         "new-alpha": "turbo run build && lerna publish from-package --canary --preid alpha"
     },
     "devDependencies": {
