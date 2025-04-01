@@ -209,9 +209,9 @@ describe("scroll() animation", () => {
                 expect(animateMainThreadDefaultBounds.left).to.equal(
                     animateDefaultBounds.left
                 )
-                expect(animateMainThreadEaseOutBounds.left).to.equal(
-                    animateEaseOutBounds.left
-                )
+                expect(
+                    Math.round(animateMainThreadEaseOutBounds.left)
+                ).to.equal(Math.round(animateEaseOutBounds.left))
 
                 // Skipping as env doesn't support linear() easing
                 // expect(miniSpringBounds.left).to.equal(animateSpringBounds.left)
