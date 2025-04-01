@@ -70,7 +70,7 @@ export function startViewAnimation(
             const animations: AnimationPlaybackControls[] = []
 
             /**
-             * Create animations for our definitions
+             * Create animations for each of our explicitly-defined subjects.
              */
             targets.forEach((definition, target) => {
                 // TODO: If target is not "root", resolve elements
@@ -154,11 +154,16 @@ export function startViewAnimation(
                      * the above method.
                      */
                     const transitionName = name.type === "group" ? "layout" : ""
-                    const animationTransition = {
+                    let animationTransition = {
                         ...getValueTransition(defaultOptions, transitionName),
                     }
 
-                    applyGeneratorOptions(animationTransition)
+                    animationTransition.duration &&= secondsToMilliseconds(
+                        animationTransition.duration
+                    )
+
+                    animationTransition =
+                        applyGeneratorOptions(animationTransition)
 
                     const easing = mapEasingToNativeEasing(
                         animationTransition.ease,
