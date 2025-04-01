@@ -68,22 +68,13 @@ export interface AnimationPlaybackControls {
     cancel: () => void
 
     /**
-     * Allows the animation to be awaited.
-     */
-    then: (onResolve: VoidFunction, onReject?: VoidFunction) => Promise<void>
-
-    /**
      * Attaches a timeline to the animation, for instance the `ScrollTimeline`.
      *
      * This is currently for internal use only.
      */
     attachTimeline?: (
         timeline: ProgressTimeline,
-        fallback?: (
-            animation:
-                | AnimationPlaybackControls
-                | AnimationPlaybackControlsWithFinished
-        ) => VoidFunction
+        fallback?: (animation: AnimationPlaybackControls) => VoidFunction
     ) => VoidFunction
 
     /**
@@ -93,12 +84,13 @@ export interface AnimationPlaybackControls {
      * ensure an animation is being scrubbed by progress rather than eased time.
      */
     flatten: () => void
+
+    finished: Promise<any>
 }
 
-export type AnimationPlaybackControlsWithFinished = Omit<
-    AnimationPlaybackControls,
-    "then"
-> & { finished: Promise<any> }
+export type AnimationPlaybackControlsWithThen = AnimationPlaybackControls & {
+    then: (onResolve: VoidFunction, onReject?: VoidFunction) => Promise<void>
+}
 
 export interface AnimationState<V> {
     value: V
@@ -111,6 +103,15 @@ export interface KeyframeGenerator<V> {
     toString: () => string
 }
 
+export interface DOMValueAnimationOptions<V extends string | number = number> {
+    element: HTMLElement | SVGElement
+    keyframes: ValueKeyframesDefinition
+    name: string
+    pseudoElement?: string
+    allowFlatten?: boolean
+    transition: ValueAnimationTransition<V>
+}
+
 export interface ValueAnimationOptions<V extends string | number = number>
     extends ValueAnimationTransition {
     keyframes: V[]
@@ -120,9 +121,13 @@ export interface ValueAnimationOptions<V extends string | number = number>
     allowFlatten?: boolean
 }
 
-export type GeneratorFactory = (
+export type GeneratorFactoryFunction = (
     options: ValueAnimationOptions<any>
 ) => KeyframeGenerator<any>
+
+export interface GeneratorFactory extends GeneratorFactoryFunction {
+    applyToOptions: (options: Transition) => Transition
+}
 
 export type AnimationGeneratorType =
     | GeneratorFactory

@@ -1,5 +1,5 @@
 import {
-    AnimationPlaybackControls,
+    AnimationPlaybackControlsWithThen,
     frame,
     getValueTransition,
 } from "motion-dom"
@@ -34,7 +34,7 @@ export function animateTarget(
     visualElement: VisualElement,
     targetAndTransition: TargetAndTransition,
     { delay = 0, transitionOverride, type }: VisualElementAnimationOptions = {}
-): AnimationPlaybackControls[] {
+): AnimationPlaybackControlsWithThen[] {
     let {
         transition = visualElement.getDefaultTransition(),
         transitionEnd,
@@ -43,7 +43,7 @@ export function animateTarget(
 
     if (transitionOverride) transition = transitionOverride
 
-    const animations: AnimationPlaybackControls[] = []
+    const animations: AnimationPlaybackControlsWithThen[] = []
 
     const animationTypeState =
         type &&

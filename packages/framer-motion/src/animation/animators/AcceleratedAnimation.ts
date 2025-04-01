@@ -3,6 +3,7 @@ import {
     isGenerator,
     isWaapiSupportedEasing,
     MotionValue,
+    startWaapiAnimation,
     supportsLinearEasing,
     ValueAnimationOptions,
 } from "motion-dom"
@@ -24,7 +25,6 @@ import {
 } from "./BaseAnimation"
 import { MainThreadAnimation } from "./MainThreadAnimation"
 import { acceleratedValues } from "./utils/accelerated-values"
-import { startWaapiAnimation } from "./waapi"
 import { getFinalKeyframe } from "./waapi/utils/get-final-keyframe"
 import { supportsWaapi } from "./waapi/utils/supports-waapi"
 
@@ -283,6 +283,10 @@ export class AcceleratedAnimation<
 
         const { animation } = resolved
         return animation.playbackRate
+    }
+
+    get finished() {
+        return this.resolved!.animation.finished as unknown as Promise<void>
     }
 
     set speed(newSpeed: number) {

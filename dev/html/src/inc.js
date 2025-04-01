@@ -1,4 +1,4 @@
-import * as Motion from "motion"
+import * as Motion from "framer-motion/dom"
 import * as MotionDOM from "motion-dom"
 
 window.MotionDOM = MotionDOM

@@ -1,5 +1,5 @@
 import {
-    AnimationPlaybackControls,
+    AnimationPlaybackControlsWithThen,
     motionValue as createMotionValue,
     MotionValue,
     ValueAnimationTransition,
@@ -12,7 +12,7 @@ export function animateSingleValue<V extends string | number>(
     value: MotionValue<V> | V,
     keyframes: V | GenericKeyframesTarget<V>,
     options?: ValueAnimationTransition
-): AnimationPlaybackControls {
+): AnimationPlaybackControlsWithThen {
     const motionValue = isMotionValue(value) ? value : createMotionValue(value)
 
     motionValue.start(animateMotionValue("", motionValue, keyframes, options))

@@ -1,8 +1,8 @@
 import resolve from "@rollup/plugin-node-resolve"
 import replace from "@rollup/plugin-replace"
+import terser from "@rollup/plugin-terser"
 import dts from "rollup-plugin-dts"
 import preserveDirectives from "rollup-plugin-preserve-directives"
-import { terser } from "rollup-plugin-terser"
 import pkg from "./package.json" with { type: "json" }
 import tsconfig from "./tsconfig.json" with { type: "json" }
 

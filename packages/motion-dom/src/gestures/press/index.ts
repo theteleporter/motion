@@ -107,7 +107,7 @@ export function press(
 
             if (
                 !isElementKeyboardAccessible(target) &&
-                target.tabIndex === null
+                !target.hasAttribute("tabindex")
             ) {
                 target.tabIndex = 0
             }

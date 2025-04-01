@@ -1,5 +1,5 @@
 import type {
-    AnimationPlaybackControls,
+    AnimationPlaybackControlsWithThen,
     AnimationScope,
     DOMKeyframesDefinition,
     AnimationOptions as DynamicAnimationOptions,
@@ -7,7 +7,7 @@ import type {
     MotionValue,
     ValueAnimationTransition,
 } from "motion-dom"
-import { GroupPlaybackControls } from "motion-dom"
+import { GroupAnimationWithThen } from "motion-dom"
 import { GenericKeyframesTarget } from "../../types"
 import {
     AnimationSequence,
@@ -32,7 +32,7 @@ export function createScopedAnimate(scope?: AnimationScope) {
     function scopedAnimate(
         sequence: AnimationSequence,
         options?: SequenceOptions
-    ): AnimationPlaybackControls
+    ): AnimationPlaybackControlsWithThen
     /**
      * Animate a string
      */
@@ -40,7 +40,7 @@ export function createScopedAnimate(scope?: AnimationScope) {
         value: string | MotionValue<string>,
         keyframes: string | GenericKeyframesTarget<string>,
         options?: ValueAnimationTransition<string>
-    ): AnimationPlaybackControls
+    ): AnimationPlaybackControlsWithThen
     /**
      * Animate a number
      */
@@ -48,7 +48,7 @@ export function createScopedAnimate(scope?: AnimationScope) {
         value: number | MotionValue<number>,
         keyframes: number | GenericKeyframesTarget<number>,
         options?: ValueAnimationTransition<number>
-    ): AnimationPlaybackControls
+    ): AnimationPlaybackControlsWithThen
     /**
      * Animate a generic motion value
      */
@@ -56,7 +56,7 @@ export function createScopedAnimate(scope?: AnimationScope) {
         value: V | MotionValue<V>,
         keyframes: V | GenericKeyframesTarget<V>,
         options?: ValueAnimationTransition<V>
-    ): AnimationPlaybackControls
+    ): AnimationPlaybackControlsWithThen
     /**
      * Animate an Element
      */
@@ -64,7 +64,7 @@ export function createScopedAnimate(scope?: AnimationScope) {
         element: ElementOrSelector,
         keyframes: DOMKeyframesDefinition,
         options?: DynamicAnimationOptions
-    ): AnimationPlaybackControls
+    ): AnimationPlaybackControlsWithThen
     /**
      * Animate an object
      */
@@ -72,7 +72,7 @@ export function createScopedAnimate(scope?: AnimationScope) {
         object: O | O[],
         keyframes: ObjectTarget<O>,
         options?: DynamicAnimationOptions
-    ): AnimationPlaybackControls
+    ): AnimationPlaybackControlsWithThen
     /**
      * Implementation
      */
@@ -98,8 +98,8 @@ export function createScopedAnimate(scope?: AnimationScope) {
             | ValueAnimationTransition<number>
             | ValueAnimationTransition<string>
             | DynamicAnimationOptions
-    ): AnimationPlaybackControls {
-        let animations: AnimationPlaybackControls[] = []
+    ): AnimationPlaybackControlsWithThen {
+        let animations: AnimationPlaybackControlsWithThen[] = []
 
         if (isSequence(subjectOrSequence)) {
             animations = animateSequence(
@@ -116,7 +116,7 @@ export function createScopedAnimate(scope?: AnimationScope) {
             )
         }
 
-        const animation = new GroupPlaybackControls(animations)
+        const animation = new GroupAnimationWithThen(animations)
 
         if (scope) {
             scope.animations.push(animation)

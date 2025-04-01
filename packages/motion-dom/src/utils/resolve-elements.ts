@@ -28,11 +28,6 @@ export function resolveElements(
         let root: WithQuerySelectorAll = document
 
         if (scope) {
-            // TODO: Refactor to utils package
-            // invariant(
-            //     Boolean(scope.current),
-            //     "Scope provided, but no element detected."
-            // )
             root = scope.current
         }
 

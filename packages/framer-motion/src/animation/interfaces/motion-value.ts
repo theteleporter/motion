@@ -1,9 +1,9 @@
 import type { MotionValue, StartAnimation } from "motion-dom"
 import {
-    AnimationPlaybackControls,
+    AnimationPlaybackControlsWithThen,
     frame,
     getValueTransition,
-    GroupPlaybackControls,
+    GroupAnimationWithThen,
     ValueAnimationOptions,
 } from "motion-dom"
 import { MotionGlobalConfig, secondsToMilliseconds } from "motion-utils"
@@ -26,7 +26,7 @@ export const animateMotionValue =
         element?: VisualElement<any>,
         isHandoff?: boolean
     ): StartAnimation =>
-    (onComplete): AnimationPlaybackControls => {
+    (onComplete): AnimationPlaybackControlsWithThen => {
         const valueTransition = getValueTransition(transition, name) || {}
 
         /**
@@ -136,7 +136,7 @@ export const animateMotionValue =
 
                 // We still want to return some animation controls here rather
                 // than returning undefined
-                return new GroupPlaybackControls([])
+                return new GroupAnimationWithThen([])
             }
         }
 

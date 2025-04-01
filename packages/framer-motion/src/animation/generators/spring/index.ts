@@ -1,8 +1,11 @@
 import {
     calcGeneratorDuration,
+    createGeneratorEasing,
     generateLinearEasing,
     maxGeneratorDuration,
     SpringOptions,
+    supportsLinearEasing,
+    Transition,
     ValueAnimationOptions,
 } from "motion-dom"
 import { millisecondsToSeconds, secondsToMilliseconds } from "motion-utils"
@@ -63,7 +66,7 @@ function getSpringOptions(options: SpringOptions) {
     return springOptions
 }
 
-export function spring(
+function spring(
     optionsOrVisualDuration:
         | ValueAnimationOptions<number>
         | number = springDefaults.visualDuration,
@@ -224,7 +227,19 @@ export function spring(
 
             return calculatedDuration + "ms " + easing
         },
+        toTransition: () => {},
     }
 
     return generator
 }
+
+spring.applyToOptions = (options: Transition) => {
+    const generatorOptions = createGeneratorEasing(options as any, 100, spring)
+
+    options.ease = supportsLinearEasing() ? generatorOptions.ease : "easeOut"
+    options.duration = secondsToMilliseconds(generatorOptions.duration)
+    options.type = "keyframes"
+    return options
+}
+
+export { spring }

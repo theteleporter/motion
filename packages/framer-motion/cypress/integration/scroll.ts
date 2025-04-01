@@ -168,6 +168,15 @@ describe("scroll() animation", () => {
             .get("div")
             .contains("animate - spring")
             .as("animateSpring")
+            .get("div")
+            .contains("animate main thread - default")
+            .as("animateMainThreadDefault")
+            .get("div")
+            .contains("animate main thread - easeOut")
+            .as("animateMainThreadEaseOut")
+            .get("div")
+            .contains("animate main thread - spring")
+            .as("animateMainThreadSpring")
             // Now compare transforms
             .then(function () {
                 const miniDefaultBounds =
@@ -180,6 +189,12 @@ describe("scroll() animation", () => {
                     this.animateEaseOut[0].getBoundingClientRect()
                 const miniSpringBounds =
                     this.miniSpring[0].getBoundingClientRect()
+                const animateMainThreadDefaultBounds =
+                    this.animateMainThreadDefault[0].getBoundingClientRect()
+                const animateMainThreadEaseOutBounds =
+                    this.animateMainThreadEaseOut[0].getBoundingClientRect()
+                const animateMainThreadSpringBounds =
+                    this.animateMainThreadSpring[0].getBoundingClientRect()
 
                 // Both default boxes should have the same position
                 expect(miniDefaultBounds.left).to.equal(
@@ -191,6 +206,13 @@ describe("scroll() animation", () => {
                     animateEaseOutBounds.left
                 )
 
+                expect(animateMainThreadDefaultBounds.left).to.equal(
+                    animateDefaultBounds.left
+                )
+                expect(
+                    Math.round(animateMainThreadEaseOutBounds.left)
+                ).to.equal(Math.round(animateEaseOutBounds.left))
+
                 // Skipping as env doesn't support linear() easing
                 // expect(miniSpringBounds.left).to.equal(animateSpringBounds.left)
 
@@ -200,6 +222,12 @@ describe("scroll() animation", () => {
                 )
                 expect(miniDefaultBounds.left).not.to.equal(
                     miniSpringBounds.left
+                )
+                expect(animateMainThreadDefaultBounds.left).not.to.equal(
+                    animateMainThreadEaseOutBounds.left
+                )
+                expect(animateMainThreadDefaultBounds.left).not.to.equal(
+                    animateMainThreadSpringBounds.left
                 )
                 // Skipping as env doesn't support linear() easing
                 // expect(miniEaseOutBounds.left).not.to.equal(

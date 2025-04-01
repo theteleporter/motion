@@ -1,5 +1,5 @@
 import { noop } from "motion-utils"
-import type { BaseGroupPlaybackControls } from "../animation/controls/BaseGroup"
+import type { GroupAnimation } from "../animation/GroupAnimation"
 import { AnimationOptions, DOMKeyframesDefinition } from "../animation/types"
 import { addToQueue } from "./queue"
 import { Target, ViewTransitionOptions, ViewTransitionTarget } from "./types"
@@ -14,9 +14,9 @@ export class ViewTransitionBuilder {
 
     options: ViewTransitionOptions
 
-    notifyReady: (value: BaseGroupPlaybackControls) => void = noop
+    notifyReady: (value: GroupAnimation) => void = noop
 
-    private readyPromise = new Promise<BaseGroupPlaybackControls>((resolve) => {
+    private readyPromise = new Promise<GroupAnimation>((resolve) => {
         this.notifyReady = resolve
     })
 
