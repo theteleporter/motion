@@ -4,7 +4,7 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
-## [12.6.3] 2025-03-26
+## [12.6.3] 2025-04-01
 
 ### Changed
 
