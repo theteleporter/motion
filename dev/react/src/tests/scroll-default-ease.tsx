@@ -32,6 +32,11 @@ export const App = () => {
     const [scopeAnimateDefault, animateDefault] = useAnimate()
     const [scopeAnimateEaseOut, animateEaseOut] = useAnimate()
     const [scopeAnimateSpring, animateSpring] = useAnimate()
+    const [scopeAnimateMainThreadDefault, animateMainThreadDefault] =
+        useAnimate()
+    const [scopeAnimateMainThreadEaseOut, animateMainThreadEaseOut] =
+        useAnimate()
+    const [scopeAnimateMainThreadSpring, animateMainThreadSpring] = useAnimate()
 
     useEffect(() => {
         return pipe(
@@ -44,7 +49,30 @@ export const App = () => {
             scrollAnimate(scopeAnimateEaseOut, animateEaseOut, {
                 ease: "easeOut",
             }),
-            scrollAnimate(scopeAnimateSpring, animateSpring, { type: spring })
+            scrollAnimate(scopeAnimateSpring, animateSpring, { type: spring }),
+            scrollAnimate(
+                scopeAnimateMainThreadDefault,
+                animateMainThreadDefault,
+                {
+                    repeatDelay: 0.0001,
+                }
+            ),
+            scrollAnimate(
+                scopeAnimateMainThreadEaseOut,
+                animateMainThreadEaseOut,
+                {
+                    ease: "easeOut",
+                    repeatDelay: 0.0001,
+                }
+            ),
+            scrollAnimate(
+                scopeAnimateMainThreadSpring,
+                animateMainThreadSpring,
+                {
+                    type: spring,
+                    repeatDelay: 0.0001,
+                }
+            )
         ) as () => void
     }, [])
 
@@ -68,6 +96,15 @@ export const App = () => {
                 </div>
                 <div ref={scopeAnimateSpring} style={progressStyle}>
                     animate - spring
+                </div>
+                <div ref={scopeAnimateMainThreadDefault} style={progressStyle}>
+                    animate main thread - default
+                </div>
+                <div ref={scopeAnimateMainThreadEaseOut} style={progressStyle}>
+                    animate main thread - easeOut
+                </div>
+                <div ref={scopeAnimateMainThreadSpring} style={progressStyle}>
+                    animate main thread - spring
                 </div>
             </div>
         </div>
