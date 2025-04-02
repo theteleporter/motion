@@ -6,12 +6,18 @@ export const App = () => {
     const [scope, animate] = useAnimate()
 
     useEffect(() => {
-        scroll(animate("#without-delay", { x: "500px" }, { duration: 1 }))
+        scroll(
+            animate(
+                "#without-delay",
+                { x: "500px" },
+                { duration: 1, repeat: 2 }
+            )
+        )
         scroll(
             animate(
                 "#with-delay",
                 { transform: "translateX(500px)" },
-                { delay: 0.5, duration: 1 }
+                { delay: 0.5, duration: 1, repeat: Infinity }
             )
         )
     }, [])
