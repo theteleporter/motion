@@ -6,8 +6,6 @@ import {
 import { frame } from "../frameloop"
 import { time } from "../frameloop/sync-time"
 
-export type Transformer<T> = (v: T) => T
-
 /**
  * @public
  */

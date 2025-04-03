@@ -7,8 +7,8 @@ import {
     useMotionValue,
     useMotionValueEvent,
 } from "../../"
-import { render } from "../../../jest.setup"
 import { nextFrame } from "../../gestures/__tests__/utils"
+import { render } from "../../jest.setup"
 
 describe("animate prop as object", () => {
     test("animates to set prop", async () => {

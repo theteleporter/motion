@@ -1,9 +1,9 @@
-import { render } from "../../../jest.setup"
 import { motion } from "../.."
+import { render } from "../../jest.setup"
 
 describe("box-shadow support", () => {
     test("box-shadow should animate correctly, even with no initial set", async () => {
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             const Component = () => (
                 <motion.div
                     animate={{ boxShadow: "5px 5px 50px #000" }}
@@ -30,7 +30,7 @@ describe("box-shadow support", () => {
     })
 
     test("box-shadow should animate correctly, even when read from browser in weird format", async () => {
-        const promise = new Promise(resolve => {
+        const promise = new Promise((resolve) => {
             const Component = () => (
                 <motion.div
                     animate={{ boxShadow: "5px 5px 0px #fff" }}
