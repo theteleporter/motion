@@ -1,8 +1,5 @@
 export const MotionGlobalConfig: {
-    skipAnimations: boolean
-    useManualTiming: boolean
-    WillChange?: any
-} = {
-    skipAnimations: false,
-    useManualTiming: false,
-}
+    skipAnimations?: boolean
+    useManualTiming?: boolean
+    mix?: <T>(a: T, b: T) => (p: number) => T
+} = {}
