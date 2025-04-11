@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useCallback, useId, useMemo } from "react"
+import { useId, useMemo } from "react"
 import {
     PresenceContext,
     type PresenceContextProps,
@@ -34,40 +34,38 @@ export const PresenceChild = ({
     const presenceChildren = useConstant(newChildrenMap)
     const id = useId()
 
-    const memoizedOnExitComplete = useCallback(
-        (childId: string) => {
-            presenceChildren.set(childId, true)
-
-            for (const isComplete of presenceChildren.values()) {
-                if (!isComplete) return // can stop searching when any is incomplete
-            }
-
-            onExitComplete && onExitComplete()
-        },
-        [presenceChildren, onExitComplete]
-    )
-
-    const context = useMemo(
-        (): PresenceContextProps => ({
+    let isReusedContext = true
+    let context = useMemo((): PresenceContextProps => {
+        isReusedContext = false
+        return {
             id,
             initial,
             isPresent,
             custom,
-            onExitComplete: memoizedOnExitComplete,
+            onExitComplete: (childId: string) => {
+                presenceChildren.set(childId, true)
+
+                for (const isComplete of presenceChildren.values()) {
+                    if (!isComplete) return // can stop searching when any is incomplete
+                }
+
+                onExitComplete && onExitComplete()
+            },
             register: (childId: string) => {
                 presenceChildren.set(childId, false)
                 return () => presenceChildren.delete(childId)
             },
-        }),
-        /**
-         * If the presence of a child affects the layout of the components around it,
-         * we want to make a new context value to ensure they get re-rendered
-         * so they can detect that layout change.
-         */
-        presenceAffectsLayout
-            ? [Math.random(), memoizedOnExitComplete]
-            : [isPresent, memoizedOnExitComplete]
-    )
+        }
+    }, [isPresent, presenceChildren, onExitComplete])
+
+    /**
+     * If the presence of a child affects the layout of the components around it,
+     * we want to make a new context value to ensure they get re-rendered
+     * so they can detect that layout change.
+     */
+    if (presenceAffectsLayout && isReusedContext) {
+        context = { ...context }
+    }
 
     useMemo(() => {
         presenceChildren.forEach((_, key) => presenceChildren.set(key, false))
