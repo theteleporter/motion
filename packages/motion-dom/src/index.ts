@@ -48,3 +48,8 @@ export * from "./value"
 
 export * from "./view"
 export * from "./view/types"
+
+/**
+ * Deprecated
+ */
+export { cancelSync, sync } from "./frameloop/index-legacy"
