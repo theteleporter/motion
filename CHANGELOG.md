@@ -4,15 +4,17 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.6.5] 2025-04-11
+
+### Fixed
+
+-   Polyfilled `sync` and `cancelSync` exports.
+
 ## [12.6.4] 2025-04-11
 
 ### Added
 
 -   Global injection of `WillChangeMotionValue` for internal Framer use.
-
-### Fixed
-
--   Polyfilled `sync` and `cancelSync` exports.
 
 ## [12.6.3] 2025-04-01
 

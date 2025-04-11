@@ -1,5 +1,6 @@
 export {
     cancelFrame,
+    cancelSync,
     frame,
     frameData,
     hover,
@@ -7,6 +8,7 @@ export {
     MotionValue,
     motionValue,
     press,
+    sync,
     time,
 } from "motion-dom"
 export { invariant, noop, progress } from "motion-utils"
