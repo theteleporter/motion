@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.7.0] 2025-04-14
+
+### Added
+
+-   `layoutCrossfade` allows disabling crossfade of shared layout elements.
+
 ## [12.6.5] 2025-04-11
 
 ### Fixed
