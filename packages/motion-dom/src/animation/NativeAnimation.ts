@@ -119,11 +119,8 @@ export class NativeAnimation implements AnimationPlaybackControls {
                     name,
                     getFinalKeyframe(keyframes, transition)
                 )
-            } else {
-                this.commitStyles()
+                this.cancel()
             }
-
-            this.cancel()
         }
 
         /**
