@@ -14,7 +14,7 @@ Undocumented APIs should be considered internal and may change without warning.
 
 ### Added
 
--   `layoutCrossfade` allows disabling crossfade of shared layout elements.
+-   Private `layoutCrossfade` allows disabling crossfade of shared layout elements.
 
 ## [12.6.5] 2025-04-11
 

@@ -97,7 +97,7 @@ export interface LayoutProps {
      * By default, shared layout elements will crossfade. By setting this
      * to `false`, this element will take its default opacity throughout the animation.
      *
-     * @public
+     * @internal
      */
     layoutCrossfade?: boolean
 }
