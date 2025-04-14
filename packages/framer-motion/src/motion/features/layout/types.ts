@@ -92,4 +92,12 @@ export interface LayoutProps {
      * perform scale correction on it.
      */
     "data-framer-portal-id"?: string
+
+    /**
+     * By default, shared layout elements will crossfade. By setting this
+     * to `false`, this element will take its default opacity throughout the animation.
+     *
+     * @public
+     */
+    layoutCrossfade?: boolean
 }
