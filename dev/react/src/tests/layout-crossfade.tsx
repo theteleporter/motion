@@ -14,6 +14,7 @@ export const App = () => {
                 <AnimatePresence>
                     {state && (
                         <motion.div
+                            id="box"
                             layoutId="box"
                             layoutCrossfade={false}
                             style={{

@@ -358,5 +358,12 @@ describe("Layout animation", () => {
             .should(([$box]: any) => {
                 expect($box.style.opacity).to.equal("1")
             })
+            .get("button")
+            .trigger("click")
+            .wait(200)
+            .get("#box")
+            .should(([$box]: any) => {
+                expect($box.style.opacity).to.equal("1")
+            })
     })
 })
