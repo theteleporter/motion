@@ -1,6 +1,8 @@
 import { NativeAnimation } from "./NativeAnimation"
 
-export class NativeAnimationWrapper extends NativeAnimation {
+export class NativeAnimationWrapper<
+    T extends string | number
+> extends NativeAnimation<T> {
     constructor(animation: Animation) {
         super()
 

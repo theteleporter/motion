@@ -1,6 +1,9 @@
 import { NativeAnimation } from "../NativeAnimation"
 
-const animationMaps = new WeakMap<Element, Map<string, NativeAnimation>>()
+const animationMaps = new WeakMap<
+    Element,
+    Map<string, NativeAnimation<string | number>>
+>()
 export const animationMapKey = (name: string, pseudoElement: string = "") =>
     `${name}:${pseudoElement}`
 

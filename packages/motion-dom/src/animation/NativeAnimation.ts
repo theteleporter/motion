@@ -25,7 +25,7 @@ export interface NativeAnimationOptions<V extends string | number = number>
 /**
  * NativeAnimation implements AnimationPlaybackControls for the browser's Web Animations API.
  */
-export class NativeAnimation
+export class NativeAnimation<T extends string | number>
     extends WithPromise
     implements AnimationPlaybackControlsWithThen
 {
@@ -85,22 +85,21 @@ export class NativeAnimation
             this.finishedTime = this.time
 
             if (!pseudoElement) {
-                this.updateMotionValue()
-
-                /**
-                 * If we can, we want to commit the final style as set by the user,
-                 * rather than the computed keyframe value supplied by the animation.
-                 */
-                setStyle(
-                    element,
-                    name,
-                    getFinalKeyframe(
-                        keyframes as any,
-                        this.options as any,
-                        finalKeyframe,
-                        this.speed
-                    )
+                const keyframe = getFinalKeyframe(
+                    keyframes as any,
+                    this.options as any,
+                    finalKeyframe,
+                    this.speed
                 )
+                if (this.updateMotionValue) {
+                    this.updateMotionValue(keyframe)
+                } else {
+                    /**
+                     * If we can, we want to commit the final style as set by the user,
+                     * rather than the computed keyframe value supplied by the animation.
+                     */
+                    setStyle(element, name, keyframe)
+                }
 
                 this.animation.cancel()
             }
@@ -109,7 +108,7 @@ export class NativeAnimation
         }
     }
 
-    updateMotionValue() {}
+    updateMotionValue?(value?: T): void
 
     play() {
         if (this.isStopped) return
@@ -140,8 +139,11 @@ export class NativeAnimation
             return
         }
 
-        this.updateMotionValue()
-        this.commitStyles()
+        if (this.updateMotionValue) {
+            this.updateMotionValue()
+        } else {
+            this.commitStyles()
+        }
 
         if (!this.isPseudoElement) this.cancel()
     }
