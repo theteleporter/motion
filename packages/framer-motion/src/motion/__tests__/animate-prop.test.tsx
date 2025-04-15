@@ -984,7 +984,7 @@ describe("animate prop as object", () => {
             rerender(<Component />)
         })
 
-        return expect(promise).resolves.toBe("rgba(0, 0, 0, 1)")
+        return expect(promise).resolves.toBe("#000")
     })
 
     test("forces an animation to fallback if has been set to `null`", async () => {
@@ -1101,7 +1101,7 @@ describe("animate prop as object", () => {
         })
 
         return expect(element).toHaveStyle(
-            "background-color: rgba(255, 51, 102, 1)"
+            "background-color: hsl(345, 100%, 60%)"
         )
     })
 
@@ -1126,7 +1126,7 @@ describe("animate prop as object", () => {
         })
 
         return expect(element).toHaveStyle(
-            "background-color: rgba(255, 51, 102, 1)"
+            "background-color: hsl(345, 100%, 60%)"
         )
     })
 
