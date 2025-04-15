@@ -84,17 +84,11 @@ export class NativeAnimation
         this.animation.onfinish = () => {
             this.finishedTime = this.time
 
-            // TODO: Fix drag tabs example by ensuring motion value gets set here
-            // this.commitStyles()
+            this.commitStyles()
 
-            if (
-                (pseudoElement || this.speed < 0) &&
-                "commitStyles" in this.animation
-            ) {
-                this.commitStyles()
-            } else {
+            if (!pseudoElement) {
                 /**
-                 * Whereas if we can, we want to commit the final style as set by the user,
+                 * If we can, we want to commit the final style as set by the user,
                  * rather than the computed keyframe value supplied by the animation.
                  */
                 setStyle(
@@ -159,7 +153,7 @@ export class NativeAnimation
      * Motion to also correctly calculate velocity for any subsequent animation
      * while deferring the commit until the next animation frame.
      */
-    private commitStyles() {
+    protected commitStyles() {
         if (!this.isPseudoElement) {
             this.animation.commitStyles?.()
         }

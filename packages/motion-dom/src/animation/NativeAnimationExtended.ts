@@ -58,7 +58,7 @@ export class NativeAnimationExtended<
      * its current value, "previous" value, and therefore allow
      * Motion to calculate velocity for any subsequent animation.
      */
-    commitStyles() {
+    protected commitStyles() {
         const { motionValue, onUpdate, onComplete, element, ...options } =
             this.options
 
