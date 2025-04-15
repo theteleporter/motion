@@ -84,9 +84,9 @@ export class NativeAnimation
         this.animation.onfinish = () => {
             this.finishedTime = this.time
 
-            this.commitStyles()
-
             if (!pseudoElement) {
+                this.updateMotionValue()
+
                 /**
                  * If we can, we want to commit the final style as set by the user,
                  * rather than the computed keyframe value supplied by the animation.
@@ -97,15 +97,19 @@ export class NativeAnimation
                     getFinalKeyframe(
                         keyframes as any,
                         this.options as any,
-                        finalKeyframe
+                        finalKeyframe,
+                        this.speed
                     )
                 )
+
+                this.animation.cancel()
             }
 
-            this.animation.cancel()
             this.notifyFinished()
         }
     }
+
+    updateMotionValue() {}
 
     play() {
         if (this.isStopped) return
@@ -136,6 +140,7 @@ export class NativeAnimation
             return
         }
 
+        this.updateMotionValue()
         this.commitStyles()
 
         if (!this.isPseudoElement) this.cancel()

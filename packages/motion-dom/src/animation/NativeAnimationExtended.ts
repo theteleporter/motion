@@ -58,29 +58,25 @@ export class NativeAnimationExtended<
      * its current value, "previous" value, and therefore allow
      * Motion to calculate velocity for any subsequent animation.
      */
-    protected commitStyles() {
+    updateMotionValue() {
         const { motionValue, onUpdate, onComplete, element, ...options } =
             this.options
 
-        if (motionValue) {
-            const sampleAnimation = new JSAnimation({
-                ...options,
-                autoplay: false,
-            })
+        if (!motionValue) return
 
-            const sampleTime = secondsToMilliseconds(
-                this.finishedTime ?? this.time
-            )
+        const sampleAnimation = new JSAnimation({
+            ...options,
+            autoplay: false,
+        })
 
-            motionValue.setWithVelocity(
-                sampleAnimation.sample(sampleTime - sampleDelta).value,
-                sampleAnimation.sample(sampleTime).value,
-                sampleDelta
-            )
+        const sampleTime = secondsToMilliseconds(this.finishedTime ?? this.time)
 
-            sampleAnimation.stop()
-        } else {
-            super.commitStyles()
-        }
+        motionValue.setWithVelocity(
+            sampleAnimation.sample(sampleTime - sampleDelta).value,
+            sampleAnimation.sample(sampleTime).value,
+            sampleDelta
+        )
+
+        sampleAnimation.stop()
     }
 }
