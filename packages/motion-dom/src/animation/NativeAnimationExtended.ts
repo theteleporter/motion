@@ -17,7 +17,7 @@ const sampleDelta = 10 //ms
 
 export class NativeAnimationExtended<
     T extends string | number
-> extends NativeAnimation {
+> extends NativeAnimation<T> {
     options: NativeAnimationOptionsExtended<T>
 
     constructor(options: NativeAnimationOptionsExtended<T>) {
@@ -58,11 +58,16 @@ export class NativeAnimationExtended<
      * its current value, "previous" value, and therefore allow
      * Motion to calculate velocity for any subsequent animation.
      */
-    updateMotionValue() {
+    updateMotionValue(value?: T) {
         const { motionValue, onUpdate, onComplete, element, ...options } =
             this.options
 
         if (!motionValue) return
+
+        if (value !== undefined) {
+            motionValue.set(value)
+            return
+        }
 
         const sampleAnimation = new JSAnimation({
             ...options,
