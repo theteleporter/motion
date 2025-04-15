@@ -47,20 +47,42 @@ export function buildSVGAttrs(
      * and copy it into style.
      */
     if (attrs.transform) {
-        if (dimensions) style.transform = attrs.transform
+        style.transform = attrs.transform
+
         delete attrs.transform
     }
 
     // Parse transformOrigin
-    if (
-        dimensions &&
-        (originX !== undefined || originY !== undefined || style.transform)
-    ) {
-        style.transformOrigin = calcSVGTransformOrigin(
-            dimensions,
-            originX !== undefined ? originX : 0.5,
-            originY !== undefined ? originY : 0.5
-        )
+    if (originX !== undefined || originY !== undefined || style.transform) {
+        if (style.transform === "none") {
+            delete style.transform
+            delete style.transformBox
+            delete style.transformOrigin
+        } else {
+            /**
+             * Dimension is measured on the client side.
+             * Therefore, the origin cannot be measured on the first mount, resulting in a jump.
+             */
+            if (dimensions) {
+                style.transformBox = "view-box"
+                style.transformOrigin = calcSVGTransformOrigin(
+                    dimensions,
+                    originX !== undefined ? originX : 0.5,
+                    originY !== undefined ? originY : 0.5
+                )
+            } else {
+                /**
+                 * Before the dimension is measured, set "transformBox" to "Fill Box" and center the origin
+                 * to leave the initial origin to the browser.
+                 */
+                style.transformBox = "fill-box"
+                style.transformOrigin = "50% 50%"
+            }
+        }
+
+        // We apply transforms as CSS transforms.
+        delete attrs.transformBox
+        delete attrs.transformOrigin
     }
 
     // Render attrX/attrY/attrScale as attributes
