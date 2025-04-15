@@ -48,10 +48,13 @@ test.describe("animate() methods", () => {
     test("play interrupt custom ease", async ({ page }) => {
         await waitForAnimation(
             "animate/animate-interrupt-custom-ease.html",
-            page
+            page,
+            600
         )
         await eachBox(page, async (box) => {
             expect(box).toHaveText("25")
+            const boundingBox = await box.boundingBox()
+            expect(boundingBox?.x).toBeCloseTo(0)
         })
     })
 
@@ -145,7 +148,8 @@ test.describe("animate() methods", () => {
         await eachBox(page, async (box) => {
             const boundingBox = await box.boundingBox()
             expect(boundingBox?.x).toBeCloseTo(0)
-            expect(box).toHaveText("paused")
+            const text = await box.innerText()
+            expect(text).toBe("paused")
         })
     })
 
@@ -157,7 +161,8 @@ test.describe("animate() methods", () => {
             page
         )
         await eachBox(page, async (box) => {
-            expect(box).toHaveText("0.1")
+            const text = await box.innerText()
+            expect(text).toBe("0.1")
             const boundingBox = await box.boundingBox()
             expect(boundingBox?.x).toBeCloseTo(50, 1)
         })

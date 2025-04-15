@@ -314,11 +314,12 @@ export class JSAnimation<T extends number | string>
             this.holdTime === null &&
             (this.state === "finished" || (this.state === "running" && done))
 
-        if (isAnimationFinished && finalKeyframe !== undefined) {
+        if (isAnimationFinished) {
             state.value = getFinalKeyframe(
                 keyframes,
                 this.options,
-                finalKeyframe
+                finalKeyframe,
+                this.speed
             )
         }
 
