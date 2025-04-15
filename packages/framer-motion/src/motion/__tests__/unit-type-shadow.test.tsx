@@ -25,7 +25,7 @@ describe("box-shadow support", () => {
         })
 
         return expect(promise).resolves.toHaveStyle(
-            "box-shadow: 5px 5px 50px rgba(0, 0, 0, 1)"
+            "box-shadow: 5px 5px 50px #000"
         )
     })
 
@@ -51,7 +51,7 @@ describe("box-shadow support", () => {
         })
 
         return expect(promise).resolves.toHaveStyle(
-            "box-shadow: 5px 5px 0px rgba(255, 255, 255, 1)"
+            "box-shadow: 5px 5px 0px #fff"
         )
     })
 })

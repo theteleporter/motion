@@ -8,6 +8,7 @@ export function renderHTML(
     styleProp?: MotionStyle,
     projection?: IProjectionNode
 ) {
+    console.log("rendering", style)
     Object.assign(
         element.style,
         style,

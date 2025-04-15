@@ -133,7 +133,7 @@ describe("css variables", () => {
         expect(results).toEqual([
             {
                 "--a": "20px",
-                "--color": "rgba(0, 0, 0, 1)",
+                "--color": "#000",
             },
         ])
     })

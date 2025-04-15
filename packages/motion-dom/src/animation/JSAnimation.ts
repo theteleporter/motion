@@ -10,6 +10,7 @@ import { activeAnimations } from "../stats/animation-count"
 import { mix } from "../utils/mix"
 import { Mixer } from "../utils/mix/types"
 import { frameloopDriver } from "./drivers/driver-frameloop"
+import { inertia } from "./generators/inertia"
 import { keyframes as keyframesGenerator } from "./generators/keyframes"
 import { calcGeneratorDuration } from "./generators/utils/calc-duration"
 import { getFinalKeyframe } from "./keyframes/get-final"
@@ -194,6 +195,7 @@ export class JSAnimation<T extends number | string>
             repeat,
             repeatType,
             repeatDelay,
+            type,
             onUpdate,
             finalKeyframe,
         } = this.options
@@ -314,7 +316,8 @@ export class JSAnimation<T extends number | string>
             this.holdTime === null &&
             (this.state === "finished" || (this.state === "running" && done))
 
-        if (isAnimationFinished) {
+        // TODO: The exception for inertia could be cleaner here
+        if (isAnimationFinished && type !== inertia) {
             state.value = getFinalKeyframe(
                 keyframes,
                 this.options,
