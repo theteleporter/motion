@@ -1,13 +1,11 @@
 <html>
     <!--
-    Interrupt: Motion NativeAnimation
+    Interrupt: Motion NativeAnimationExtended
 
     This benchmarks the performance of mass-interrupting
-    NativeAnimation animations.
+    NativeAnimationExtended animations.
 
-    WAAPI doesn't support interruption so NativeAnimation
-    commitsStyles before reading values from the DOM. This is
-    less efficient than Motion's NativeAnimationExtended which
+    WAAPI doesn't support interruption so NativeAnimationExtended
     samples a simulated animation where possible to avoid read/write
     thrashing.
   -->
@@ -43,7 +41,7 @@
         <div class="container"></div>
         <script type="module" src="/src/imports/framer-motion-dom.js"></script>
         <script type="module">
-            const { animateMini } = window.Motion
+            const { animate } = window.Motion
 
             // Create boxes
             const numBoxes = 100
@@ -55,12 +53,24 @@
             const boxes = document.querySelectorAll(".box")
 
             setTimeout(() => {
-                animateMini(boxes, { opacity: 1 }, { duration: 3 })
+                boxes.forEach((box) => {
+                    animate(
+                        box,
+                        { opacity: 1 },
+                        { duration: 3, repeatDelay: 0.0001 }
+                    )
+                })
 
                 setTimeout(() => {
-                    animateMini(boxes, { opacity: 0 }, { duration: 3 })
+                    boxes.forEach((box) => {
+                        animate(
+                            box,
+                            { opacity: 0 },
+                            { duration: 3, repeatDelay: 0.0001 }
+                        )
+                    })
                 }, 1500)
-            }, 1000)
+            }, 4000)
         </script>
     </body>
 </html>
