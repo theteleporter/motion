@@ -398,6 +398,8 @@ export class JSAnimation<T extends number | string>
         if (this.holdTime !== null) {
             this.startTime = now - this.holdTime
         } else if (this.state === "finished") {
+            console.log("JSAnimation updateFinished")
+            this.updateFinished()
             this.startTime = now
         } else if (!this.startTime) {
             this.startTime = startTime ?? now

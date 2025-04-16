@@ -1,21 +1,27 @@
 export class WithPromise {
-    finished: Promise<void>
+    protected _finished: Promise<void>
 
     resolve: VoidFunction
 
+    count = 0
+
+    constructor() {
+        this.updateFinished()
+    }
+
+    get finished() {
+        return this._finished
+    }
+
     protected updateFinished() {
-        this.finished = new Promise<void>((resolve) => {
+        this.count++
+        this._finished = new Promise<void>((resolve) => {
             this.resolve = resolve
         })
     }
 
     protected notifyFinished() {
         this.resolve()
-        this.updateFinished()
-    }
-
-    constructor() {
-        this.updateFinished()
     }
 
     /**
