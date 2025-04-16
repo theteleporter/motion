@@ -12059,7 +12059,7 @@ __metadata:
     "@typescript-eslint/parser": ^7.2.0
     "@vitejs/plugin-react-swc": ^3.5.0
     eslint-plugin-react-refresh: ^0.4.6
-    framer-motion: ^12.7.3
+    motion: ^12.7.3
     react: ^18.3.1
     react-dom: ^18.3.1
     vite: ^5.2.0
