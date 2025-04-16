@@ -183,6 +183,14 @@ export class AsyncMotionValueAnimation<T extends string | number>
         this._animation = animation
     }
 
+    get finished() {
+        if (!this._animation) {
+            return this._finished
+        } else {
+            return this.animation.finished
+        }
+    }
+
     then(onResolve: VoidFunction, _onReject?: VoidFunction) {
         return this.finished.finally(onResolve).then(() => {})
     }
@@ -242,6 +250,7 @@ export class AsyncMotionValueAnimation<T extends string | number>
     }
 
     complete() {
+        console.log("async animation complete")
         this.animation.complete()
     }
 

@@ -126,8 +126,44 @@ test.describe("animate() methods", () => {
         })
     })
 
+    test("subsequent .finished calls should fire immediately", async ({
+        page,
+    }) => {
+        await waitForAnimation("animate/animate-finished-later.html", page)
+
+        await eachBox(page, async (box) => {
+            const text = await box.innerText()
+            expect(text).toBe("finished")
+        })
+    })
+
+    test("subsequent .finished calls should not fire immediately after replay", async ({
+        page,
+    }) => {
+        await waitForAnimation(
+            "animate/animate-finished-after-replay.html",
+            page
+        )
+
+        await eachBox(page, async (box) => {
+            const text = await box.innerText()
+            expect(text).not.toBe("finished")
+        })
+    })
+
     test(".then() backwards compatibility", async ({ page }) => {
         await waitForAnimation("animate/animate-then.html", page)
+        await eachBox(page, async (box) => {
+            const text = await box.innerText()
+            expect(text).toBe("finished")
+        })
+    })
+
+    test("subsequent .then() calls should work immediately", async ({
+        page,
+    }) => {
+        await waitForAnimation("animate/animate-then-later.html", page)
+
         await eachBox(page, async (box) => {
             const text = await box.innerText()
             expect(text).toBe("finished")

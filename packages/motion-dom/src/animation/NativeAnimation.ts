@@ -114,6 +114,10 @@ export class NativeAnimation<T extends string | number>
         if (this.isStopped) return
 
         this.animation.play()
+
+        if (this.state === "finished") {
+            this.updateFinished()
+        }
     }
 
     pause() {
