@@ -4,6 +4,31 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.7.3] 2025-04-15
+
+### Fixed
+
+-   Fixing `duration` for `animateView` transitions.
+-   Prevent `.commitStyles()` on `pseudoElement` animations.
+
+## [12.7.2] 2025-04-14
+
+### Fixed
+
+-   Adding `"sideEffects": false` to `motion-dom` and `motion-utils` packages.
+
+## [12.7.1] 2025-04-14
+
+### Fixed
+
+-   Skip `.commitStyles` on `psuedoElement` animations.
+
+## [12.7.0] 2025-04-14
+
+### Added
+
+-   Private `layoutCrossfade` allows disabling crossfade of shared layout elements.
+
 ## [12.6.5] 2025-04-11
 
 ### Fixed

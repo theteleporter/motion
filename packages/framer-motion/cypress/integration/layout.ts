@@ -347,4 +347,23 @@ describe("Layout animation", () => {
                 expect($count.textContent).to.equal("1")
             })
     })
+
+    it("Disabling crossfade works as expected", () => {
+        cy.visit("?test=layout-crossfade")
+            .wait(50)
+            .get("button")
+            .trigger("click")
+            .wait(200)
+            .get("#box")
+            .should(([$box]: any) => {
+                expect($box.style.opacity).to.equal("1")
+            })
+            .get("button")
+            .trigger("click")
+            .wait(200)
+            .get("#box")
+            .should(([$box]: any) => {
+                expect($box.style.opacity).to.equal("1")
+            })
+    })
 })

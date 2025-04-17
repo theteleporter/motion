@@ -25,19 +25,18 @@ export function mixValues(
     if (shouldCrossfadeOpacity) {
         target.opacity = mixNumber(
             0,
-            // TODO Reinstate this if only child
-            lead.opacity !== undefined ? (lead.opacity as number) : 1,
+            (lead.opacity as number) ?? 1,
             easeCrossfadeIn(progress)
         )
         target.opacityExit = mixNumber(
-            follow.opacity !== undefined ? (follow.opacity as number) : 1,
+            (follow.opacity as number) ?? 1,
             0,
             easeCrossfadeOut(progress)
         )
     } else if (isOnlyMember) {
         target.opacity = mixNumber(
-            follow.opacity !== undefined ? (follow.opacity as number) : 1,
-            lead.opacity !== undefined ? (lead.opacity as number) : 1,
+            (follow.opacity as number) ?? 1,
+            (lead.opacity as number) ?? 1,
             progress
         )
     }
