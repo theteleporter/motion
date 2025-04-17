@@ -6,11 +6,6 @@ import { SVGElements } from "./supported-elements"
 
 export interface SVGRenderState extends HTMLRenderState {
     /**
-     * Measured dimensions of the SVG element to be used to calculate a transform-origin.
-     */
-    dimensions?: SVGDimensions
-
-    /**
      * A mutable record of attributes we want to apply directly to the rendered Element
      * every frame. We use a mutable data structure to reduce GC during animations.
      */
