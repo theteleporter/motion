@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.7.4] 2025-04-17
+
+### Fixed
+
+-   Removed non-deterministic behaviour from `AnimatePresence`.
+
 ## [12.7.3] 2025-04-15
 
 ### Fixed
