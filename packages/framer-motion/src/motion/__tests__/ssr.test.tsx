@@ -146,7 +146,7 @@ function runTests(render: (components: any) => string) {
         )
 
         expect(div).toBe(
-            '<div style="transform:translateX(100px) translateY(200px)"></div>'
+            '<div style="transform:translateX(100px) translateY(200px);transform-origin:50% 50% 0"></div>'
         )
     })
 
@@ -165,7 +165,7 @@ function runTests(render: (components: any) => string) {
         )
 
         expect(customElement).toBe(
-            '<element-test style="transform:translateX(100px) translateY(200px)"></element-test>'
+            '<element-test style="transform:translateX(100px) translateY(200px);transform-origin:50% 50% 0"></element-test>'
         )
     })
 
@@ -185,7 +185,7 @@ function runTests(render: (components: any) => string) {
         )
 
         expect(circle).toBe(
-            '<circle cx="100" stroke-width="10" pathLength="1" stroke-dashoffset="0px" stroke-dasharray="0.5px 1px" style="background:#fff;transform:translateX(100px);transform-box:fill-box;transform-origin:50% 50%"></circle>'
+            '<circle cx="100" stroke-width="10" pathLength="1" stroke-dashoffset="0px" stroke-dasharray="0.5px 1px" style="background:#fff;transform:translateX(100px);transform-origin:50% 50% 0;transform-box:fill-box"></circle>'
         )
         const rect = render(
             <AnimatePresence>
@@ -204,7 +204,7 @@ function runTests(render: (components: any) => string) {
         )
 
         expect(rect).toBe(
-            '<rect mask="" class="test" style="background:#fff"></rect>'
+            '<rect mask="" class="test" style="background:#fff;transform:none;transform-origin:50% 50% 0"></rect>'
         )
     })
 
@@ -213,7 +213,9 @@ function runTests(render: (components: any) => string) {
             <motion.div initial={{ x: 100 }} style={{ x: 200 }} />
         )
 
-        expect(div).toBe(`<div style="transform:translateX(100px)"></div>`)
+        expect(div).toBe(
+            `<div style="transform:translateX(100px);transform-origin:50% 50% 0"></div>`
+        )
     })
 
     test("sets tabindex='0' if onTap is set", () => {
@@ -249,7 +251,9 @@ function runTests(render: (components: any) => string) {
             />
         )
 
-        expect(div).toBe(`<div style="transform:translateX(100px)"></div>`)
+        expect(div).toBe(
+            `<div style="transform:translateX(100px);transform-origin:50% 50% 0"></div>`
+        )
     })
 
     test("Reorder: Renders correct element", () => {
@@ -264,7 +268,7 @@ function runTests(render: (components: any) => string) {
         const div = render(<Component />)
 
         expect(div).toBe(
-            `<ul><li draggable="false" style="z-index:unset;transform:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:pan-x"></li></ul>`
+            `<ul><li draggable="false" style="z-index:unset;transform:none;transform-origin:50% 50% 0;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:pan-x"></li></ul>`
         )
     })
 
@@ -280,7 +284,7 @@ function runTests(render: (components: any) => string) {
         const div = render(<Component />)
 
         expect(div).toBe(
-            `<ul><li style="z-index:unset;transform:none"></li></ul>`
+            `<ul><li style="z-index:unset;transform:none;transform-origin:50% 50% 0"></li></ul>`
         )
     })
 
@@ -296,7 +300,7 @@ function runTests(render: (components: any) => string) {
         const div = render(<Component />)
 
         expect(div).toBe(
-            `<div><div draggable="false" style="z-index:unset;transform:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:pan-x"></div></div>`
+            `<div><div draggable="false" style="z-index:unset;transform:none;transform-origin:50% 50% 0;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:pan-x"></div></div>`
         )
     })
 

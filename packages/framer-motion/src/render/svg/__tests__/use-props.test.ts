@@ -37,7 +37,7 @@ describe("SVG useProps", () => {
             style: {
                 transform: "translateX(8px) scale(9)",
                 transformBox: "fill-box",
-                transformOrigin: "50% 50%",
+                transformOrigin: "50% 50% 0",
             },
         })
     })
