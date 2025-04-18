@@ -10,26 +10,6 @@ export interface SVGRenderState extends HTMLRenderState {
      * every frame. We use a mutable data structure to reduce GC during animations.
      */
     attrs: ResolvedValues
-
-    /**
-     * A record of the previous layout values provided by props.
-     */
-    prevLayoutProps?: {
-        x?: number
-        y?: number
-        width?: number
-        height?: number
-        cx?: number
-        cy?: number
-        r?: number
-    }
-}
-
-export type SVGDimensions = {
-    x: number
-    y: number
-    width: number
-    height: number
 }
 
 interface SVGAttributesWithoutMotionProps<T>
