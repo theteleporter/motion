@@ -13,7 +13,7 @@ describe("Reorder", () => {
         const staticMarkup = renderToStaticMarkup(<Component />)
         const string = renderToString(<Component />)
 
-        const expectedMarkup = `<article><main draggable="false" style="z-index:unset;transform:none;transform-origin:50% 50% 0;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:pan-x"></main></article>`
+        const expectedMarkup = `<article><main draggable="false" style="z-index:unset;transform:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:pan-x"></main></article>`
 
         expect(staticMarkup).toBe(expectedMarkup)
         expect(string).toBe(expectedMarkup)
@@ -32,7 +32,7 @@ describe("Reorder", () => {
         const staticMarkup = renderToStaticMarkup(<Component />)
         const string = renderToString(<Component />)
 
-        const expectedMarkup = `<article><main draggable="false" style="z-index:unset;transform:none;transform-origin:50% 50% 0;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:pan-x"></main></article>`
+        const expectedMarkup = `<article><main draggable="false" style="z-index:unset;transform:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:pan-x"></main></article>`
 
         expect(staticMarkup).toBe(expectedMarkup)
         expect(string).toBe(expectedMarkup)

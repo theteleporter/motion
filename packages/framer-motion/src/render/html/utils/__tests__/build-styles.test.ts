@@ -28,7 +28,6 @@ describe("buildHTMLStyles", () => {
 
         expect(style).toEqual({
             transform: "perspective(200px) translateX(1px) rotateX(90deg)",
-            transformOrigin: "50% 50% 0",
         })
     })
 
@@ -40,7 +39,6 @@ describe("buildHTMLStyles", () => {
         expect(style).toEqual({
             perspective: "100px",
             transform: "translateX(100px)",
-            transformOrigin: "50% 50% 0",
         })
     })
 
@@ -51,7 +49,6 @@ describe("buildHTMLStyles", () => {
 
         expect(style).toEqual({
             transform: "translateX(1vw) translateY(2%) rotateX(90turn)",
-            transformOrigin: "50% 50% 0",
         })
     })
 
@@ -62,7 +59,6 @@ describe("buildHTMLStyles", () => {
 
         expect(style).toEqual({
             transform: "none",
-            transformOrigin: "50% 50% 0",
         })
     })
 
@@ -89,7 +85,6 @@ describe("buildHTMLStyles", () => {
 
         expect(style).toEqual({
             transform: "translateY(2) translateX(1px)",
-            transformOrigin: "50% 50% 0",
         })
     })
 
@@ -106,7 +101,6 @@ describe("buildHTMLStyles", () => {
 
         expect(style).toEqual({
             transform: "translateY(2) translateX(1px)",
-            transformOrigin: "50% 50% 0",
         })
     })
 })

@@ -21,7 +21,6 @@ describe("HTML useProps", () => {
         expect(result.current).toEqual({
             style: {
                 transform: "translateX(3px)",
-                transformOrigin: "50% 50% 0",
             },
         })
     })
@@ -44,7 +43,6 @@ describe("HTML useProps", () => {
         expect(result.current).toEqual({
             style: {
                 transform: "translateX(3px)",
-                transformOrigin: "50% 50% 0",
             },
         })
     })
@@ -67,11 +65,9 @@ describe("HTML useProps", () => {
         expect(a).not.toEqual(c)
         expect(a).toEqual({
             transform: "translateX(100px)",
-            transformOrigin: "50% 50% 0",
         })
         expect(c).toEqual({
             transform: "translateX(200px)",
-            transformOrigin: "50% 50% 0",
         })
     })
 
@@ -84,7 +80,6 @@ describe("HTML useProps", () => {
             draggable: false,
             style: {
                 transform: "translateX(3px)",
-                transformOrigin: "50% 50% 0",
                 userSelect: "none",
                 WebkitUserSelect: "none",
                 WebkitTouchCallout: "none",
@@ -100,7 +95,6 @@ describe("HTML useProps", () => {
             draggable: false,
             style: {
                 transform: "translateX(3px)",
-                transformOrigin: "50% 50% 0",
                 userSelect: "none",
                 WebkitUserSelect: "none",
                 WebkitTouchCallout: "none",
@@ -116,7 +110,6 @@ describe("HTML useProps", () => {
             draggable: false,
             style: {
                 transform: "translateX(3px)",
-                transformOrigin: "50% 50% 0",
                 userSelect: "none",
                 WebkitUserSelect: "none",
                 WebkitTouchCallout: "none",
