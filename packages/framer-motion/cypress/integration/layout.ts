@@ -180,7 +180,7 @@ describe("Layout animation", () => {
         let initialBbox: BoundingBox
 
         cy.visit("?test=layout-dependency-child")
-            .wait(10000)
+            .wait(50)
             .get("#child")
             .should(([$child]: any) => {
                 initialBbox = $child.getBoundingClientRect()
@@ -197,7 +197,6 @@ describe("Layout animation", () => {
                 expect(afterBbox.width).to.equal(initialBbox.width)
                 expect(afterBbox.height).to.equal(initialBbox.height)
             })
-            .wait(10000)
     })
 
     it("Has a correct bounding box when a transform is applied", () => {
