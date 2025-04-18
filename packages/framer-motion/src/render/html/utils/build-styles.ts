@@ -69,12 +69,12 @@ export function buildHTMLStyles(
      * Build a transformOrigin style. Uses the same defaults as the browser for
      * undefined origins.
      */
-    if (hasTransformOrigin || style.transform) {
+    if (hasTransformOrigin) {
         const {
             originX = "50%",
             originY = "50%",
             originZ = 0,
-        } = state.transformOrigin
+        } = transformOrigin
         style.transformOrigin = `${originX} ${originY} ${originZ}`
     }
 }
