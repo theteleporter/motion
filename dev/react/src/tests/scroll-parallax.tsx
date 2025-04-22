@@ -4,13 +4,26 @@ import * as React from "react"
 export const App = () => {
     React.useEffect(() => {
         document.querySelectorAll(".img-container").forEach((section) => {
-            const header = section.querySelector("h2")
+            const mainThreadSentinel = section.querySelector(
+                ".sentinel.main-thread"
+            )
+            const waapiSentinel = section.querySelector(".sentinel.waapi")
 
-            if (!header) return
+            if (!mainThreadSentinel || !waapiSentinel) return
 
-            scroll(animate(header, { y: [-400, 400] }, { ease: "linear" }), {
-                target: header,
-            })
+            scroll(
+                animate(mainThreadSentinel, {
+                    y: [-400, 400],
+                }),
+                { target: mainThreadSentinel }
+            )
+
+            scroll(
+                animate(waapiSentinel, {
+                    transform: ["translateY(-400px)", "translateY(400px)"],
+                }),
+                { target: waapiSentinel }
+            )
         })
     }, [])
 
@@ -19,7 +32,8 @@ export const App = () => {
             <section className="img-container">
                 <div>
                     <div className="img-placeholder" />
-                    <h2>#001</h2>
+                    <div className="main-thread sentinel" />
+                    <div className="waapi sentinel" />
                 </div>
             </section>
             <section className="img-container">
@@ -81,21 +95,17 @@ function StyleSheet() {
         background-color: #000;
     }
 
-    .img-container h2 {
-        color: var(--accent);
-        margin: 0;
-        font-family: "Azeret Mono", monospace;
-        font-size: 50px;
-        font-weight: 700;
-        letter-spacing: -3px;
-        line-height: 1.2;
+    .img-container .sentinel {
         position: absolute;
-        display: inline-block;
-        top: calc(50% - 25px);
-        left: calc(50% + 120px);
+        top: 50%;
+        left: 50%;
         width: 100px;
         height: 100px;
-        background-color: #000;
+        background-color: blue;
+    }
+
+    .waapi.sentinel {
+       background-color: red;
     }
 
     .progress {
