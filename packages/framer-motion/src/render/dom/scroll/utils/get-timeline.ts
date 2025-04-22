@@ -45,10 +45,11 @@ export function getTimeline({
 
     const targetKey = options.target ?? "self"
     const targetCache = containerCache.get(targetKey) ?? {}
-    containerCache.set(targetKey, targetCache)
 
-    if (!targetCache[axis]) {
-        targetCache[axis] =
+    const axisKey = axis + (options.offset ?? []).join(",")
+
+    if (!targetCache[axisKey]) {
+        targetCache[axisKey] =
             !options.target && supportsScrollTimeline()
                 ? new ScrollTimeline({ source: container, axis } as any)
                 : scrollTimelineFallback({ container, ...options })
