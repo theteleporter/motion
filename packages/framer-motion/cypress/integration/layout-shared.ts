@@ -749,7 +749,7 @@ describe("Shared layout: A -> AB -> A crossfade transition", () => {
                 })
             })
             .trigger("click")
-            .wait(50)
+            .wait(100)
             .get("#a")
             .should(([$box]: any) => {
                 expectBbox($box, {
