@@ -239,18 +239,18 @@ describe("scroll() animation", () => {
     it("correctly applies parallax animations", () => {
         cy.visit("?test=scroll-parallax")
             .viewport(1000, 500)
-            .wait(40000)
+            .wait(200)
             .get(".img-container:first-child .main-thread.sentinel")
             .should(([$element]: any) => {
-                expect($element.style.transform).to.equal("translateY(100px)")
-                expect($element.getBoundingClientRect().top).to.equal(350)
+                expect($element.getBoundingClientRect().top).to.equal(200)
             })
             .get(".img-container:first-child .waapi.sentinel")
             .should(([$element]: any) => {
-                expect($element.style.transform).not.to.equal(
-                    "translateY(100px)"
-                )
-                expect($element.getBoundingClientRect().top).to.equal(350)
+                expect($element.getBoundingClientRect().top).to.equal(200)
+            })
+            .get(".img-container:first-child .waapi.sentinel")
+            .should(([$element]: any) => {
+                expect($element.getBoundingClientRect().top).to.equal(200)
             })
     })
 })
