@@ -18,7 +18,7 @@ declare class ScrollTimeline implements ProgressTimeline {
 
 const timelineCache = new Map<
     Element,
-    { x?: ProgressTimeline; y?: ProgressTimeline }
+    Map<Element | "self", { x?: ProgressTimeline; y?: ProgressTimeline }>
 >()
 
 function scrollTimelineFallback(options: ScrollOptionsWithDefaults) {
@@ -38,20 +38,21 @@ export function getTimeline({
 }: ScrollOptionsWithDefaults): ProgressTimeline {
     const { axis } = options
 
-    // Support legacy source argument. Deprecate later.
     if (source) container = source
 
-    if (!timelineCache.has(container)) {
-        timelineCache.set(container, {})
+    const containerCache = timelineCache.get(container) ?? new Map()
+    timelineCache.set(container, containerCache)
+
+    const targetKey = options.target ?? "self"
+    const targetCache = containerCache.get(targetKey) ?? {}
+    containerCache.set(targetKey, targetCache)
+
+    if (!targetCache[axis]) {
+        targetCache[axis] =
+            !options.target && supportsScrollTimeline()
+                ? new ScrollTimeline({ source: container, axis } as any)
+                : scrollTimelineFallback({ container, ...options })
     }
 
-    const elementCache = timelineCache.get(container)!
-
-    if (!elementCache[axis]) {
-        elementCache[axis] = supportsScrollTimeline()
-            ? new ScrollTimeline({ source: container, axis } as any)
-            : scrollTimelineFallback({ container, ...options })
-    }
-
-    return elementCache[axis]!
+    return targetCache[axis]!
 }

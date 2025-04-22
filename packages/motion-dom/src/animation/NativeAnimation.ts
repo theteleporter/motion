@@ -225,7 +225,7 @@ export class NativeAnimation<T extends string | number>
 
         this.animation.onfinish = null
 
-        if (supportsScrollTimeline()) {
+        if (timeline && supportsScrollTimeline()) {
             this.animation.timeline = timeline as any
 
             return noop<void>

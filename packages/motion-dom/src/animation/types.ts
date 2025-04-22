@@ -19,7 +19,7 @@ export interface ValueAnimationOptionsWithRenderContext<
 }
 
 export interface TimelineWithFallback {
-    timeline: ProgressTimeline
+    timeline?: ProgressTimeline
     observe: (animation: AnimationPlaybackControls) => VoidFunction
 }
 

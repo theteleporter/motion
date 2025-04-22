@@ -7,8 +7,9 @@ export function attachToAnimation(
     options: ScrollOptionsWithDefaults
 ) {
     const timeline = getTimeline(options)
+
     return animation.attachTimeline({
-        timeline,
+        timeline: options.target ? undefined : timeline,
         observe: (valueAnimation) => {
             valueAnimation.pause()
 

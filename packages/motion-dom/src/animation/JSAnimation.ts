@@ -487,8 +487,6 @@ export class JSAnimation<T extends number | string>
     }
 
     attachTimeline(timeline: TimelineWithFallback): VoidFunction {
-        this.pause()
-
         if (this.options.allowFlatten) {
             this.options.type = "keyframes"
             this.options.ease = "linear"
