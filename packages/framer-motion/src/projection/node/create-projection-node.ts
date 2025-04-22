@@ -7,12 +7,22 @@ import {
     frameSteps,
     getValueTransition,
     microtask,
+    mixNumber,
     statsBuffer,
     time,
     ValueAnimationOptions,
     type Process,
 } from "motion-dom"
-import { noop, SubscriptionManager } from "motion-utils"
+import {
+    Axis,
+    AxisDelta,
+    Box,
+    clamp,
+    Delta,
+    noop,
+    Point,
+    SubscriptionManager,
+} from "motion-utils"
 import { animateSingleValue } from "../../animation/animate/single-value"
 import { getOptimisedAppearId } from "../../animation/optimized-appear/get-appear-id"
 import { MotionStyle } from "../../motion/types"
@@ -22,9 +32,7 @@ import { ResolvedValues } from "../../render/types"
 import { FlatTree } from "../../render/utils/flat-tree"
 import { VisualElement } from "../../render/VisualElement"
 import { Transition } from "../../types"
-import { clamp } from "../../utils/clamp"
 import { delay } from "../../utils/delay"
-import { mixNumber } from "../../utils/mix/number"
 import { resolveMotionValue } from "../../value/utils/resolve-motion-value"
 import { mixValues } from "../animation/mix-values"
 import { copyAxisDeltaInto, copyBoxInto } from "../geometry/copy"
@@ -43,7 +51,6 @@ import {
 } from "../geometry/delta-calc"
 import { removeBoxTransforms } from "../geometry/delta-remove"
 import { createBox, createDelta } from "../geometry/models"
-import { Axis, AxisDelta, Box, Delta, Point } from "../geometry/types"
 import {
     aspectRatio,
     axisDeltaEquals,
@@ -1490,9 +1497,7 @@ export function createProjectionNode<I>({
             hasOnlyRelativeTargetChanged: boolean = false
         ) {
             const snapshot = this.snapshot
-            const snapshotLatestValues = snapshot
-                ? snapshot.latestValues
-                : undefined || {}
+            const snapshotLatestValues = snapshot ? snapshot.latestValues : {}
             const mixedValues = { ...this.latestValues }
 
             const targetDelta = createDelta()

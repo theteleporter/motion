@@ -4,6 +4,23 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.7.5] 2025-04-22
+
+### Changed
+
+-   Improved scroll timeline caching.
+-   Replaced WAAPI keyframe generation with `linear()` easing.
+-   Ensure final defined keyframe is always applied to animations when animation finishes.
+-   Moved `instantAnimationState.current` to `MotionGlobalConfig.instantAnimations`.
+-   Changed `delay` from `read` to `setup` frameloop step.
+
+### Fixed
+
+-   Fixed `.then()` and `await` early resolution.
+-   Fixed replaying main thread animations after finished.
+-   `.speed` works correctly across all animation types.
+-   Various imperative animation control fixes.
+
 ## [12.7.4] 2025-04-17
 
 ### Fixed
