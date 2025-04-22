@@ -235,6 +235,16 @@ describe("scroll() animation", () => {
                 // )
             })
     })
+
+    it("correctly applies parallax animations", () => {
+        cy.visit("?test=scroll-parallax")
+            .viewport(1000, 500)
+            .wait(100)
+            .get(".img-container:first-child h2")
+            .should(([$element]: any) => {
+                expect($element.style.transform).to.equal("translateY(50px)")
+            })
+    })
 })
 
 describe("SVG", () => {
