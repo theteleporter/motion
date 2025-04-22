@@ -3,26 +3,41 @@ import * as React from "react"
 
 export const App = () => {
     React.useEffect(() => {
+        const distance = 400
         document.querySelectorAll(".img-container").forEach((section) => {
             const mainThreadSentinel = section.querySelector(
                 ".sentinel.main-thread"
             )
             const waapiSentinel = section.querySelector(".sentinel.waapi")
+            const miniSentinel = section.querySelector(".sentinel.mini")
 
-            if (!mainThreadSentinel || !waapiSentinel) return
+            if (!mainThreadSentinel || !waapiSentinel || !miniSentinel) return
 
             scroll(
                 animate(mainThreadSentinel, {
-                    y: [-400, 400],
+                    y: [-distance, distance],
                 }),
                 { target: mainThreadSentinel }
             )
 
             scroll(
                 animate(waapiSentinel, {
-                    transform: ["translateY(-400px)", "translateY(400px)"],
+                    transform: [
+                        `translateY(-${distance}px)`,
+                        `translateY(${distance}px)`,
+                    ],
                 }),
                 { target: waapiSentinel }
+            )
+
+            scroll(
+                animate(miniSentinel, {
+                    transform: [
+                        `translateY(-${distance}px)`,
+                        `translateY(${distance}px)`,
+                    ],
+                }),
+                { target: miniSentinel }
             )
         })
     }, [])
@@ -34,30 +49,39 @@ export const App = () => {
                     <div className="img-placeholder" />
                     <div className="main-thread sentinel" />
                     <div className="waapi sentinel" />
+                    <div className="mini sentinel" />
                 </div>
             </section>
             <section className="img-container">
                 <div>
                     <div className="img-placeholder" />
-                    <h2>#002</h2>
+                    <div className="main-thread sentinel" />
+                    <div className="waapi sentinel" />
+                    <div className="mini sentinel" />
                 </div>
             </section>
             <section className="img-container">
                 <div>
                     <div className="img-placeholder" />
-                    <h2>#003</h2>
+                    <div className="main-thread sentinel" />
+                    <div className="waapi sentinel" />
+                    <div className="mini sentinel" />
                 </div>
             </section>
             <section className="img-container">
                 <div>
                     <div className="img-placeholder" />
-                    <h2>#004</h2>
+                    <div className="main-thread sentinel" />
+                    <div className="waapi sentinel" />
+                    <div className="mini sentinel" />
                 </div>
             </section>
             <section className="img-container">
                 <div>
                     <div className="img-placeholder" />
-                    <h2>#005</h2>
+                    <div className="main-thread sentinel" />
+                    <div className="waapi sentinel" />
+                    <div className="mini sentinel" />
                 </div>
             </section>
             <StyleSheet />
@@ -97,7 +121,7 @@ function StyleSheet() {
 
     .img-container .sentinel {
         position: absolute;
-        top: 50%;
+        top: calc(50% - 50px);
         left: 50%;
         width: 100px;
         height: 100px;
@@ -106,6 +130,10 @@ function StyleSheet() {
 
     .waapi.sentinel {
        background-color: red;
+    }
+
+    .mini.sentinel {
+        background-color: green;
     }
 
     .progress {
