@@ -250,7 +250,6 @@ export class AsyncMotionValueAnimation<T extends string | number>
     }
 
     complete() {
-        console.log("async animation complete")
         this.animation.complete()
     }
 

@@ -32,6 +32,7 @@ export function createRenderBatcher(
         setup,
         read,
         resolveKeyframes,
+        preUpdate,
         update,
         preRender,
         render,
@@ -57,6 +58,7 @@ export function createRenderBatcher(
         setup.process(state)
         read.process(state)
         resolveKeyframes.process(state)
+        preUpdate.process(state)
         update.process(state)
         preRender.process(state)
         render.process(state)

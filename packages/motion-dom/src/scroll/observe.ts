@@ -18,7 +18,7 @@ export function observeTimeline(update: Update, timeline: ProgressTimeline) {
         prevProgress = progress
     }
 
-    frame.update(onFrame, true)
+    frame.preUpdate(onFrame, true)
 
     return () => cancelFrame(onFrame)
 }

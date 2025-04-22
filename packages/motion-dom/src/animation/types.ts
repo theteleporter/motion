@@ -1,6 +1,7 @@
 import { Easing } from "motion-utils"
 import { SVGAttributes } from "../render/svg/types"
 import { MotionValue } from "../value"
+import { Driver } from "./drivers/types"
 import { KeyframeResolver } from "./keyframes/KeyframesResolver"
 import { WithRender } from "./keyframes/types"
 
@@ -189,14 +190,6 @@ export interface DecayOptions extends VelocityOptions {
     timeConstant?: number
     modifyTarget?: (v: number) => number
 }
-
-export interface DriverControls {
-    start: () => void
-    stop: () => void
-    now: () => number
-}
-
-export type Driver = (update: (timestamp: number) => void) => DriverControls
 
 export interface InertiaOptions extends DecayOptions {
     bounceStiffness?: number

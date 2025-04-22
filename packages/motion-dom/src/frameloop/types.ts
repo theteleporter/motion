@@ -16,6 +16,7 @@ export type StepId =
     | "setup"
     | "read"
     | "resolveKeyframes"
+    | "preUpdate"
     | "update"
     | "preRender"
     | "render"

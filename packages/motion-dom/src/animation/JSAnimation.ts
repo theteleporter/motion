@@ -10,6 +10,7 @@ import { activeAnimations } from "../stats/animation-count"
 import { mix } from "../utils/mix"
 import { Mixer } from "../utils/mix/types"
 import { frameloopDriver } from "./drivers/driver-frameloop"
+import { DriverControls } from "./drivers/types"
 import { inertia } from "./generators/inertia"
 import { keyframes as keyframesGenerator } from "./generators/keyframes"
 import { calcGeneratorDuration } from "./generators/utils/calc-duration"
@@ -17,7 +18,6 @@ import { getFinalKeyframe } from "./keyframes/get-final"
 import {
     AnimationPlaybackControlsWithThen,
     AnimationState,
-    DriverControls,
     GeneratorFactory,
     KeyframeGenerator,
     TimelineWithFallback,
@@ -398,7 +398,6 @@ export class JSAnimation<T extends number | string>
         if (this.holdTime !== null) {
             this.startTime = now - this.holdTime
         } else if (this.state === "finished") {
-            console.log("JSAnimation updateFinished")
             this.updateFinished()
             this.startTime = now
         } else if (!this.startTime) {
