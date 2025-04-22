@@ -9,6 +9,10 @@ Undocumented APIs should be considered internal and may change without warning.
 ### Changed
 
 -   Improved scroll timeline caching.
+-   Replaced WAAPI keyframe generation with `linear()` easing.
+-   Ensure final defined keyframe is always applied to animations when animation finishes.
+-   Moved `instantAnimationState.current` to `MotionGlobalConfig.instantAnimations`.
+-   Changed `delay` from `read` to `setup` frameloop step.
 
 ### Fixed
 

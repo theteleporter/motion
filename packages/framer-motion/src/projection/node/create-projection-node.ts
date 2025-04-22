@@ -1171,7 +1171,7 @@ export function createProjectionNode<I>({
                     this.relativeTarget = createBox()
                     this.relativeTargetOrigin = createBox()
                     calcRelativePosition(
-                        this.relativeTargetOrigin!,
+                        this.relativeTargetOrigin,
                         this.layout.layoutBox,
                         relativeParent.layout.layoutBox
                     )
@@ -1208,7 +1208,7 @@ export function createProjectionNode<I>({
                 this.forceRelativeParentToResolveTarget()
 
                 calcRelativeBox(
-                    this.target!,
+                    this.target,
                     this.relativeTarget,
                     this.relativeParent.target
                 )
@@ -1224,7 +1224,7 @@ export function createProjectionNode<I>({
                     copyBoxInto(this.target, this.layout.layoutBox)
                 }
 
-                applyBoxDelta(this.target!, this.targetDelta)
+                applyBoxDelta(this.target, this.targetDelta)
             } else {
                 /**
                  * If no target, use own layout as target
@@ -1253,8 +1253,8 @@ export function createProjectionNode<I>({
                     this.relativeTargetOrigin = createBox()
 
                     calcRelativePosition(
-                        this.relativeTargetOrigin!,
-                        this.target!,
+                        this.relativeTargetOrigin,
+                        this.target,
                         relativeParent.target
                     )
 
