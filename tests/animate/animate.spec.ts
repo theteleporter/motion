@@ -425,6 +425,14 @@ test.describe("animate() options", () => {
             expect(style).toContain("opacity: var(--opacity-end)")
         })
     })
+
+    test("spring velocity", async ({ page }) => {
+        await waitForAnimation("animate/animate-spring-velocity.html", page)
+        await eachBox(page, async (box) => {
+            const text = await box.innerText()
+            expect(text).toBe("pass")
+        })
+    })
 })
 
 test.describe("NativeAnimation", () => {

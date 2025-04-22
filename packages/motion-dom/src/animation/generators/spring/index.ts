@@ -19,6 +19,7 @@ import { createGeneratorEasing } from "../utils/create-generator-easing"
 import { calcGeneratorVelocity } from "../utils/velocity"
 import { springDefaults } from "./defaults"
 import { calcAngularFreq, findSpring } from "./find"
+
 const durationKeys = ["duration", "bounce"]
 const physicsKeys = ["stiffness", "damping", "mass"]
 
@@ -187,7 +188,7 @@ function spring(
             const current = resolveSpring(t)
 
             if (!isResolvedFromDuration) {
-                let currentVelocity = 0.0
+                let currentVelocity = t === 0 ? initialVelocity : 0.0
 
                 /**
                  * We only need to calculate velocity for under-damped springs
