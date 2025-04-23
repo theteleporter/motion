@@ -20,6 +20,7 @@ export class WithPromise {
     }
 
     protected notifyFinished() {
+        console.trace()
         this.resolve()
     }
 
