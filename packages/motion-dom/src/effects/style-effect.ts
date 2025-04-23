@@ -1,4 +1,4 @@
-import { frame } from "../frameloop"
+import { cancelFrame, frame } from "../frameloop"
 import { ElementOrSelector, resolveElements } from "../utils/resolve-elements"
 import { MotionValue } from "../value"
 
@@ -27,17 +27,20 @@ export function styleEffect(
 
             const scheduleUpdate = () => frame.render(updateStyle)
 
-            const subscription = value.on("change", scheduleUpdate)
+            const cancel = value.on("change", scheduleUpdate)
 
             scheduleUpdate()
 
-            subscriptions.push(subscription)
+            subscriptions.push(() => {
+                cancel()
+                cancelFrame(updateStyle)
+            })
         }
     }
 
     return () => {
-        for (const subscription of subscriptions) {
-            subscription()
+        for (const cancel of subscriptions) {
+            cancel()
         }
     }
 }
