@@ -16,11 +16,11 @@ describe("motionValue", () => {
 
         value.on("change", callback)
 
-        expect(callback).not.toBeCalled()
+        expect(callback).not.toHaveBeenCalled()
         value.set(1)
-        expect(callback).toBeCalledTimes(1)
+        expect(callback).toHaveBeenCalledTimes(1)
         value.set(1)
-        expect(callback).toBeCalledTimes(1)
+        expect(callback).toHaveBeenCalledTimes(1)
     })
 
     test("renderRequest event fires", () => {
@@ -29,9 +29,9 @@ describe("motionValue", () => {
 
         value.on("renderRequest", callback)
 
-        expect(callback).not.toBeCalled()
+        expect(callback).not.toHaveBeenCalled()
         value.set(1)
-        expect(callback).toBeCalledTimes(1)
+        expect(callback).toHaveBeenCalledTimes(1)
     })
 
     test("Velocity is calculated as zero when value is arbitrarily changed after creation", () => {

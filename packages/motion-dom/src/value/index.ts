@@ -277,7 +277,6 @@ export class MotionValue<V = any> {
      * @public
      */
     set(v: V, render = true) {
-        if (v === "none") console.trace()
         if (!render || !this.passiveEffect) {
             this.updateAndNotify(v, render)
         } else {
