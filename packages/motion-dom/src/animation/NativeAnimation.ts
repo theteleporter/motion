@@ -56,6 +56,7 @@ export class NativeAnimation<T extends string | number>
             pseudoElement,
             allowFlatten = false,
             finalKeyframe,
+            onComplete,
         } = options as any
 
         this.isPseudoElement = Boolean(pseudoElement)
@@ -104,6 +105,7 @@ export class NativeAnimation<T extends string | number>
                 this.animation.cancel()
             }
 
+            onComplete?.()
             this.notifyFinished()
         }
 
