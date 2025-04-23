@@ -156,7 +156,6 @@ export { SVGAttributesAsMotionValues, SVGMotionProps } from "./render/svg/types"
 export { AnimationLifecycles, CreateVisualElement } from "./render/types"
 export { FlatTree } from "./render/utils/flat-tree"
 export {
-    CustomValueType,
     Inertia,
     Keyframes,
     KeyframesTarget,

@@ -1,6 +1,5 @@
-import { interpolate } from "motion-dom"
 import { EasingFunction } from "motion-utils"
-import { CustomValueType } from "../types"
+import { interpolate } from "./interpolate"
 
 /**
  * @public
@@ -29,12 +28,6 @@ export interface TransformOptions<T> {
      */
     mixer?: (from: T, to: T) => (v: number) => any
 }
-
-const isCustomValueType = (v: any): v is CustomValueType => {
-    return v && typeof v === "object" && v.mix
-}
-
-const getMixer = (v: any) => (isCustomValueType(v) ? v.mix : undefined)
 
 /**
  * Transforms numbers into other values by mapping them from an input range to an output range.
@@ -124,10 +117,7 @@ export function transform<T>(
     const outputRange = args[2 + argOffset] as T[]
     const options = args[3 + argOffset] as TransformOptions<T>
 
-    const interpolator = interpolate(inputRange, outputRange, {
-        mixer: getMixer(outputRange[0]),
-        ...options,
-    })
+    const interpolator = interpolate(inputRange, outputRange, options)
 
     return useImmediate ? interpolator(inputValue) : interpolator
 }

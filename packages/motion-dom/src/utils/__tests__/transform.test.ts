@@ -1,7 +1,6 @@
-import "../../jest.setup"
 import { transform } from "../transform"
 
-// Functionality of `transform` is thoroughly tested in `popmotion/interpolate`
+// Functionality of `transform` is thoroughly tested in `interpolate`
 // but here we test the overload functionality and some basic interpolations/typings
 describe("transform", () => {
     test("works identically with both syntax", () => {
