@@ -1,6 +1,6 @@
-import { motionValue, MotionValue } from "."
+import { MotionValue } from "."
 import { transform, TransformOptions } from "../utils/transform"
-import { subscribeValue } from "./subscribe-value"
+import { transformValue } from "./transform-value"
 
 export type MapInputRange = number[]
 
@@ -48,10 +48,5 @@ export function mapValue<O>(
     options?: TransformOptions<O>
 ): MotionValue<O> {
     const map = transform(inputRange, outputRange, options)
-    const getLatest = () => map(inputValue.get())
-    const value = motionValue(getLatest())
-
-    subscribeValue([inputValue], value, getLatest)
-
-    return value
+    return transformValue(() => map(inputValue.get()))
 }
