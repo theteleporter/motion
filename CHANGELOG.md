@@ -10,6 +10,12 @@ Undocumented APIs should be considered internal and may change without warning.
 
 -   Unifying `transform` behaviour for SVG and CSS switched from element measurements for `transform-box: fill-box`.
 
+## [12.8.2] 2025-04-23
+
+### Fixed
+
+-   Ensure `.then()` fires when `.stop()` or `.cancel()` are called.
+
 ## [12.8.1] 2025-04-22
 
 ### Fixed

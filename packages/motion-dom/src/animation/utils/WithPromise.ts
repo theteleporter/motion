@@ -2,7 +2,6 @@ export class WithPromise {
     protected _finished: Promise<void>
 
     resolve: VoidFunction
-
     count = 0
 
     constructor() {

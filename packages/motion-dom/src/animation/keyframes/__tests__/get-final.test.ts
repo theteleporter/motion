@@ -12,11 +12,23 @@ describe("getFinalKeyframe", () => {
             getFinalKeyframe([0, 1], { repeat: 2, repeatType: "loop" })
         ).toEqual(1)
         expect(
+            getFinalKeyframe([0, 1], { repeat: 2, repeatType: "loop" }, -1)
+        ).toEqual(-1)
+        expect(
+            getFinalKeyframe([0, 1], { repeat: 3, repeatType: "loop" }, -1)
+        ).toEqual(-1)
+        expect(
             getFinalKeyframe([0, 1], { repeat: 1, repeatType: "reverse" })
         ).toEqual(0)
         expect(
             getFinalKeyframe([0, 1], { repeat: 2, repeatType: "reverse" })
         ).toEqual(1)
+        expect(
+            getFinalKeyframe([0, 1], { repeat: 2, repeatType: "reverse" }, -1)
+        ).toEqual(-1)
+        expect(
+            getFinalKeyframe([0, 1], { repeat: 3, repeatType: "reverse" }, -1)
+        ).toEqual(0)
         expect(
             getFinalKeyframe([0, 1], { repeat: 1, repeatType: "mirror" })
         ).toEqual(0)
@@ -25,6 +37,9 @@ describe("getFinalKeyframe", () => {
         ).toEqual(1)
         expect(
             getFinalKeyframe([0, 1], { repeat: 2, repeatType: "mirror" }, -1)
+        ).toEqual(-1)
+        expect(
+            getFinalKeyframe([0, 1], { repeat: 3, repeatType: "mirror" }, -1)
         ).toEqual(0)
     })
 })

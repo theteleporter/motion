@@ -1,7 +1,7 @@
 import { supportsFlags } from "../../../../utils/supports/flags"
 import { isWaapiSupportedEasing } from "../is-supported"
 
-describe("isWaapiSupportedEasing", () => {
+test("isWaapiSupportedEasing", () => {
     expect(isWaapiSupportedEasing()).toEqual(true)
     expect(isWaapiSupportedEasing("linear")).toEqual(true)
     expect(isWaapiSupportedEasing("easeIn")).toEqual(true)

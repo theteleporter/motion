@@ -1,8 +1,8 @@
 import { easeInOut, noop } from "motion-utils"
 import { defaultOffset } from "../../keyframes/offsets/default"
 import { convertOffsetToTimes } from "../../keyframes/offsets/time"
+import { KeyframeGenerator } from "../../types"
 import { defaultEasing, keyframes } from "../keyframes"
-import { KeyframeGenerator } from "../types"
 
 function animateSync(
     animation: KeyframeGenerator<string | number>,
