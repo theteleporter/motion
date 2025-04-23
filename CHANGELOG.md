@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.9.0] 2025-04-23
+
+### Added
+
+-   `styleEffect`
+
 ## [12.8.2] 2025-04-23
 
 ### Changed
