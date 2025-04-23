@@ -157,6 +157,49 @@ describe("styleEffect", () => {
                 // Check that values don't update on the next frame
                 frame.postRender(() => {
                     // Verify styles didn't change after cleanup
+                    expect(element.style.padding).toBe("11px")
+                    expect(element.style.opacity).toBe("0.8")
+                    resolve()
+                })
+            })
+        })
+    })
+
+    it("returns cleanup function that stops updating styles that have already been scheduled", () => {
+        return new Promise<void>((resolve) => {
+            // Create motion values
+            const padding = motionValue("5px")
+            const opacity = motionValue("0.5")
+
+            // Apply style effect and get cleanup function
+            const cleanup = styleEffect(element, {
+                padding,
+                opacity,
+            })
+
+            // Verify initial styles
+            expect(element.style.padding).toBe("5px")
+            expect(element.style.opacity).toBe("0.5")
+
+            // Change values and verify update on next frame
+            padding.set("10px")
+            opacity.set("0.8")
+
+            frame.postRender(() => {
+                // Verify update happened
+                expect(element.style.padding).toBe("10px")
+                expect(element.style.opacity).toBe("0.8")
+
+                // Change values again
+                padding.set("15px")
+                opacity.set("1")
+
+                // Call cleanup function
+                cleanup()
+
+                // Check that values don't update on the next frame
+                frame.postRender(() => {
+                    // Verify styles didn't change after cleanup
                     expect(element.style.padding).toBe("10px")
                     expect(element.style.opacity).toBe("0.8")
                     resolve()
