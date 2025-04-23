@@ -4,7 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
-## [12.7.6] Unreleased
+## [12.8.0] 2025-04-22
+
+### Added
+
+-   `mapValue`
+-   `transformValue`
 
 ### Changed
 
