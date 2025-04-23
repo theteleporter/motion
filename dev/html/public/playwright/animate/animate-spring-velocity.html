@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="container">
-            <div class="box">test</div>
+            <div class="box">fail</div>
         </div>
         <script type="module" src="/src/inc.js"></script>
         <script type="module">
@@ -31,7 +31,7 @@
             const box = document.querySelector(".box")
             frame.postRender(() => {
                 if (box?.getBoundingClientRect().width > 120) {
-                    box.innerText = "fail"
+                    box.innerText = "pass"
                 }
             }, true)
         </script>

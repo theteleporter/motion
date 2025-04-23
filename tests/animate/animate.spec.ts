@@ -428,10 +428,9 @@ test.describe("animate() options", () => {
 
     test("spring velocity", async ({ page }) => {
         await waitForAnimation("animate/animate-spring-velocity.html", page)
-        await eachBox(page, async (box) => {
-            const text = await box.innerText()
-            expect(text).toBe("pass")
-        })
+        const box = page.locator(".box")
+        const text = await box.innerText()
+        expect(text).toBe("pass")
     })
 })
 
