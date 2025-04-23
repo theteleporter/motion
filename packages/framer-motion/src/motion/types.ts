@@ -10,7 +10,6 @@ import {
 } from "../gestures/types"
 import { EventProps } from "../render/types"
 import {
-    MakeCustomValueType,
     Omit,
     Target,
     TargetAndTransition,
@@ -29,24 +28,13 @@ export type VariantLabels = string | string[]
 import { SVGPathProperties, TransformProperties } from "motion-dom"
 export { SVGPathProperties, TransformProperties }
 
-export interface CustomStyles {
-    /**
-     * Framer Library custom prop types. These are not actually supported in Motion - preferably
-     * we'd have a way of external consumers injecting supported styles into this library.
-     */
-    size?: string | number
-    radius?: string | number
-    shadow?: string
-    image?: string
-}
-
-export type MakeMotion<T> = MakeCustomValueType<{
+export type MakeMotion<T> = {
     [K in keyof T]:
         | T[K]
         | MotionValue<number>
         | MotionValue<string>
         | MotionValue<any> // A permissive type for Custom value types
-}>
+}
 
 export type MotionCSS = MakeMotion<
     Omit<CSSProperties, "rotate" | "scale" | "perspective">
@@ -74,8 +62,7 @@ export type MotionCSSVariables = {
  */
 export type MotionStyle = MotionCSS &
     MotionTransform &
-    MakeMotion<SVGPathProperties> &
-    MakeCustomValueType<CustomStyles>
+    MakeMotion<SVGPathProperties>
 
 export type OnUpdate = (v: Target) => void
 

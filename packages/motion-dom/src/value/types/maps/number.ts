@@ -46,7 +46,6 @@ export const numberValueTypes: ValueTypeMap = {
 
     ...transformValueTypes,
     zIndex: int,
-    size: px,
 
     // SVG
     fillOpacity: alpha,

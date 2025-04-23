@@ -1,6 +1,4 @@
 import { MotionValue } from "motion-dom"
-import { CustomValueType } from "../../types"
-import { isCustomValue } from "../../utils/resolve-value"
 import { isMotionValue } from "./is-motion-value"
 
 /**
@@ -9,10 +7,7 @@ import { isMotionValue } from "./is-motion-value"
  * TODO: Remove and move to library
  */
 export function resolveMotionValue(
-    value?: string | number | CustomValueType | MotionValue
+    value?: string | number | MotionValue
 ): string | number {
-    const unwrappedValue = isMotionValue(value) ? value.get() : value
-    return isCustomValue(unwrappedValue)
-        ? unwrappedValue.toValue()
-        : unwrappedValue
+    return isMotionValue(value) ? value.get() : value
 }

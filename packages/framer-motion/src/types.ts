@@ -1,11 +1,7 @@
 import { VariableKeyframesDefinition } from "motion-dom"
 import { Easing } from "motion-utils"
 import { CSSProperties, SVGAttributes } from "react"
-import {
-    CustomStyles,
-    SVGPathProperties,
-    TransformProperties,
-} from "./motion/types"
+import { SVGPathProperties, TransformProperties } from "./motion/types"
 
 export type GenericKeyframesTarget<V> = V[] | Array<null | V>
 
@@ -19,9 +15,7 @@ export type ResolvedKeyframesTarget =
 /**
  * @public
  */
-export type KeyframesTarget =
-    | ResolvedKeyframesTarget
-    | GenericKeyframesTarget<CustomValueType>
+export type KeyframesTarget = ResolvedKeyframesTarget
 
 /**
  * @public
@@ -30,7 +24,7 @@ export type ResolvedSingleTarget = string | number
 /**
  * @public
  */
-export type SingleTarget = ResolvedSingleTarget | CustomValueType
+export type SingleTarget = ResolvedSingleTarget
 /**
  * @public
  */
@@ -995,19 +989,13 @@ type TargetProperties = CSSPropertiesWithoutTransitionOrSingleTransforms &
     SVGAttributes<SVGElement> &
     SVGTransformAttributes &
     TransformProperties &
-    CustomStyles &
     SVGPathProperties &
     VariableKeyframesDefinition
 
 /**
  * @public
  */
-export type MakeCustomValueType<T> = { [K in keyof T]: T[K] | CustomValueType }
-
-/**
- * @public
- */
-export type Target = MakeCustomValueType<TargetProperties>
+export type Target = { [K in keyof TargetProperties]: TargetProperties[K] }
 
 /**
  * @public
@@ -1062,12 +1050,4 @@ export type Variant = TargetAndTransition | TargetResolver
  */
 export type Variants = {
     [key: string]: Variant
-}
-
-/**
- * @public
- */
-export interface CustomValueType {
-    mix: (from: any, to: any) => (p: number) => number | string
-    toValue: () => number | string
 }
