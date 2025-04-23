@@ -6,8 +6,6 @@ import {
 import { frame } from "../frameloop"
 import { time } from "../frameloop/sync-time"
 
-export type Transformer<T> = (v: T) => T
-
 /**
  * @public
  */
@@ -28,6 +26,7 @@ export interface MotionValueEventCallbacks<V> {
     animationCancel: () => void
     change: (latestValue: V) => void
     renderRequest: () => void
+    destroy: () => void
 }
 
 /**
@@ -452,6 +451,7 @@ export class MotionValue<V = any> {
      * @public
      */
     destroy() {
+        this.events.destroy?.notify()
         this.clearListeners()
         this.stop()
 

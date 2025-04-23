@@ -4,11 +4,52 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.8.1] 2025-04-22
+
+### Fixed
+
+-   Removing errant `console.trace` on `value.set("none")`.
+
+## [12.8.0] 2025-04-22
+
+### Added
+
+-   `mapValue`
+-   `transformValue`
+
+### Changed
+
+-   Removed support for Framer's internal `CustomValueType`.
+
+## [12.7.5] 2025-04-22
+
+### Changed
+
+-   Improved scroll timeline caching.
+-   Replaced WAAPI keyframe generation with `linear()` easing.
+-   Ensure final defined keyframe is always applied to animations when animation finishes.
+-   Moved `instantAnimationState.current` to `MotionGlobalConfig.instantAnimations`.
+-   Changed `delay` from `read` to `setup` frameloop step.
+
+### Fixed
+
+-   Fixed `.then()` and `await` early resolution.
+-   Fixed replaying main thread animations after finished.
+-   `.speed` works correctly across all animation types.
+-   Various imperative animation control fixes.
+
+## [12.7.4] 2025-04-17
+
+### Fixed
+
+-   Removed non-deterministic behaviour from `AnimatePresence`.
+
 ## [12.7.3] 2025-04-15
 
 ### Fixed
 
--   `duration` for `animateView` transitions.
+-   Fixing `duration` for `animateView` transitions.
+-   Prevent `.commitStyles()` on `pseudoElement` animations.
 
 ## [12.7.2] 2025-04-14
 

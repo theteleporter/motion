@@ -28,8 +28,16 @@ export function createRenderBatcher(
         return acc
     }, {} as Steps)
 
-    const { read, resolveKeyframes, update, preRender, render, postRender } =
-        steps
+    const {
+        setup,
+        read,
+        resolveKeyframes,
+        preUpdate,
+        update,
+        preRender,
+        render,
+        postRender,
+    } = steps
 
     const processBatch = () => {
         const timestamp = MotionGlobalConfig.useManualTiming
@@ -47,8 +55,10 @@ export function createRenderBatcher(
         state.isProcessing = true
 
         // Unrolled render loop for better per-frame performance
+        setup.process(state)
         read.process(state)
         resolveKeyframes.process(state)
+        preUpdate.process(state)
         update.process(state)
         preRender.process(state)
         render.process(state)

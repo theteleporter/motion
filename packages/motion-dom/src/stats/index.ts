@@ -59,9 +59,11 @@ function reportStats(): StatsSummary {
 
     const summary = {
         frameloop: {
+            setup: summarise(value.frameloop.setup),
             rate: summarise(value.frameloop.rate),
             read: summarise(value.frameloop.read),
             resolveKeyframes: summarise(value.frameloop.resolveKeyframes),
+            preUpdate: summarise(value.frameloop.preUpdate),
             update: summarise(value.frameloop.update),
             preRender: summarise(value.frameloop.preRender),
             render: summarise(value.frameloop.render),
@@ -106,9 +108,11 @@ export function recordStats() {
 
     newStatsBuffer.value = {
         frameloop: {
+            setup: [],
             rate: [],
             read: [],
             resolveKeyframes: [],
+            preUpdate: [],
             update: [],
             preRender: [],
             render: [],
