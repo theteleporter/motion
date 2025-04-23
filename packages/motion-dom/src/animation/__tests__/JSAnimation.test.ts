@@ -1,8 +1,14 @@
 import { noop, reverseEasing } from "motion-utils"
-import { nextFrame } from "../../../../framer-motion/src/gestures/__tests__/utils"
+import { frame } from "../../frameloop"
 import { JSAnimation, animateValue } from "../JSAnimation"
 import { ValueAnimationOptions } from "../types"
 import { syncDriver } from "./utils"
+
+async function nextFrame() {
+    return new Promise<void>((resolve) => {
+        frame.postRender(() => resolve())
+    })
+}
 
 const linear = noop
 
@@ -171,7 +177,7 @@ describe("JSAnimation", () => {
                     "rgba(114, 228, 0, 1)",
                     "rgba(0, 228, 114, 1)",
                     "rgba(0, 161, 198, 1)",
-                    "rgba(0, 0, 255, 1)",
+                    "#00f",
                 ],
                 resolve
             )
@@ -198,7 +204,7 @@ describe("JSAnimation", () => {
                     "rgba(198, 0, 161, 1)",
                     "rgba(161, 0, 198, 1)",
                     "rgba(114, 0, 228, 1)",
-                    "rgba(0, 0, 255, 1)",
+                    "#00f",
                 ],
                 resolve
             )
@@ -505,7 +511,7 @@ describe("JSAnimation", () => {
                 "rgba(0, 0, 255, 1)",
                 "rgba(0, 0, 255, 1)",
                 "rgba(0, 0, 255, 1)",
-                "rgba(0, 0, 255, 1)",
+                "#00f",
             ]
             animateValue({
                 keyframes: ["#f00", "#00f"],
@@ -1170,43 +1176,48 @@ describe("JSAnimation", () => {
     test("Correctly resolves when stopped", async () => {
         const output: number[] = []
 
-        const animation = animateValue({
-            keyframes: [0, 100],
-            driver: syncDriver(20),
-            duration: 100,
-            ease: linear,
-            onUpdate: (v) => {
-                output.push(v)
-                if (v === 40) {
-                    animation.stop()
-                }
-            },
+        return new Promise<void>((resolve) => {
+            const animation = animateValue({
+                keyframes: [0, 100],
+                driver: syncDriver(20),
+                duration: 100,
+                ease: linear,
+                onUpdate: (v) => {
+                    output.push(v)
+                    if (v === 40) {
+                        animation.stop()
+                    }
+                },
+                onStop: () => {
+                    expect(output).toEqual([0, 20, 40])
+                    resolve()
+                },
+            })
         })
-
-        await animation
-
-        expect(output).toEqual([0, 20, 40])
     })
 
     test("Correctly cancels an animation", async () => {
         const output: number[] = []
 
-        const animation = animateValue({
-            keyframes: [0, 100],
-            driver: syncDriver(20),
-            duration: 100,
-            ease: linear,
-            onUpdate: (v) => {
-                output.push(v)
-                if (v === 40) {
-                    animation.cancel()
-                }
-            },
+        return new Promise<void>((resolve) => {
+            const animation = animateValue({
+                keyframes: [0, 100],
+                driver: syncDriver(20),
+                duration: 100,
+                ease: linear,
+                onUpdate: (v) => {
+                    output.push(v)
+                    if (v === 40) {
+                        animation.cancel()
+                    }
+                },
+            })
+
+            animation.finished.finally(() => {
+                expect(output).toEqual([0, 20, 40, 0])
+                resolve()
+            })
         })
-
-        await animation
-
-        expect(output).toEqual([0, 20, 40, 0])
     })
 
     test("Correctly completes an animation", async () => {
@@ -1396,18 +1407,5 @@ describe("JSAnimation", () => {
                 type: "spring",
             }).duration
         ).toEqual(1.2)
-    })
-
-    test("Doesn't throw when forcing animation resolution on an animation that would be skipped", async () => {
-        const animation = animateValue({
-            KeyframeResolver: AsyncKeyframesResolver as any,
-            keyframes: [1, 1],
-            duration: 0.1,
-            ease: "linear",
-        })
-
-        animation.sample(0.4)
-
-        expect(true).toBe(true)
     })
 })
