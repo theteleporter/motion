@@ -1,21 +1,24 @@
 import { GroupAnimation } from "../GroupAnimation"
-import { AnimationPlaybackControls } from "../types"
+import { GroupAnimationWithThen } from "../GroupAnimationWithThen"
+import { AnimationPlaybackControlsWithThen } from "../types"
 
 function createTestAnimationControls(
-    partialControls?: Partial<AnimationPlaybackControls>
-): AnimationPlaybackControls {
+    partialControls?: Partial<AnimationPlaybackControlsWithThen>
+): AnimationPlaybackControlsWithThen {
     return {
         time: 1,
         speed: 1,
         duration: 10,
         startTime: 0,
+        state: "running",
         stop: () => {},
         play: () => {},
         pause: () => {},
         then: (resolve: VoidFunction) => {
             return Promise.resolve().then(resolve)
         },
-        flatten: () => {},
+        finished: Promise.resolve(),
+        attachTimeline: () => () => {},
         complete: () => {},
         cancel: () => {},
         ...partialControls,
@@ -24,7 +27,7 @@ function createTestAnimationControls(
 
 describe("GroupAnimation", () => {
     test("Filters undefined animations", () => {
-        const a: AnimationPlaybackControls = createTestAnimationControls()
+        const a = createTestAnimationControls()
 
         const controls = new GroupAnimation([undefined, a])
 
@@ -32,7 +35,7 @@ describe("GroupAnimation", () => {
     })
 
     test("Gets time", () => {
-        const a: AnimationPlaybackControls = createTestAnimationControls({
+        const a = createTestAnimationControls({
             time: 5,
         })
 
@@ -42,11 +45,11 @@ describe("GroupAnimation", () => {
     })
 
     test("Sets time", () => {
-        const a: AnimationPlaybackControls = createTestAnimationControls({
+        const a = createTestAnimationControls({
             time: 5,
         })
 
-        const b: AnimationPlaybackControls = createTestAnimationControls({
+        const b = createTestAnimationControls({
             time: 5,
         })
 
@@ -59,12 +62,12 @@ describe("GroupAnimation", () => {
     })
 
     test("Calls play on all animations", () => {
-        const a: AnimationPlaybackControls = createTestAnimationControls({
+        const a = createTestAnimationControls({
             time: 5,
             play: jest.fn(),
         })
 
-        const b: AnimationPlaybackControls = createTestAnimationControls({
+        const b = createTestAnimationControls({
             time: 5,
             play: jest.fn(),
         })
@@ -78,12 +81,12 @@ describe("GroupAnimation", () => {
     })
 
     test("Calls pause on all animations", () => {
-        const a: AnimationPlaybackControls = createTestAnimationControls({
+        const a = createTestAnimationControls({
             time: 5,
             pause: jest.fn(),
         })
 
-        const b: AnimationPlaybackControls = createTestAnimationControls({
+        const b = createTestAnimationControls({
             time: 5,
             pause: jest.fn(),
         })
@@ -97,16 +100,16 @@ describe("GroupAnimation", () => {
     })
 
     test(".then() returns Promise", () => {
-        const controls = new GroupAnimation([])
+        const controls = new GroupAnimationWithThen([])
         controls.then(() => {}).then(() => {})
     })
 
     test("Resolves if all promises are already resolved", async () => {
         const aOnComplete = jest.fn()
-        const a: AnimationPlaybackControls = createTestAnimationControls({})
+        const a = createTestAnimationControls({})
 
         const bOnComplete = jest.fn()
-        const b: AnimationPlaybackControls = createTestAnimationControls({})
+        const b = createTestAnimationControls({})
 
         a.then(() => aOnComplete())
         b.then(() => bOnComplete())
@@ -121,10 +124,10 @@ describe("GroupAnimation", () => {
 
     test("Resolves when all promises are resolved", async () => {
         const aOnComplete = jest.fn()
-        const a: AnimationPlaybackControls = createTestAnimationControls({})
+        const a = createTestAnimationControls({})
 
         const bOnComplete = jest.fn()
-        const b: AnimationPlaybackControls = createTestAnimationControls({})
+        const b = createTestAnimationControls({})
 
         a.then(() => aOnComplete())
         b.then(() => bOnComplete())

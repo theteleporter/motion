@@ -4,6 +4,16 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.8.3] 2025-04-24
+
+### Changed
+
+-   Animating a `MotionValue` to its current value will skip creating the animation.
+
+### Fixed
+
+-   Ensure `.then()` fires when `.stop()` or `.cancel()` are called. This is undesired but reverts the behaviour to before `12.7.5`.
+
 ## [12.8.2] 2025-04-24
 
 ### Changed

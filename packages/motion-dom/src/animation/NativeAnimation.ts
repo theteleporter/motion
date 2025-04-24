@@ -56,6 +56,7 @@ export class NativeAnimation<T extends string | number>
             pseudoElement,
             allowFlatten = false,
             finalKeyframe,
+            onComplete,
         } = options as any
 
         this.isPseudoElement = Boolean(pseudoElement)
@@ -104,8 +105,14 @@ export class NativeAnimation<T extends string | number>
                 this.animation.cancel()
             }
 
+            onComplete?.()
             this.notifyFinished()
         }
+
+        /**
+         * TODO: In a breaking change, we should replace this with `.notifyCancel()`
+         */
+        this.animation.oncancel = () => this.notifyFinished()
     }
 
     updateMotionValue?(value?: T): void

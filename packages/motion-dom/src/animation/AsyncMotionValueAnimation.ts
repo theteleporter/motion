@@ -109,8 +109,7 @@ export class AsyncMotionValueAnimation<T extends string | number>
     ) {
         this.keyframeResolver = undefined
 
-        const { name, type, velocity, delay, isHandoff, onUpdate, onComplete } =
-            options
+        const { name, type, velocity, delay, isHandoff, onUpdate } = options
         this.resolvedAt = time.now()
 
         /**
@@ -168,12 +167,7 @@ export class AsyncMotionValueAnimation<T extends string | number>
                   } as any)
                 : new JSAnimation(resolvedOptions)
 
-        animation.finished
-            .then(() => {
-                onComplete?.()
-                this.notifyFinished()
-            })
-            .catch(noop)
+        animation.finished.then(() => this.notifyFinished()).catch(noop)
 
         if (this.pendingTimeline) {
             this.stopTimeline = animation.attachTimeline(this.pendingTimeline)

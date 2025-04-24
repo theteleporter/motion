@@ -45,13 +45,13 @@
             )
 
             mini.finished.then(() => {
-                miniElement.innerHTML = "finished"
+                document.getElementById("mini").innerHTML = "finished"
             })
             js.finished.then(() => {
-                jsElement.innerHTML = "finished"
+                document.getElementById("js").innerHTML = "finished"
             })
             waapi.finished.then(() => {
-                waapiElement.innerHTML = "finished"
+                document.getElementById("waapi").innerHTML = "finished"
             })
 
             delay(() => {

@@ -71,6 +71,20 @@ export function animateTarget(
         }
 
         /**
+         * If the value is already at the defined target, skip the animation.
+         */
+        const currentValue = value.get()
+        if (
+            currentValue !== undefined &&
+            !value.isAnimating &&
+            !Array.isArray(valueTarget) &&
+            valueTarget === currentValue &&
+            !valueTransition.velocity
+        ) {
+            continue
+        }
+
+        /**
          * If this is the first time a value is being animated, check
          * to see if we're handling off from an existing animation.
          */
