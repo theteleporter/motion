@@ -320,13 +320,13 @@ export class MotionValue<V = any> {
         this.setCurrent(v)
 
         // Update update subscribers
-        if (this.current !== this.prev && this.events.change) {
-            this.events.change.notify(this.current)
+        if (this.current !== this.prev) {
+            this.events.change?.notify(this.current)
         }
 
         // Update render subscribers
-        if (render && this.events.renderRequest) {
-            this.events.renderRequest.notify(this.current)
+        if (render) {
+            this.events.renderRequest?.notify(this.current)
         }
     }
 

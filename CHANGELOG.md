@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.9.0] 2025-04-23
+
+### Added
+
+-   `styleEffect`
+
 ## [12.8.3] 2025-04-24
 
 ### Changed
@@ -20,13 +26,13 @@ Undocumented APIs should be considered internal and may change without warning.
 
 -   Unifying `transform` behaviour for SVG and CSS switched from element measurements for `transform-box: fill-box`.
 
-## [12.8.1] 2025-04-22
+## [12.8.1] 2025-04-23
 
 ### Fixed
 
 -   Removing errant `console.trace` on `value.set("none")`.
 
-## [12.8.0] 2025-04-22
+## [12.8.0] 2025-04-23
 
 ### Added
 
