@@ -4,7 +4,13 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
-## [12.9.0] 2025-04-23
+## [12.9.1] 2025-04-25
+
+### Fixed
+
+-   Restarting a finished main thread animation with a negative `.speed` now works as expected.
+
+## [12.9.0] 2025-04-24
 
 ### Added
 
