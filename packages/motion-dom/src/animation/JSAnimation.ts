@@ -395,11 +395,12 @@ export class JSAnimation<T extends number | string>
         onPlay && onPlay()
 
         const now = this.driver.now()
-        if (this.holdTime !== null) {
-            this.startTime = now - this.holdTime
-        } else if (this.state === "finished") {
+
+        if (this.state === "finished") {
             this.updateFinished()
             this.startTime = now
+        } else if (this.holdTime !== null) {
+            this.startTime = now - this.holdTime
         } else if (!this.startTime) {
             this.startTime = startTime ?? now
         }
