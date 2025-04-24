@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.8.2] 2025-04-24
+
+### Changed
+
+-   Unifying `transform` behaviour for SVG and CSS switched from element measurements for `transform-box: fill-box`.
+
 ## [12.8.1] 2025-04-22
 
 ### Fixed
