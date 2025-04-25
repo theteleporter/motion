@@ -59,6 +59,7 @@
                 offset: ["start start", "end end"],
             }
 
+            scroll((p, info) => console.log(p, info.y))
             scroll(mini, scrollOptions)
             scroll(js, scrollOptions)
             scroll(waapi, scrollOptions)

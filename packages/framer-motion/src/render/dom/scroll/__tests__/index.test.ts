@@ -16,23 +16,35 @@ async function nextFrame() {
 
 const createMockMeasurement = (element: Element, name: string) => {
     const elementMeasurements = measurements.get(element) || {}
+
     measurements.set(element, elementMeasurements)
 
-    Object.defineProperty(element, name, {
-        get: () => {
-            return elementMeasurements[name] ?? 0
-        },
-        set: () => {},
-    })
+    if (!element.hasOwnProperty(name)) {
+        Object.defineProperty(element, name, {
+            get: () => {
+                return elementMeasurements[name] ?? 0
+            },
+            set: () => {},
+        })
+    }
 
     return (value: number) => {
         elementMeasurements[name] = value
     }
 }
 
-const setWindowHeight = createMockMeasurement(document.body, "clientHeight")
-const setDocumentHeight = createMockMeasurement(document.body, "scrollHeight")
-const setScrollTop = createMockMeasurement(document.body, "scrollTop")
+const setWindowHeight = createMockMeasurement(
+    document.documentElement,
+    "clientHeight"
+)
+const setDocumentHeight = createMockMeasurement(
+    document.documentElement,
+    "scrollHeight"
+)
+const setScrollTop = createMockMeasurement(
+    document.documentElement,
+    "scrollTop"
+)
 
 async function fireScroll(distance: number = 0) {
     setScrollTop(distance)
