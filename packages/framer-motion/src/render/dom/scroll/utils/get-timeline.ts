@@ -55,5 +55,5 @@ export function getTimeline({
                 : scrollTimelineFallback({ container, ...options })
     }
 
-    return targetCache[axis]!
+    return targetCache[axisKey]!
 }
