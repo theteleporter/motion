@@ -18,7 +18,8 @@ export function scroll(
      */
     if (
         container === document.documentElement &&
-        container.scrollHeight === container.clientHeight
+        ((axis === "y" && container.scrollHeight === container.clientHeight) ||
+            (axis === "x" && container.scrollWidth === container.clientWidth))
     ) {
         container = document.body
     }
