@@ -11,11 +11,11 @@ const onScrollHandlers = new WeakMap<Element, Set<OnScrollHandler>>()
 export type ScrollTargets = Array<HTMLElement>
 
 const getEventTarget = (element: HTMLElement) =>
-    element === document.documentElement ? window : element
+    element === document.body ? window : element
 
 export function scrollInfo(
     onScroll: OnScrollInfo,
-    { container = document.documentElement, ...options }: ScrollInfoOptions = {}
+    { container = document.body, ...options }: ScrollInfoOptions = {}
 ) {
     let containerHandlers = onScrollHandlers.get(container)
 
