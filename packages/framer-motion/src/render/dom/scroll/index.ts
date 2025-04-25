@@ -5,11 +5,7 @@ import { OnScroll, ScrollOptions } from "./types"
 
 export function scroll(
     onScroll: OnScroll | AnimationPlaybackControls,
-    {
-        axis = "y",
-        container = document.documentElement,
-        ...options
-    }: ScrollOptions = {}
+    { axis = "y", container = document.body, ...options }: ScrollOptions = {}
 ): VoidFunction {
     const optionsWithDefaults = { axis, container, ...options }
 

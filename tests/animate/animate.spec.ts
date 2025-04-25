@@ -376,6 +376,22 @@ test.describe("animate() methods", () => {
             expect(style).toContain("transform: ")
         })
     })
+
+    test("scroll", async ({ page }) => {
+        test.use({ viewport: { width: 500, height: 500 } })
+
+        await waitForAnimation("animate/animate-scroll.html", page)
+
+        // Scroll 250px
+        await page.evaluate(() => {
+            window.scrollTo(0, 250)
+        })
+
+        await eachBox(page, async (box) => {
+            const boundingBox = await box.boundingBox()
+            expect(boundingBox?.x).toBeCloseTo(50)
+        })
+    })
 })
 
 test.describe("animate() properties", () => {
