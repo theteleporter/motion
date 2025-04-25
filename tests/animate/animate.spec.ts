@@ -19,6 +19,8 @@ async function waitForAnimation(url: string, page: Page, customTimeout = 500) {
 }
 
 test.describe("animate() methods", () => {
+    test.use({ viewport: { width: 500, height: 500 } })
+
     test("play", async ({ page }) => {
         await waitForAnimation("animate/animate-play.html", page)
         await eachBox(page, async (box) => {
@@ -378,8 +380,6 @@ test.describe("animate() methods", () => {
     })
 
     test("scroll", async ({ page }) => {
-        test.use({ viewport: { width: 500, height: 500 } })
-
         await waitForAnimation("animate/animate-scroll.html", page)
 
         // Scroll 250px
