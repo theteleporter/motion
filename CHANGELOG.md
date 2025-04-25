@@ -4,7 +4,14 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
-## [12.9.1] 2025-04-25
+## [12.9.2] 2025-04-25
+
+### Fixed
+
+-   Fixed scroll timeline cache when defining `offset`.
+-   Changed default scroll `container` from `document.documentElement` to `document.body`.
+
+## [12.9.1] 2025-04-24
 
 ### Fixed
 
