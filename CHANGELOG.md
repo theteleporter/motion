@@ -9,7 +9,7 @@ Undocumented APIs should be considered internal and may change without warning.
 ### Fixed
 
 -   Fixed scroll timeline cache when defining `offset`.
--   Changed default scroll `container` from `document.documentElement` to `document.body`.
+-   Detect when page scroll is attached to `document.body` and use this instead of `document.documentElement`.
 
 ## [12.9.1] 2025-04-24
 
