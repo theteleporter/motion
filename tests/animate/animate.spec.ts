@@ -74,6 +74,20 @@ test.describe("animate() methods", () => {
         })
     })
 
+    test("play after finished and setting speed", async ({ page }) => {
+        await waitForAnimation(
+            "animate/animate-play-again-speed.html",
+            page,
+            600
+        )
+        await eachBox(page, async (box) => {
+            const boundingBox = await box.boundingBox()
+            expect(boundingBox?.x).not.toBeCloseTo(0)
+            const text = await box.innerText()
+            expect(text).not.toBe("error")
+        })
+    })
+
     test("play after setting speed", async ({ page }) => {
         await waitForAnimation("animate/animate-play-negative-speed.html", page)
         await eachBox(page, async (box) => {
@@ -89,7 +103,7 @@ test.describe("animate() methods", () => {
             const boundingBox = await box.boundingBox()
             expect(boundingBox?.x).toBeCloseTo(0)
             const text = await box.innerText()
-            expect(text).not.toBe("finished")
+            expect(text).toBe("finished")
         })
     })
 
@@ -292,7 +306,7 @@ test.describe("animate() methods", () => {
             // Ensure a style has been applied
             const style = await box.getAttribute("style")
             expect(style).toContain("transform: translateX")
-            expect(await box.innerText()).not.toBe("finished")
+            expect(await box.innerText()).toBe("finished")
         })
     })
 
