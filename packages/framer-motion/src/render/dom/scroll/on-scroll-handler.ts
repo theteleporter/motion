@@ -27,8 +27,6 @@ function measure(
         }
     }
 
-    console.log(target.scrollHeight, target.clientHeight)
-
     info.x.targetLength =
         target === container ? target.scrollWidth : target.clientWidth
     info.y.targetLength =
