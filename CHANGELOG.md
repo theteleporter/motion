@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.9.3] 2025-05-01
+
+### Fixed
+
+-   Fixed memory leak when unmounting `motion` components.
+
 ## [12.9.2] 2025-04-25
 
 ### Fixed
