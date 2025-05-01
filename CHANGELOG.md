@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.9.4] 2025-05-01
+
+### Fixed
+
+-   Remove version check for `MotionValue`.
+
 ## [12.9.3] 2025-05-01
 
 ### Fixed

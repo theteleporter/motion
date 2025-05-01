@@ -20,8 +20,6 @@ export const replaceSettings = (env) => {
               preventAssignment: false,
           }
 
-    replaceConfig.__VERSION__ = `${pkg.version}`
-
     return replace(replaceConfig)
 }
 
