@@ -60,7 +60,7 @@ class MeasureLayoutWithContext extends Component<MeasureProps> {
 
     getSnapshotBeforeUpdate(prevProps: MeasureProps) {
         const { layoutDependency, visualElement, drag, isPresent } = this.props
-        const projection = visualElement.projection
+        const { projection } = visualElement
 
         if (!projection) return null
 

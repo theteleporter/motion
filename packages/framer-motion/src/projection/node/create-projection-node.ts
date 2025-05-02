@@ -160,7 +160,7 @@ export function createProjectionNode<I>({
         /**
          * A reference to the platform-native node (currently this will be a HTMLElement).
          */
-        instance: I
+        instance: I | undefined
 
         /**
          * A reference to the root projection node. There'll only ever be one tree and one root.
@@ -435,7 +435,7 @@ export function createProjectionNode<I>({
         /**
          * Lifecycles
          */
-        mount(instance: I, isLayoutDirty = this.root.hasTreeAnimated) {
+        mount(instance: I) {
             if (this.instance) return
 
             this.isSVG = isSVGElement(instance)
@@ -450,7 +450,7 @@ export function createProjectionNode<I>({
             this.root.nodes!.add(this)
             this.parent && this.parent.children.add(this)
 
-            if (isLayoutDirty && (layout || layoutId)) {
+            if (this.root.hasTreeAnimated && (layout || layoutId)) {
                 this.isLayoutDirty = true
             }
 
@@ -593,7 +593,7 @@ export function createProjectionNode<I>({
             const stack = this.getStack()
             stack && stack.remove(this)
             this.parent && this.parent.children.delete(this)
-            ;(this.instance as any) = undefined
+            this.instance = undefined
             this.eventHandlers.clear()
 
             cancelFrame(this.updateProjection)
@@ -891,7 +891,7 @@ export function createProjectionNode<I>({
                 needsMeasurement = false
             }
 
-            if (needsMeasurement) {
+            if (needsMeasurement && this.instance) {
                 const isRoot = checkIsScrollRoot(this.instance)
                 this.scroll = {
                     animationId: this.root.animationId,
@@ -924,6 +924,7 @@ export function createProjectionNode<I>({
 
             if (
                 isResetRequested &&
+                this.instance &&
                 (hasProjection ||
                     hasTransform(this.latestValues) ||
                     transformTemplateHasChanged)

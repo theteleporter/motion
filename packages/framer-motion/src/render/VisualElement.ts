@@ -425,7 +425,6 @@ export abstract class VisualElement<
 
     unmount() {
         this.projection && this.projection.unmount()
-        this.projection = undefined
         cancelFrame(this.notifyUpdate)
         cancelFrame(this.render)
         this.valueSubscriptions.forEach((remove) => remove())
