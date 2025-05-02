@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.9.5] 2025-05-02
+
+### Fixed
+
+-   Fixed drag `undefined` error in React 19 Strict Mode.
+
 ## [12.9.4] 2025-05-01
 
 ### Fixed
