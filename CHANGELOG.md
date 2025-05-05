@@ -9,6 +9,7 @@ Undocumented APIs should be considered internal and may change without warning.
 ### Fixed
 
 -   Fixed drag `undefined` error in React 19 Strict Mode.
+-   Skip keyframe measurements for values without support for unit conversion.
 
 ## [12.9.4] 2025-05-01
 
