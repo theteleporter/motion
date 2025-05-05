@@ -206,6 +206,27 @@ function runTests(render: (components: any) => string) {
         expect(rect).toBe(
             '<rect mask="" class="test" style="background:#fff;transform:none;transform-origin:50% 50%;transform-box:fill-box"></rect>'
         )
+
+        const path = render(
+            <AnimatePresence>
+                <motion.path
+                    initial={{ x: 0 }}
+                    animate={{ x: 100 }}
+                    exit={{ x: 0 }}
+                    mask=""
+                    style={{
+                        background: "#fff",
+                        transformBox: "view-box",
+                    }}
+                    className="test"
+                    onMouseMove={() => {}}
+                />
+            </AnimatePresence>
+        )
+
+        expect(path).toBe(
+            '<path mask="" class="test" style="background:#fff;transform-box:view-box;transform:none;transform-origin:50% 50%"></path>'
+        )
     })
 
     test("initial correctly overrides style", () => {

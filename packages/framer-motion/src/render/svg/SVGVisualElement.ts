@@ -58,7 +58,8 @@ export class SVGVisualElement extends DOMVisualElement<
             renderState,
             latestValues,
             this.isSVGTag,
-            props.transformTemplate
+            props.transformTemplate,
+            props.style
         )
     }
 
