@@ -63,6 +63,85 @@ describe("styleEffect", () => {
         expect(element.style.color).toBe("blue")
     })
 
+    it("supports independent transform values", async () => {
+        const element = document.createElement("div")
+
+        // Create motion values
+        const x = motionValue("100%")
+        const transformPerspective = motionValue(500)
+        const scaleY = motionValue(2)
+
+        // Apply style effect
+        styleEffect(element, {
+            x,
+            transformPerspective,
+            scaleY,
+        })
+
+        await nextFrame()
+
+        // Verify initial styles
+        expect(element.style.transform).toBe(
+            "perspective(500px) translateX(100%) scaleY(2)"
+        )
+
+        // Change motion values
+        x.set("50%")
+        transformPerspective.set(1000)
+        scaleY.set(1)
+
+        // Updates should be scheduled for the next frame render
+        // Styles should not have changed yet
+        expect(element.style.transform).toBe(
+            "perspective(500px) translateX(100%) scaleY(2)"
+        )
+
+        await nextFrame()
+
+        // Verify styles are updated
+        expect(element.style.transform).toBe(
+            "perspective(1000px) translateX(50%) scaleY(1)"
+        )
+    })
+
+    it("supports independent transform values split across multiple styleEffects", async () => {
+        const element = document.createElement("div")
+
+        // Create motion values
+        const x = motionValue("100%")
+        const transformPerspective = motionValue(500)
+        const scaleY = motionValue(2)
+
+        // Apply style effect
+        styleEffect(element, { x })
+        styleEffect(element, { transformPerspective, scaleY })
+
+        await nextFrame()
+
+        // Verify initial styles
+        expect(element.style.transform).toBe(
+            "perspective(500px) translateX(100%) scaleY(2)"
+        )
+
+        // Change motion values
+        x.set("50%")
+        transformPerspective.set(1000)
+        scaleY.set(1)
+
+        // Updates should be scheduled for the next frame render
+        // Styles should not have changed yet
+        expect(element.style.transform).toBe(
+            "perspective(500px) translateX(100%) scaleY(2)"
+        )
+
+        await nextFrame()
+
+        // Verify styles are updated
+        expect(element.style.transform).toBe(
+            "perspective(1000px) translateX(50%) scaleY(1)"
+        )
+    })
+
     it("handles multiple elements", async () => {
         // Create additional elements
         const element = document.createElement("div")
