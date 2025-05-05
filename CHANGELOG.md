@@ -4,6 +4,106 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.9.7] 2025-05-05
+
+### Fixed
+
+-   Fix mixing `PopChild` with Astro view transitions.
+
+## [12.9.6] 2025-05-05
+
+### Fixed
+
+-   Fix setting `transformBox` via `style`.
+
+## [12.9.5] 2025-05-05
+
+### Fixed
+
+-   Fixed drag `undefined` error in React 19 Strict Mode.
+-   Skip keyframe measurements for values without support for unit conversion.
+
+## [12.9.4] 2025-05-01
+
+### Fixed
+
+-   Remove version check for `MotionValue`.
+
+## [12.9.3] 2025-05-01
+
+### Fixed
+
+-   Fixed memory leak when unmounting `motion` components.
+
+## [12.9.2] 2025-04-25
+
+### Fixed
+
+-   Fixed scroll timeline cache when defining `offset`.
+-   Detect when page scroll is attached to `document.body` and use this instead of `document.documentElement`.
+
+## [12.9.1] 2025-04-24
+
+### Fixed
+
+-   Restarting a finished main thread animation with a negative `.speed` now works as expected.
+
+## [12.9.0] 2025-04-24
+
+### Added
+
+-   `styleEffect`
+
+## [12.8.3] 2025-04-24
+
+### Changed
+
+-   Animating a `MotionValue` to its current value will skip creating the animation.
+
+### Fixed
+
+-   Ensure `.then()` fires when `.stop()` or `.cancel()` are called. This is undesired but reverts the behaviour to before `12.7.5`.
+
+## [12.8.2] 2025-04-24
+
+### Changed
+
+-   Unifying `transform` behaviour for SVG and CSS switched from element measurements for `transform-box: fill-box`.
+
+## [12.8.1] 2025-04-23
+
+### Fixed
+
+-   Removing errant `console.trace` on `value.set("none")`.
+
+## [12.8.0] 2025-04-23
+
+### Added
+
+-   `mapValue`
+-   `transformValue`
+
+### Changed
+
+-   Removed support for Framer's internal `CustomValueType`.
+
+## [12.7.5] 2025-04-22
+
+### Changed
+
+-   Improved scroll timeline caching.
+-   Replaced WAAPI keyframe generation with `linear()` easing.
+-   Ensure final defined keyframe is always applied to animations when animation finishes.
+-   Moved `instantAnimationState.current` to `MotionGlobalConfig.instantAnimations`.
+-   Changed `delay` from `read` to `setup` frameloop step.
+
+### Fixed
+
+-   Fixed `.then()` and `await` early resolution.
+-   Fixed replaying main thread animations after finished.
+-   `.speed` works correctly across all animation types.
+-   Various imperative animation control fixes.
+
 ## [12.7.4] 2025-04-17
 
 ### Fixed

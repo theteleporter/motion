@@ -1,4 +1,4 @@
-import { BezierDefinition } from "../../../types"
+import { BezierDefinition } from "motion-utils"
 import { cubicBezierAsString } from "../cubic-bezier"
 import { supportedWaapiEasing } from "../supported"
 

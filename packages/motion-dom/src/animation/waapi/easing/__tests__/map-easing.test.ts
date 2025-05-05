@@ -1,4 +1,4 @@
-import { BezierDefinition, Easing } from "../../../types"
+import { BezierDefinition, Easing } from "motion-utils"
 import { cubicBezierAsString } from "../cubic-bezier"
 import { mapEasingToNativeEasing } from "../map-easing"
 

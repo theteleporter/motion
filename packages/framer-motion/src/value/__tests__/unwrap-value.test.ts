@@ -1,15 +1,6 @@
 import { MotionValue } from "motion-dom"
 import { resolveMotionValue } from "../utils/resolve-motion-value"
 
-class Test {
-    mix() {
-        return () => 0
-    }
-    toValue() {
-        return 5
-    }
-}
-
 describe("resolveMotionValue", () => {
     it("should leave non-motion values alone", () => {
         let value: any = { test: "foo" }
@@ -23,8 +14,5 @@ describe("resolveMotionValue", () => {
         const value = { test: "bar" }
         motionValue = new MotionValue(value)
         expect(resolveMotionValue(motionValue)).toBe(value)
-    })
-    it("should should unwrap a custom value", () => {
-        expect(resolveMotionValue(new Test())).toEqual(5)
     })
 })

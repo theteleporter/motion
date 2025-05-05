@@ -54,11 +54,13 @@
             }
 
             async function runAnimation(newState, interrupt = "wait") {
-                return animateView(update(newState), {
+                const animation = await animateView(update(newState), {
                     ease: "easeOut",
                     duration: 1,
                     interrupt,
                 })
+
+                return animation
             }
 
             runAnimation("b")
