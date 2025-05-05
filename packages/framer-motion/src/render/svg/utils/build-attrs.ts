@@ -20,7 +20,8 @@ export function buildSVGAttrs(
         ...latest
     }: ResolvedValues,
     isSVGTag: boolean,
-    transformTemplate?: MotionProps["transformTemplate"]
+    transformTemplate?: MotionProps["transformTemplate"],
+    styleProp?: MotionProps["style"]
 ) {
     buildHTMLStyles(state, latest, transformTemplate)
 
@@ -57,7 +58,7 @@ export function buildSVGAttrs(
          * SVG's element transform-origin uses its own median as a reference.
          * Therefore, transformBox becomes a fill-box
          */
-        style.transformBox = "fill-box"
+        style.transformBox = (styleProp?.transformBox as string) ?? "fill-box"
         delete attrs.transformBox
     }
 
