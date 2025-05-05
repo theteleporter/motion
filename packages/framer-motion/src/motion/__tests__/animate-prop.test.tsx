@@ -1289,4 +1289,23 @@ describe("animate prop as object", () => {
 
         return expect(result).toBe(1)
     })
+
+    test("Positional values without specific handlers are not measured", async () => {
+        const result = await new Promise<boolean>((resolve) => {
+            const Component = () => {
+                return (
+                    <motion.div
+                        initial={{ rotate: "10deg", x: 100 }}
+                        animate={{ rotate: "2turn", x: 200 }}
+                        transition={{ duration: 0.01 }}
+                        onAnimationComplete={() => resolve(true)}
+                    />
+                )
+            }
+            const { rerender } = render(<Component />)
+            rerender(<Component />)
+        })
+
+        return expect(result).toBe(true)
+    })
 })

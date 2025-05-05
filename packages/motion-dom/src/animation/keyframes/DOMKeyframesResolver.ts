@@ -99,7 +99,7 @@ export class DOMKeyframesResolver<
                     unresolvedKeyframes[i] = parseFloat(value as string)
                 }
             }
-        } else {
+        } else if (positionalValues[name]) {
             /**
              * Else, the only way to resolve this is by measuring the element.
              */
