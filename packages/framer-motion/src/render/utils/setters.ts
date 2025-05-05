@@ -1,6 +1,11 @@
 import { motionValue } from "motion-dom"
-import { TargetAndTransition, TargetResolver } from "../../types"
-import { resolveFinalValueInKeyframes } from "../../utils/resolve-value"
+import { isKeyframesTarget } from "../../animation/utils/is-keyframes-target"
+import {
+    SingleTarget,
+    TargetAndTransition,
+    TargetResolver,
+    ValueTarget,
+} from "../../types"
 import type { VisualElement } from "../VisualElement"
 import { resolveVariant } from "./resolve-dynamic-variants"
 
@@ -18,6 +23,11 @@ function setMotionValue(
     } else {
         visualElement.addValue(key, motionValue(value))
     }
+}
+
+function resolveFinalValueInKeyframes(v: ValueTarget): SingleTarget {
+    // TODO maybe throw if v.length - 1 is placeholder token?
+    return isKeyframesTarget(v) ? v[v.length - 1] || 0 : v
 }
 
 export function setTarget(

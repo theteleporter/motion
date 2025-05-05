@@ -1,19 +1,16 @@
-import { frame, MotionValue } from "motion-dom"
+import { getDefaultValueType, MotionValue, transformProps } from "motion-dom"
 import { MotionProps, MotionStyle } from "../../motion/types"
 import { createBox } from "../../projection/geometry/models"
 import { IProjectionNode } from "../../projection/node/types"
 import { DOMVisualElement } from "../dom/DOMVisualElement"
 import { DOMVisualElementOptions } from "../dom/types"
 import { camelToDash } from "../dom/utils/camel-to-dash"
-import { getDefaultValueType } from "../dom/value-types/defaults"
-import { transformProps } from "../html/utils/keys-transform"
 import { ResolvedValues } from "../types"
 import { VisualElement } from "../VisualElement"
 import { SVGRenderState } from "./types"
 import { buildSVGAttrs } from "./utils/build-attrs"
 import { camelCaseAttributes } from "./utils/camel-case-attrs"
 import { isSVGTag } from "./utils/is-svg-tag"
-import { updateSVGDimensions } from "./utils/measure"
 import { renderSVG } from "./utils/render"
 import { scrapeMotionValuesFromProps } from "./utils/scrape-motion-values"
 
@@ -52,18 +49,6 @@ export class SVGVisualElement extends DOMVisualElement<
         return scrapeMotionValuesFromProps(props, prevProps, visualElement)
     }
 
-    updateDimensions = () => {
-        if (this.current && !this.renderState.dimensions) {
-            updateSVGDimensions(this.current, this.renderState)
-        }
-    }
-
-    onBindTransform() {
-        if (this.current && !this.renderState.dimensions) {
-            frame.postRender(this.updateDimensions)
-        }
-    }
-
     build(
         renderState: SVGRenderState,
         latestValues: ResolvedValues,
@@ -73,7 +58,8 @@ export class SVGVisualElement extends DOMVisualElement<
             renderState,
             latestValues,
             this.isSVGTag,
-            props.transformTemplate
+            props.transformTemplate,
+            props.style
         )
     }
 

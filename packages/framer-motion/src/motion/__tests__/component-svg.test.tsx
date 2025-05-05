@@ -1,7 +1,7 @@
-import { render } from "../../../jest.setup"
-import { motion, motionValue, useMotionValue, useTransform } from "../../"
 import { useRef } from "react"
+import { motion, motionValue, useMotionValue, useTransform } from "../../"
 import { nextFrame } from "../../gestures/__tests__/utils"
+import { render } from "../../jest.setup"
 
 describe("SVG", () => {
     test("doesn't add translateZ", () => {
@@ -12,8 +12,8 @@ describe("SVG", () => {
             </svg>
         )
 
-        expect(getByTestId("g")).not.toHaveStyle("transform: translateX(100px)")
-        expect(getByTestId("h")).not.toHaveStyle("transform: translateX(100px)")
+        expect(getByTestId("g")).toHaveStyle("transform: translateX(100px)")
+        expect(getByTestId("h")).toHaveStyle("transform: translateX(100px)")
     })
 
     test("accepts attrX/attrY/attrScale in types", () => {

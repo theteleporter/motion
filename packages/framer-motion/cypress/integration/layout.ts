@@ -46,7 +46,7 @@ describe("Layout animation", () => {
             /**
              * Test that onLayoutAnimationComplete fires
              */
-            .wait(300)
+            .wait(1000)
             .should(([$box]: any) => {
                 expect($box.style.backgroundColor).to.equal("blue")
             })

@@ -2,8 +2,8 @@ import {
     AnimationPlaybackControlsWithThen,
     frame,
     getValueTransition,
+    positionalKeys,
 } from "motion-dom"
-import { positionalKeys } from "../../render/html/utils/keys-position"
 import type { AnimationTypeState } from "../../render/utils/animation-state"
 import { setTarget } from "../../render/utils/setters"
 import type { VisualElement } from "../../render/VisualElement"
@@ -68,6 +68,20 @@ export function animateTarget(
         const valueTransition = {
             delay,
             ...getValueTransition(transition || {}, key),
+        }
+
+        /**
+         * If the value is already at the defined target, skip the animation.
+         */
+        const currentValue = value.get()
+        if (
+            currentValue !== undefined &&
+            !value.isAnimating &&
+            !Array.isArray(valueTarget) &&
+            valueTarget === currentValue &&
+            !valueTransition.velocity
+        ) {
+            continue
         }
 
         /**

@@ -48,6 +48,7 @@ function updateAxisInfo(
 
     axis.current = element[`scroll${position}`]
     axis.scrollLength = element[`scroll${length}`] - element[`client${length}`]
+
     axis.offset.length = 0
     axis.offset[0] = 0
     axis.offset[1] = axis.scrollLength

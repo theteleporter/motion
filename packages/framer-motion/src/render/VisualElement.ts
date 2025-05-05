@@ -1,11 +1,22 @@
 import {
     cancelFrame,
+    complex,
+    findValueType,
     frame,
+    getAnimatableNone,
+    KeyframeResolver,
     motionValue,
     time,
+    transformProps,
     type MotionValue,
 } from "motion-dom"
-import { SubscriptionManager, warnOnce } from "motion-utils"
+import type { Box } from "motion-utils"
+import {
+    isNumericalString,
+    isZeroValueString,
+    SubscriptionManager,
+    warnOnce,
+} from "motion-utils"
 import {
     MotionConfigContext,
     ReducedMotionConfig,
@@ -15,22 +26,14 @@ import { featureDefinitions } from "../motion/features/definitions"
 import { Feature } from "../motion/features/Feature"
 import { FeatureDefinitions } from "../motion/features/types"
 import { MotionProps, MotionStyle } from "../motion/types"
-import { OnUpdateSettings } from "../motion/utils/use-visual-state"
 import { createBox } from "../projection/geometry/models"
-import type { Box } from "../projection/geometry/types"
 import { IProjectionNode } from "../projection/node/types"
-import { isNumericalString } from "../utils/is-numerical-string"
-import { isZeroValueString } from "../utils/is-zero-value-string"
 import { initPrefersReducedMotion } from "../utils/reduced-motion"
 import {
     hasReducedMotionListener,
     prefersReducedMotion,
 } from "../utils/reduced-motion/state"
-import { complex } from "../value/types/complex"
 import { isMotionValue } from "../value/utils/is-motion-value"
-import { getAnimatableNone } from "./dom/value-types/animatable-none"
-import { findValueType } from "./dom/value-types/find"
-import { transformProps } from "./html/utils/keys-transform"
 import { visualElementStore } from "./store"
 import {
     ResolvedValues,
@@ -42,7 +45,6 @@ import {
     isControllingVariants as checkIsControllingVariants,
     isVariantNode as checkIsVariantNode,
 } from "./utils/is-controlling-variants"
-import { KeyframeResolver } from "./utils/KeyframesResolver"
 import { updateMotionValuesFromProps } from "./utils/motion-values"
 import { resolveVariantFromProps } from "./utils/resolve-variants"
 
@@ -330,10 +332,6 @@ export abstract class VisualElement<
         [key: string]: VoidFunction
     } = {}
 
-    private onUpdate?: (
-        settings: OnUpdateSettings<Instance, RenderState>
-    ) => void
-
     constructor(
         {
             parent,
@@ -345,8 +343,7 @@ export abstract class VisualElement<
         }: VisualElementOptions<Instance, RenderState>,
         options: Options = {} as any
     ) {
-        const { latestValues, renderState, onUpdate } = visualState
-        this.onUpdate = onUpdate
+        const { latestValues, renderState } = visualState
         this.latestValues = latestValues
         this.baseTarget = { ...latestValues }
         this.initialValues = props.initial ? { ...latestValues } : {}
@@ -631,8 +628,6 @@ export abstract class VisualElement<
         if (this.handleChildMotionValue) {
             this.handleChildMotionValue()
         }
-
-        this.onUpdate && this.onUpdate(this)
     }
 
     getProps() {

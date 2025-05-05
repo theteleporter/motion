@@ -1,5 +1,4 @@
-import { MotionValue } from "motion-dom"
-import { transform, TransformOptions } from "../utils/transform"
+import { MotionValue, transform, TransformOptions } from "motion-dom"
 import { useConstant } from "../utils/use-constant"
 import { useCombineMotionValues } from "./use-combine-values"
 import { useComputed } from "./use-computed"

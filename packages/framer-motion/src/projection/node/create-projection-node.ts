@@ -7,12 +7,22 @@ import {
     frameSteps,
     getValueTransition,
     microtask,
+    mixNumber,
     statsBuffer,
     time,
     ValueAnimationOptions,
     type Process,
 } from "motion-dom"
-import { noop, SubscriptionManager } from "motion-utils"
+import {
+    Axis,
+    AxisDelta,
+    Box,
+    clamp,
+    Delta,
+    noop,
+    Point,
+    SubscriptionManager,
+} from "motion-utils"
 import { animateSingleValue } from "../../animation/animate/single-value"
 import { getOptimisedAppearId } from "../../animation/optimized-appear/get-appear-id"
 import { MotionStyle } from "../../motion/types"
@@ -22,9 +32,7 @@ import { ResolvedValues } from "../../render/types"
 import { FlatTree } from "../../render/utils/flat-tree"
 import { VisualElement } from "../../render/VisualElement"
 import { Transition } from "../../types"
-import { clamp } from "../../utils/clamp"
 import { delay } from "../../utils/delay"
-import { mixNumber } from "../../utils/mix/number"
 import { resolveMotionValue } from "../../value/utils/resolve-motion-value"
 import { mixValues } from "../animation/mix-values"
 import { copyAxisDeltaInto, copyBoxInto } from "../geometry/copy"
@@ -43,7 +51,6 @@ import {
 } from "../geometry/delta-calc"
 import { removeBoxTransforms } from "../geometry/delta-remove"
 import { createBox, createDelta } from "../geometry/models"
-import { Axis, AxisDelta, Box, Delta, Point } from "../geometry/types"
 import {
     aspectRatio,
     axisDeltaEquals,
@@ -153,7 +160,7 @@ export function createProjectionNode<I>({
         /**
          * A reference to the platform-native node (currently this will be a HTMLElement).
          */
-        instance: I
+        instance: I | undefined
 
         /**
          * A reference to the root projection node. There'll only ever be one tree and one root.
@@ -428,7 +435,7 @@ export function createProjectionNode<I>({
         /**
          * Lifecycles
          */
-        mount(instance: I, isLayoutDirty = this.root.hasTreeAnimated) {
+        mount(instance: I) {
             if (this.instance) return
 
             this.isSVG = isSVGElement(instance)
@@ -443,7 +450,7 @@ export function createProjectionNode<I>({
             this.root.nodes!.add(this)
             this.parent && this.parent.children.add(this)
 
-            if (isLayoutDirty && (layout || layoutId)) {
+            if (this.root.hasTreeAnimated && (layout || layoutId)) {
                 this.isLayoutDirty = true
             }
 
@@ -586,7 +593,8 @@ export function createProjectionNode<I>({
             const stack = this.getStack()
             stack && stack.remove(this)
             this.parent && this.parent.children.delete(this)
-            ;(this.instance as any) = undefined
+            this.instance = undefined
+            this.eventHandlers.clear()
 
             cancelFrame(this.updateProjection)
         }
@@ -883,7 +891,7 @@ export function createProjectionNode<I>({
                 needsMeasurement = false
             }
 
-            if (needsMeasurement) {
+            if (needsMeasurement && this.instance) {
                 const isRoot = checkIsScrollRoot(this.instance)
                 this.scroll = {
                     animationId: this.root.animationId,
@@ -916,6 +924,7 @@ export function createProjectionNode<I>({
 
             if (
                 isResetRequested &&
+                this.instance &&
                 (hasProjection ||
                     hasTransform(this.latestValues) ||
                     transformTemplateHasChanged)
@@ -1490,9 +1499,7 @@ export function createProjectionNode<I>({
             hasOnlyRelativeTargetChanged: boolean = false
         ) {
             const snapshot = this.snapshot
-            const snapshotLatestValues = snapshot
-                ? snapshot.latestValues
-                : undefined || {}
+            const snapshotLatestValues = snapshot ? snapshot.latestValues : {}
             const mixedValues = { ...this.latestValues }
 
             const targetDelta = createDelta()
