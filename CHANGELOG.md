@@ -4,7 +4,13 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
-## [12.9.5] 2025-05-02
+## [12.9.6] 2025-05-05
+
+### Fixed
+
+-   Fix setting `transformBox` via `style`.
+
+## [12.9.5] 2025-05-05
 
 ### Fixed
 
