@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.9.7] 2025-05-05
+
+### Fixed
+
+-   Fix mixing `PopChild` with Astro view transitions.
+
 ## [12.9.6] 2025-05-05
 
 ### Fixed
