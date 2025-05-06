@@ -22,11 +22,12 @@ export function buildTransform(state: MotionValueState) {
 
         if (value === undefined) continue
 
+        const currentValue = value.get()
         let valueIsDefault = true
-        if (typeof value === "number") {
-            valueIsDefault = value === (key.startsWith("scale") ? 1 : 0)
+        if (typeof currentValue === "number") {
+            valueIsDefault = currentValue === (key.startsWith("scale") ? 1 : 0)
         } else {
-            valueIsDefault = false //parseFloat(value) === 0
+            valueIsDefault = parseFloat(currentValue.get()) === 0
         }
 
         if (!valueIsDefault) {
