@@ -18,16 +18,15 @@ export function buildTransform(state: MotionValueState) {
      */
     for (let i = 0; i < transformPropOrder.length; i++) {
         const key = transformPropOrder[i] as keyof typeof translateAlias
-        const value = state.get(key)
+        const value = state.latest[key]
 
         if (value === undefined) continue
 
-        const currentValue = value.get()
         let valueIsDefault = true
-        if (typeof currentValue === "number") {
-            valueIsDefault = currentValue === (key.startsWith("scale") ? 1 : 0)
+        if (typeof value === "number") {
+            valueIsDefault = value === (key.startsWith("scale") ? 1 : 0)
         } else {
-            valueIsDefault = parseFloat(currentValue.get()) === 0
+            valueIsDefault = parseFloat(value) === 0
         }
 
         if (!valueIsDefault) {
