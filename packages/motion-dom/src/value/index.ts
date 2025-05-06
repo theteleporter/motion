@@ -480,6 +480,7 @@ export class MotionValue<V = any> {
      * @public
      */
     destroy() {
+        this.dependents?.clear()
         this.events.destroy?.notify()
         this.clearListeners()
         this.stop()
