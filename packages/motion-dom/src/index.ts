@@ -36,7 +36,7 @@ export * from "./animation/waapi/supports/waapi"
 export * from "./animation/waapi/utils/accelerated-values"
 export * from "./animation/waapi/utils/linear"
 
-export * from "./effects/style-effect"
+export * from "./effects/style"
 
 export * from "./frameloop"
 export * from "./frameloop/batcher"

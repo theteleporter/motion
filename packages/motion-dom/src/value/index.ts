@@ -132,6 +132,12 @@ export class MotionValue<V = any> {
     private canTrackVelocity: boolean | null = null
 
     /**
+     * A list of MotionValues whose values are computed from this one.
+     * This is a rough start to a proper signal-like dirtying system.
+     */
+    private dependents: Set<MotionValue> | undefined
+
+    /**
      * Tracks whether this value should be removed
      */
     liveStyle?: boolean
@@ -303,6 +309,23 @@ export class MotionValue<V = any> {
         if (this.stopPassiveEffect) this.stopPassiveEffect()
     }
 
+    dirty() {
+        this.events.change?.notify(this.current)
+    }
+
+    addDependent(dependent: MotionValue) {
+        if (!this.dependents) {
+            this.dependents = new Set()
+        }
+        this.dependents.add(dependent)
+    }
+
+    removeDependent(dependent: MotionValue) {
+        if (this.dependents) {
+            this.dependents.delete(dependent)
+        }
+    }
+
     updateAndNotify = (v: V, render = true) => {
         const currentTime = time.now()
 
@@ -322,6 +345,12 @@ export class MotionValue<V = any> {
         // Update update subscribers
         if (this.current !== this.prev) {
             this.events.change?.notify(this.current)
+
+            if (this.dependents) {
+                for (const dependent of this.dependents) {
+                    dependent.dirty()
+                }
+            }
         }
 
         // Update render subscribers
