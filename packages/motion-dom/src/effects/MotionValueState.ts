@@ -1,8 +1,10 @@
 import { cancelFrame, frame } from "../frameloop/frame"
 import { MotionValue } from "../value"
+import { numberValueTypes } from "../value/types/maps/number"
+import { getValueAsType } from "../value/types/utils/get-as-type"
 
 export class MotionValueState {
-    latest: { [key: string]: string | number } = {}
+    latest: { [name: string]: string | number } = {}
 
     private values = new Map<
         string,
@@ -10,19 +12,23 @@ export class MotionValueState {
     >()
 
     set(
-        key: string,
+        name: string,
         value: MotionValue,
         render?: VoidFunction,
         computed?: MotionValue
     ) {
-        const existingValue = this.values.get(key)
+        const existingValue = this.values.get(name)
 
         if (existingValue) {
             existingValue.onRemove()
         }
 
         const onChange = () => {
-            this.latest[key] = value.get()
+            this.latest[name] = getValueAsType(
+                value.get(),
+                numberValueTypes[name]
+            )
+
             render && frame.render(render)
         }
 
@@ -35,25 +41,17 @@ export class MotionValueState {
         const remove = () => {
             cancelOnChange()
             render && cancelFrame(render)
-            this.values.delete(key)
+            this.values.delete(name)
             computed && value.removeDependent(computed)
         }
 
-        this.values.set(key, { value, onRemove: remove })
+        this.values.set(name, { value, onRemove: remove })
 
         return remove
     }
 
-    remove(key: string, value: MotionValue) {
-        const existingValue = this.values.get(key)
-        if (existingValue?.value === value) {
-            existingValue.onRemove()
-            this.values.delete(key)
-        }
-    }
-
-    get(key: string): MotionValue | undefined {
-        return this.values.get(key)?.value
+    get(name: string): MotionValue | undefined {
+        return this.values.get(name)?.value
     }
 
     destroy() {

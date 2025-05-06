@@ -14,12 +14,14 @@ describe("styleEffect", () => {
 
         // Create motion values
         const width = motionValue("100px")
+        const height = motionValue(101)
         const color = motionValue("red")
         const testVar = motionValue(100)
 
         // Apply style effect
         styleEffect(element, {
             width,
+            height,
             color,
             "--test-var": testVar,
         })
@@ -28,12 +30,14 @@ describe("styleEffect", () => {
 
         // Verify styles are set
         expect(element.style.width).toBe("100px")
+        expect(element.style.height).toBe("101px")
         expect(element.style.color).toBe("red")
         expect(element.style.getPropertyValue("--test-var")).toBe("100")
     })
 
     it("updates styles when motion values change", async () => {
         const element = document.createElement("div")
+
         // Create motion values
         const width = motionValue("100px")
         const color = motionValue("red")

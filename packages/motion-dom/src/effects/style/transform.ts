@@ -1,6 +1,4 @@
 import { transformPropOrder } from "../../render/utils/keys-transform"
-import { numberValueTypes } from "../../value/types/maps/number"
-import { getValueAsType } from "../../value/types/utils/get-as-type"
 import { MotionValueState } from "../MotionValueState"
 
 const translateAlias = {
@@ -20,7 +18,7 @@ export function buildTransform(state: MotionValueState) {
      */
     for (let i = 0; i < transformPropOrder.length; i++) {
         const key = transformPropOrder[i] as keyof typeof translateAlias
-        const value = state.latest[key]
+        const value = state.get(key)
 
         if (value === undefined) continue
 
@@ -28,16 +26,16 @@ export function buildTransform(state: MotionValueState) {
         if (typeof value === "number") {
             valueIsDefault = value === (key.startsWith("scale") ? 1 : 0)
         } else {
-            valueIsDefault = parseFloat(value) === 0
+            valueIsDefault = false //parseFloat(value) === 0
         }
 
         if (!valueIsDefault) {
-            const valueAsType = getValueAsType(value, numberValueTypes[key])
-
             transformIsDefault = false
             const transformName = translateAlias[key] || key
-            transform += `${transformName}(${valueAsType}) `
+            const valueToRender = state.latest[key]
+            transform += `${transformName}(${valueToRender}) `
         }
     }
+
     return transformIsDefault ? "none" : transform.trim()
 }
