@@ -74,6 +74,8 @@ export function scrollInfo(
         }
 
         target.addEventListener("scroll", listener, { passive: true })
+
+        listener()
     }
 
     const listener = scrollListeners.get(container)!

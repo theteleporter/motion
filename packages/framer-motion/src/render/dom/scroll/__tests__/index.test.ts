@@ -11,7 +11,10 @@ type Measurements = {
 const measurements = new Map<Element, Measurements>()
 
 async function nextFrame() {
-    return new Promise((resolve) => frame.postRender(resolve))
+    return new Promise((resolve) => {
+        window.dispatchEvent(new window.Event("scroll"))
+        frame.postRender(resolve)
+    })
 }
 
 const createMockMeasurement = (element: Element, name: string) => {
@@ -210,7 +213,7 @@ describe("scrollInfo", () => {
         )
 
         return new Promise<void>(async (resolve) => {
-            await nextFrame()
+            await fireElementScroll(0)
             expect(latest.y.current).toEqual(0)
             expect(latest.y.offset).toEqual([0, 200])
             expect(latest.y.scrollLength).toEqual(900)
@@ -541,7 +544,7 @@ describe("scroll", () => {
         )
 
         return new Promise<void>(async (resolve) => {
-            await nextFrame()
+            await fireElementScroll(0)
             expect(latest.y.current).toEqual(0)
             expect(latest.y.offset).toEqual([0, 200])
             expect(latest.y.scrollLength).toEqual(900)
