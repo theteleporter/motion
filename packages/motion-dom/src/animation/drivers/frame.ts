@@ -14,5 +14,6 @@ export const frameloopDriver: Driver = (update) => {
          * framelocked timestamp to keep things in sync.
          */
         now: () => (frameData.isProcessing ? frameData.timestamp : time.now()),
+        schedule: () => frame.update(passTimestamp),
     }
 }

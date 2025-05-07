@@ -60,9 +60,9 @@ export function scrollInfo(
         }
 
         const listener = () => {
-            frame.read(measureAll, false, true)
-            frame.read(updateAll, false, true)
-            frame.preUpdate(notifyAll, false, true)
+            frame.read(measureAll)
+            frame.read(updateAll)
+            frame.preUpdate(notifyAll)
         }
 
         scrollListeners.set(container, listener)

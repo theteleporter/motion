@@ -11,6 +11,7 @@ export interface DriverControls {
     start: () => void
     stop: () => void
     now: () => number
+    schedule: () => void
 }
 
 export type Driver = (update: Update) => DriverControls
