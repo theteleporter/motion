@@ -368,7 +368,7 @@ export class JSAnimation<T extends number | string>
             this.startTime = this.driver.now() - newTime / this.playbackSpeed
         }
 
-        this.driver?.schedule()
+        this.driver?.start(false)
     }
 
     get speed() {

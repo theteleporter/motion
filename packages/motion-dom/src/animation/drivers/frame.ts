@@ -7,13 +7,12 @@ export const frameloopDriver: Driver = (update) => {
     const passTimestamp = ({ timestamp }: FrameData) => update(timestamp)
 
     return {
-        start: () => frame.update(passTimestamp, true),
+        start: (keepAlive = true) => frame.update(passTimestamp, keepAlive),
         stop: () => cancelFrame(passTimestamp),
         /**
          * If we're processing this frame we can use the
          * framelocked timestamp to keep things in sync.
          */
         now: () => (frameData.isProcessing ? frameData.timestamp : time.now()),
-        schedule: () => frame.update(passTimestamp),
     }
 }
