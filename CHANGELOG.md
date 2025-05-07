@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.10.1] 2025-05-07
+
+### Changed
+
+-   Main thread `scroll` animations are now lazy, resolving after `"scroll"` events instead of every animation frame.
+
 ## [12.10.0] 2025-05-06
 
 ### Added
