@@ -9,7 +9,7 @@ import { time } from "../frameloop/sync-time"
 import { activeAnimations } from "../stats/animation-count"
 import { mix } from "../utils/mix"
 import { Mixer } from "../utils/mix/types"
-import { frameloopDriver } from "./drivers/driver-frameloop"
+import { frameloopDriver } from "./drivers/frame"
 import { DriverControls } from "./drivers/types"
 import { inertia } from "./generators/inertia"
 import { keyframes as keyframesGenerator } from "./generators/keyframes"
@@ -367,6 +367,8 @@ export class JSAnimation<T extends number | string>
         } else if (this.driver) {
             this.startTime = this.driver.now() - newTime / this.playbackSpeed
         }
+
+        this.driver?.start(false)
     }
 
     get speed() {
@@ -493,6 +495,7 @@ export class JSAnimation<T extends number | string>
             this.initAnimation()
         }
 
+        this.driver?.stop()
         return timeline.observe(this)
     }
 }

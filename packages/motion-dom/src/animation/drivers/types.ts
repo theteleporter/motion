@@ -8,7 +8,7 @@ type Update = (timestamp: number) => void
  * could be a synchronous loop, a setInterval, or tied to the device's framerate.
  */
 export interface DriverControls {
-    start: () => void
+    start: (keepAlive?: boolean) => void
     stop: () => void
     now: () => number
 }
