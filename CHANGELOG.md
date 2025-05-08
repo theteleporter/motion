@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.10.2] 2025-05-08
+
+### Fixed
+
+-   Fixed `.cancel()` after `.stop()`.
+
 ## [12.10.1] 2025-05-07
 
 ### Changed
