@@ -432,10 +432,12 @@ export class JSAnimation<T extends number | string>
      * This method is bound to the instance to fix a pattern where
      * animation.stop is returned as a reference from a useEffect.
      */
-    stop = () => {
-        const { motionValue } = this.options
-        if (motionValue && motionValue.updatedAt !== time.now()) {
-            this.tick(time.now())
+    stop = (sync = true) => {
+        if (sync) {
+            const { motionValue } = this.options
+            if (motionValue && motionValue.updatedAt !== time.now()) {
+                this.tick(time.now())
+            }
         }
 
         this.isStopped = true

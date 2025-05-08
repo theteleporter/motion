@@ -1,11 +1,11 @@
 import {
     activeAnimations,
-    AnimationPlaybackControls,
     cancelFrame,
     frame,
     frameData,
     frameSteps,
     getValueTransition,
+    JSAnimation,
     microtask,
     mixNumber,
     statsBuffer,
@@ -1490,7 +1490,7 @@ export function createProjectionNode<I>({
          */
         animationValues?: ResolvedValues
         pendingAnimation?: Process
-        currentAnimation?: AnimationPlaybackControls
+        currentAnimation?: JSAnimation<number>
         mixTargetDelta: (progress: number) => void
         animationProgress = 0
 
@@ -1595,10 +1595,9 @@ export function createProjectionNode<I>({
         startAnimation(options: ValueAnimationOptions<number>) {
             this.notifyListeners("animationStart")
 
-            this.currentAnimation && this.currentAnimation.stop()
-            if (this.resumingFrom && this.resumingFrom.currentAnimation) {
-                this.resumingFrom.currentAnimation.stop()
-            }
+            this.currentAnimation?.stop(false)
+            this.resumingFrom?.currentAnimation?.stop(false)
+
             if (this.pendingAnimation) {
                 cancelFrame(this.pendingAnimation)
                 this.pendingAnimation = undefined
@@ -1627,7 +1626,7 @@ export function createProjectionNode<I>({
                         options.onComplete && options.onComplete()
                         this.completeAnimation()
                     },
-                })
+                }) as JSAnimation<number>
 
                 if (this.resumingFrom) {
                     this.resumingFrom.currentAnimation = this.currentAnimation
@@ -1656,7 +1655,7 @@ export function createProjectionNode<I>({
         finishAnimation() {
             if (this.currentAnimation) {
                 this.mixTargetDelta && this.mixTargetDelta(animationTarget)
-                this.currentAnimation.stop()
+                this.currentAnimation.stop(false)
             }
 
             this.completeAnimation()
@@ -2013,7 +2012,7 @@ export function createProjectionNode<I>({
         // Only run on root
         resetTree() {
             this.root.nodes!.forEach((node: IProjectionNode) =>
-                node.currentAnimation?.stop()
+                node.currentAnimation?.stop(false)
             )
             this.root.nodes!.forEach(clearMeasurements)
             this.root.sharedNodes.clear()
