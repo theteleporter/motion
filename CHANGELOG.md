@@ -4,11 +4,18 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
-## [12.10.3] 2025-05-08
+## [12.10.4] 2025-05-08
 
 ### Fixed
 
 -   Fixed layout animations jumping when interrupted.
+-   Lower memory and runtime overhead of layout animations.
+
+## [12.10.3] 2025-05-08
+
+### Fixed
+
+-   Attempting to fix layout animations jumping when interrupted.
 
 ## [12.10.2] 2025-05-08
 
