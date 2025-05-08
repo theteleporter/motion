@@ -1,4 +1,4 @@
-import { AnimationPlaybackControls } from "motion-dom"
+import { JSAnimation } from "motion-dom"
 import { Box, Delta, Point } from "motion-utils"
 import { InitialPromotionConfig } from "../../context/SwitchLayoutGroupContext"
 import { MotionStyle } from "../../motion/types"
@@ -109,7 +109,7 @@ export interface IProjectionNode<I = unknown> {
 
     isProjecting(): boolean
     animationValues?: ResolvedValues
-    currentAnimation?: AnimationPlaybackControls
+    currentAnimation?: JSAnimation<number>
     isTreeAnimating?: boolean
     isAnimationBlocked?: boolean
     isTreeAnimationBlocked: () => boolean

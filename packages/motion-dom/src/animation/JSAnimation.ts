@@ -5,7 +5,6 @@ import {
     pipe,
     secondsToMilliseconds,
 } from "motion-utils"
-import { frame } from "../frameloop/frame"
 import { time } from "../frameloop/sync-time"
 import { activeAnimations } from "../stats/animation-count"
 import { mix } from "../utils/mix"
@@ -433,14 +432,19 @@ export class JSAnimation<T extends number | string>
      * This method is bound to the instance to fix a pattern where
      * animation.stop is returned as a reference from a useEffect.
      */
-    stop = () => {
-        frame.preRender(() => {
-            this.isStopped = true
-            if (this.state === "idle") return
-            this.teardown()
-            const { onStop } = this.options
-            onStop && onStop()
-        })
+    stop = (sync = true) => {
+        if (sync) {
+            const { motionValue } = this.options
+            if (motionValue && motionValue.updatedAt !== time.now()) {
+                this.tick(time.now())
+            }
+        }
+
+        this.isStopped = true
+        if (this.state === "idle") return
+        this.teardown()
+        const { onStop } = this.options
+        onStop && onStop()
     }
 
     complete() {
