@@ -1614,6 +1614,7 @@ export function createProjectionNode<I>({
                 activeAnimations.layout++
                 this.currentAnimation = animateSingleValue(0, animationTarget, {
                     ...(options as any),
+                    isSync: true,
                     onUpdate: (latest: number) => {
                         this.mixTargetDelta(latest)
                         options.onUpdate && options.onUpdate(latest)
