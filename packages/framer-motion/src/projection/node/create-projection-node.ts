@@ -8,6 +8,8 @@ import {
     JSAnimation,
     microtask,
     mixNumber,
+    MotionValue,
+    motionValue,
     statsBuffer,
     time,
     ValueAnimationOptions,
@@ -1592,6 +1594,7 @@ export function createProjectionNode<I>({
             this.mixTargetDelta(this.options.layoutRoot ? 1000 : 0)
         }
 
+        motionValue?: MotionValue<number>
         startAnimation(options: ValueAnimationOptions<number>) {
             this.notifyListeners("animationStart")
 
@@ -1612,21 +1615,27 @@ export function createProjectionNode<I>({
                 globalProjectionState.hasAnimatedSinceResize = true
 
                 activeAnimations.layout++
-                this.currentAnimation = animateSingleValue(0, animationTarget, {
-                    ...(options as any),
-                    onUpdate: (latest: number) => {
-                        this.mixTargetDelta(latest)
-                        options.onUpdate && options.onUpdate(latest)
-                    },
-                    onStop: () => {
-                        activeAnimations.layout--
-                    },
-                    onComplete: () => {
-                        activeAnimations.layout--
-                        options.onComplete && options.onComplete()
-                        this.completeAnimation()
-                    },
-                }) as JSAnimation<number>
+                this.motionValue ||= motionValue(0)
+                this.currentAnimation = animateSingleValue(
+                    this.motionValue,
+                    [0, 1000],
+                    {
+                        ...(options as any),
+                        isSync: true,
+                        onUpdate: (latest: number) => {
+                            this.mixTargetDelta(latest)
+                            options.onUpdate && options.onUpdate(latest)
+                        },
+                        onStop: () => {
+                            activeAnimations.layout--
+                        },
+                        onComplete: () => {
+                            activeAnimations.layout--
+                            options.onComplete && options.onComplete()
+                            this.completeAnimation()
+                        },
+                    }
+                ) as JSAnimation<number>
 
                 if (this.resumingFrom) {
                     this.resumingFrom.currentAnimation = this.currentAnimation

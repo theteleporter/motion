@@ -157,7 +157,9 @@ export interface AnimationPlaybackLifecycles<V> {
 
 export interface ValueAnimationTransition<V = any>
     extends Transition,
-        AnimationPlaybackLifecycles<V> {}
+        AnimationPlaybackLifecycles<V> {
+    isSync?: boolean
+}
 
 export type RepeatType = "loop" | "reverse" | "mirror"
 

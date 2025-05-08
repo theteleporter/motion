@@ -7,6 +7,7 @@ import {
     AsyncMotionValueAnimation,
     frame,
     getValueTransition,
+    JSAnimation,
     ValueAnimationOptions,
 } from "motion-dom"
 import { MotionGlobalConfig, secondsToMilliseconds } from "motion-utils"
@@ -133,5 +134,7 @@ export const animateMotionValue =
             }
         }
 
-        return new AsyncMotionValueAnimation(options)
+        return valueTransition.isSync
+            ? new JSAnimation(options)
+            : new AsyncMotionValueAnimation(options)
     }
