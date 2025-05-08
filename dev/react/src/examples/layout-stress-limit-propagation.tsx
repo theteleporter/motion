@@ -1,4 +1,4 @@
-import { motion, MotionConfig } from "framer-motion"
+import { LayoutGroup, motion, MotionConfig } from "framer-motion"
 import * as React from "react"
 import { useState } from "react"
 
@@ -122,268 +122,270 @@ export const App = () => {
     }
 
     return (
-        <MotionConfig transition={{ duration: 2 }}>
-            <motion.div
-                data-layout
-                style={containerStyles}
-                onClick={() => {
-                    setExpanded(!expanded)
-                }}
-                layout
-            >
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-                <Group>
-                    <Group />
-                </Group>
-            </motion.div>
-        </MotionConfig>
+        <LayoutGroup>
+            <MotionConfig transition={{ duration: 2 }}>
+                <motion.div
+                    data-layout
+                    style={containerStyles}
+                    onClick={() => {
+                        setExpanded(!expanded)
+                    }}
+                    layout
+                >
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                    <Group>
+                        <Group />
+                    </Group>
+                </motion.div>
+            </MotionConfig>
+        </LayoutGroup>
     )
 }
