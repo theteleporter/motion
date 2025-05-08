@@ -191,6 +191,7 @@ export class AsyncMotionValueAnimation<T extends string | number>
 
     get animation(): AnimationPlaybackControls {
         if (!this._animation) {
+            this.keyframeResolver?.resume()
             flushKeyframeResolvers()
         }
 
@@ -248,7 +249,11 @@ export class AsyncMotionValueAnimation<T extends string | number>
     }
 
     cancel() {
-        this.animation.cancel()
+        if (this._animation) {
+            this.animation.cancel()
+        }
+
+        this.keyframeResolver?.cancel()
     }
 
     /**
@@ -258,8 +263,8 @@ export class AsyncMotionValueAnimation<T extends string | number>
         if (this._animation) {
             this._animation.stop()
             this.stopTimeline?.()
-        } else {
-            this.keyframeResolver?.cancel()
         }
+
+        this.keyframeResolver?.cancel()
     }
 }

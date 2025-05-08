@@ -109,11 +109,7 @@ export class KeyframeResolver<T extends string | number = any> {
     private motionValue?: MotionValue<T>
     private onComplete: OnKeyframesResolved<T>
 
-    /**
-     * Track whether this resolver has completed. Once complete, it never
-     * needs to attempt keyframe resolution again.
-     */
-    private isComplete = false
+    state: "pending" | "scheduled" | "complete" = "pending"
 
     /**
      * Track whether this resolver is async. If it is, it'll be added to the
@@ -127,12 +123,6 @@ export class KeyframeResolver<T extends string | number = any> {
      * to resolve its keyframes.
      */
     needsMeasurement = false
-
-    /**
-     * Track whether this resolver is currently scheduled to resolve
-     * to allow it to be cancelled and resumed externally.
-     */
-    isScheduled = false
 
     constructor(
         unresolvedKeyframes: UnresolvedKeyframes<string | number>,
@@ -151,7 +141,7 @@ export class KeyframeResolver<T extends string | number = any> {
     }
 
     scheduleResolve() {
-        this.isScheduled = true
+        this.state = "scheduled"
 
         if (this.isAsync) {
             toResolve.add(this)
@@ -205,26 +195,26 @@ export class KeyframeResolver<T extends string | number = any> {
     renderEndStyles() {}
     measureEndState() {}
 
-    complete(isForced = false) {
-        this.isComplete = true
+    complete(isForcedComplete = false) {
+        this.state = "complete"
 
         this.onComplete(
             this.unresolvedKeyframes as ResolvedKeyframes<T>,
             this.finalKeyframe as T,
-            isForced
+            isForcedComplete
         )
 
         toResolve.delete(this)
     }
 
     cancel() {
-        if (!this.isComplete) {
-            this.isScheduled = false
+        if (this.state === "scheduled") {
             toResolve.delete(this)
+            this.state = "pending"
         }
     }
 
     resume() {
-        if (!this.isComplete) this.scheduleResolve()
+        if (this.state === "pending") this.scheduleResolve()
     }
 }
