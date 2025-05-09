@@ -153,6 +153,9 @@ export interface AnimationPlaybackLifecycles<V> {
     onComplete?: () => void
     onRepeat?: () => void
     onStop?: () => void
+
+    // @internal
+    onCancel?: () => void
 }
 
 export interface ValueAnimationTransition<V = any>

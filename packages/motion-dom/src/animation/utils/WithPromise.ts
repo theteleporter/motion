@@ -2,7 +2,6 @@ export class WithPromise {
     protected _finished: Promise<void>
 
     resolve: VoidFunction
-    count = 0
 
     constructor() {
         this.updateFinished()
@@ -13,7 +12,6 @@ export class WithPromise {
     }
 
     protected updateFinished() {
-        this.count++
         this._finished = new Promise<void>((resolve) => {
             this.resolve = resolve
         })

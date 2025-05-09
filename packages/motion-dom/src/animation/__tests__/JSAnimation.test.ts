@@ -1211,11 +1211,10 @@ describe("JSAnimation", () => {
                         animation.cancel()
                     }
                 },
-            })
-
-            animation.finished.finally(() => {
-                expect(output).toEqual([0, 20, 40, 0])
-                resolve()
+                onCancel: () => {
+                    expect(output).toEqual([0, 20, 40, 0])
+                    resolve()
+                },
             })
         })
     })
