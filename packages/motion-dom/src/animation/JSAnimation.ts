@@ -457,6 +457,7 @@ export class JSAnimation<T extends number | string>
     }
 
     finish() {
+        this.notifyFinished()
         this.teardown()
         this.state = "finished"
 
@@ -472,7 +473,6 @@ export class JSAnimation<T extends number | string>
     }
 
     private teardown() {
-        this.notifyFinished()
         this.state = "idle"
         this.stopDriver()
         this.startTime = this.holdTime = null

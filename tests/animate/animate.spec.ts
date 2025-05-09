@@ -105,7 +105,7 @@ test.describe("animate() methods", () => {
             const boundingBox = await box.boundingBox()
             expect(boundingBox?.x).toBeCloseTo(0)
             const text = await box.innerText()
-            expect(text).toBe("finished")
+            expect(text).not.toBe("finished")
         })
     })
 
@@ -308,7 +308,7 @@ test.describe("animate() methods", () => {
             // Ensure a style has been applied
             const style = await box.getAttribute("style")
             expect(style).toContain("transform: translateX")
-            expect(await box.innerText()).toBe("finished")
+            expect(await box.innerText()).not.toBe("finished")
         })
 
         const boxes = page.locator(".box")

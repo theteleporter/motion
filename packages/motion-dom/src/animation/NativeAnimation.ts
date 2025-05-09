@@ -108,11 +108,6 @@ export class NativeAnimation<T extends string | number>
             onComplete?.()
             this.notifyFinished()
         }
-
-        /**
-         * TODO: In a breaking change, we should replace this with `.notifyCancel()`
-         */
-        this.animation.oncancel = () => this.notifyFinished()
     }
 
     updateMotionValue?(value?: T): void
