@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.10.6] 2025-05-09
+
+### Fixed
+
+-   Stop firing `.then()` after `.stop()` and `.cancel()`.
+
 ## [12.10.5] 2025-05-09
 
 ### Fixed
