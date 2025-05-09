@@ -88,7 +88,7 @@ describe("JSAnimation", () => {
                 onUpdate: (v) => numeric.push(v),
                 onComplete: () => {
                     expect(numeric).toEqual([0, 40, 80, 120, 160, 200])
-                    console.log("first animation complete")
+
                     animateValue({
                         driver: syncDriver(20),
                         duration: 100,
@@ -1211,11 +1211,10 @@ describe("JSAnimation", () => {
                         animation.cancel()
                     }
                 },
-            })
-
-            animation.finished.finally(() => {
-                expect(output).toEqual([0, 20, 40, 0])
-                resolve()
+                onCancel: () => {
+                    expect(output).toEqual([0, 20, 40, 0])
+                    resolve()
+                },
             })
         })
     })

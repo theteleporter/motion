@@ -388,13 +388,13 @@ export class JSAnimation<T extends number | string>
     play() {
         if (this.isStopped) return
 
-        const { driver = frameloopDriver, onPlay, startTime } = this.options
+        const { driver = frameloopDriver, startTime } = this.options
 
         if (!this.driver) {
             this.driver = driver((timestamp) => this.tick(timestamp))
         }
 
-        onPlay && onPlay()
+        this.options.onPlay?.()
 
         const now = this.driver.now()
 
@@ -443,8 +443,7 @@ export class JSAnimation<T extends number | string>
         this.isStopped = true
         if (this.state === "idle") return
         this.teardown()
-        const { onStop } = this.options
-        onStop && onStop()
+        this.options.onStop?.()
     }
 
     complete() {
@@ -461,8 +460,7 @@ export class JSAnimation<T extends number | string>
         this.teardown()
         this.state = "finished"
 
-        const { onComplete } = this.options
-        onComplete && onComplete()
+        this.options.onComplete?.()
     }
 
     cancel() {
@@ -470,6 +468,7 @@ export class JSAnimation<T extends number | string>
         this.startTime = 0
         this.tick(0)
         this.teardown()
+        this.options.onCancel?.()
     }
 
     private teardown() {
