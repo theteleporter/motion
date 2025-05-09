@@ -28,6 +28,14 @@
                 }
             })
 
+            hover("#hover", (target) => {
+                target.style.color = "green"
+
+                return () => {
+                    target.style.color = "purple"
+                }
+            })
+
             let multiCount = 0
             hover("#multi", (target) => {
                 target.innerHTML = multiCount

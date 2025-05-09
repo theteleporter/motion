@@ -3,6 +3,7 @@ import {
     resolveElements,
 } from "../../utils/resolve-elements"
 import { EventOptions } from "../types"
+
 export function setupGesture(
     elementOrSelector: ElementOrSelector,
     options: EventOptions

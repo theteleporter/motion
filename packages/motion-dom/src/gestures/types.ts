@@ -1,5 +1,5 @@
 /**
- * Options for the hover gesture.
+ * Options for event listeners.
  *
  * @public
  */

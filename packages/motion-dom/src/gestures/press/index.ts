@@ -53,7 +53,7 @@ export function press(
     const startPress = (startEvent: PointerEvent) => {
         const target = startEvent.currentTarget as Element
 
-        if (!isValidPressEvent(startEvent) || isPressing.has(target)) return
+        if (!isValidPressEvent(startEvent)) return
 
         isPressing.add(target)
 
