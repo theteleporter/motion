@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.10.5] 2025-05-09
+
+### Fixed
+
+-   Fixed attaching multiple `press` handlers on the same element.
+
 ## [12.10.4] 2025-05-08
 
 ### Fixed
