@@ -48,6 +48,15 @@
                 }
             })
 
+            // Test that we can attach multiple handlers to the same element
+            press("#press-div", (target) => {
+                target.style.color = "green"
+
+                return () => {
+                    target.style.color = "purple"
+                }
+            })
+
             press("#press-div-cancel", (target) => {
                 target.innerHTML = "start"
 
