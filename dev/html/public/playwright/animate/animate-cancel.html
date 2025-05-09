@@ -51,9 +51,13 @@
             mini.finished.then(() => {
                 miniElement.innerHTML = "finished"
             })
-            js.finished.then(() => {
-                jsElement.innerHTML = "finished"
-            })
+            js.finished
+                .then(() => {
+                    jsElement.innerHTML = "finished"
+                })
+                .catch(() => {
+                    console.log("js rejected")
+                })
             waapi.finished.then(() => {
                 waapiElement.innerHTML = "finished"
             })
