@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.11.0] 2025-05-12
+
+### Added
+
+-   Added `value.isEffectActive` for internal use.
+
 ## [12.10.6] 2025-05-09
 
 ### Fixed

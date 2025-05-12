@@ -118,6 +118,11 @@ export class MotionValue<V = any> {
     private stopPassiveEffect?: VoidFunction
 
     /**
+     * Whether the passive effect is active.
+     */
+    isEffectActive?: boolean
+
+    /**
      * A reference to the currently-controlling animation.
      */
     animation?: AnimationPlaybackControlsWithThen
