@@ -69,12 +69,6 @@ export const collectMotionValues: { current: MotionValue[] | undefined } = {
  */
 export class MotionValue<V = any> {
     /**
-     * This will be replaced by the build step with the latest version number.
-     * When MotionValues are provided to motion components, warn if versions are mixed.
-     */
-    version = "__VERSION__"
-
-    /**
      * If a MotionValue has an owner, it was created internally within Motion
      * and therefore has no external listeners. It is therefore safe to animate via WAAPI.
      */
