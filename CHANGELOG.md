@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.11.3] 2025-05-14
+
+### Changed
+
+-   `useWillChange` now only adds `transform` to `will-change` to prevent issues with prematurely flattened `preserve-3d`.
+
 ## [12.11.2] 2025-05-14
 
 ### Fixed
