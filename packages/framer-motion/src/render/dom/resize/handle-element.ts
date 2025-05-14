@@ -1,4 +1,4 @@
-import { ElementOrSelector, resolveElements } from "motion-dom"
+import { ElementOrSelector, isSVGElement, resolveElements } from "motion-dom"
 import { ResizeHandler } from "./types"
 
 const resizeHandlers = new WeakMap<Element, Set<ResizeHandler<Element>>>()
@@ -12,7 +12,7 @@ function getElementSize(
     if (borderBoxSize) {
         const { inlineSize, blockSize } = borderBoxSize[0]
         return { width: inlineSize, height: blockSize }
-    } else if (target instanceof SVGElement && "getBBox" in target) {
+    } else if (isSVGElement(target) && "getBBox" in target) {
         return (target as SVGGraphicsElement).getBBox()
     } else {
         return {
