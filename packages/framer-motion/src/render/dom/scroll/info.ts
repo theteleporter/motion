@@ -35,7 +35,7 @@ const keys = {
 } as const
 
 function updateAxisInfo(
-    element: HTMLElement,
+    element: Element,
     axisName: "x" | "y",
     info: ScrollInfo,
     time: number
@@ -62,7 +62,7 @@ function updateAxisInfo(
 }
 
 export function updateScrollInfo(
-    element: HTMLElement,
+    element: Element,
     info: ScrollInfo,
     time: number
 ) {
