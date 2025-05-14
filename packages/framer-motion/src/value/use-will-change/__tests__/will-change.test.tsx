@@ -64,7 +64,7 @@ describe("willChange", () => {
 
         await nextFrame()
 
-        expect(container.firstChild).toHaveStyle("will-change: filter;")
+        expect(container.firstChild).toHaveStyle("will-change: transform;")
     })
 
     test("Externally-provided motion values are not added to will-change", async () => {
@@ -213,7 +213,7 @@ describe("willChange injection", () => {
 
         await nextFrame()
 
-        expect(container.firstChild).toHaveStyle("will-change: filter;")
+        expect(container.firstChild).toHaveStyle("will-change: transform;")
     })
 
     test("Externally-provided motion values are not added to will-change", async () => {
