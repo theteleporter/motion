@@ -10,6 +10,13 @@ type Measurements = {
 
 const measurements = new Map<Element, Measurements>()
 
+// Mock scrollingElement for testing
+Object.defineProperty(document, "scrollingElement", {
+    value: document.documentElement,
+    writable: false,
+    configurable: true,
+})
+
 async function nextFrame() {
     return new Promise((resolve) => {
         window.dispatchEvent(new window.Event("scroll"))
@@ -17,7 +24,14 @@ async function nextFrame() {
     })
 }
 
-const createMockMeasurement = (element: Element, name: string) => {
+const createMockMeasurement = (element: Element | null, name: string) => {
+    if (element === null) {
+        console.error("scroll element is null")
+        return (value: number) => {
+            elementMeasurements[name] = value
+        }
+    }
+
     const elementMeasurements = measurements.get(element) || {}
 
     measurements.set(element, elementMeasurements)
@@ -37,15 +51,15 @@ const createMockMeasurement = (element: Element, name: string) => {
 }
 
 const setWindowHeight = createMockMeasurement(
-    document.documentElement,
+    document.scrollingElement,
     "clientHeight"
 )
 const setDocumentHeight = createMockMeasurement(
-    document.documentElement,
+    document.scrollingElement,
     "scrollHeight"
 )
 const setScrollTop = createMockMeasurement(
-    document.documentElement,
+    document.scrollingElement,
     "scrollTop"
 )
 

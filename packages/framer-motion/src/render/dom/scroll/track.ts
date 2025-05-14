@@ -1,4 +1,5 @@
 import { cancelFrame, frame, frameData } from "motion-dom"
+import { noop } from "motion-utils"
 import { resize } from "../resize"
 import { createScrollInfo } from "./info"
 import { createOnScrollHandler } from "./on-scroll-handler"
@@ -10,13 +11,18 @@ const onScrollHandlers = new WeakMap<Element, Set<OnScrollHandler>>()
 
 export type ScrollTargets = Array<HTMLElement>
 
-const getEventTarget = (element: HTMLElement) =>
-    element === document.documentElement ? window : element
+const getEventTarget = (element: Element) =>
+    element === document.scrollingElement ? window : element
 
 export function scrollInfo(
     onScroll: OnScrollInfo,
-    { container = document.documentElement, ...options }: ScrollInfoOptions = {}
+    {
+        container = document.scrollingElement as Element,
+        ...options
+    }: ScrollInfoOptions = {}
 ) {
+    if (!container) return noop as VoidFunction
+
     let containerHandlers = onScrollHandlers.get(container)
 
     /**

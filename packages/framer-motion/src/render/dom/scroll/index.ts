@@ -1,4 +1,5 @@
 import { AnimationPlaybackControls } from "motion-dom"
+import { noop } from "motion-utils"
 import { attachToAnimation } from "./attach-animation"
 import { attachToFunction } from "./attach-function"
 import { OnScroll, ScrollOptions } from "./types"
@@ -7,22 +8,11 @@ export function scroll(
     onScroll: OnScroll | AnimationPlaybackControls,
     {
         axis = "y",
-        container = document.documentElement,
+        container = document.scrollingElement as Element,
         ...options
     }: ScrollOptions = {}
 ): VoidFunction {
-    /**
-     * If the container is the document.documentElement and the scrollHeight
-     * and clientHeight are the same, we need to use the document.body instead
-     * as this is the scrollable document element.
-     */
-    if (
-        container === document.documentElement &&
-        ((axis === "y" && container.scrollHeight === container.clientHeight) ||
-            (axis === "x" && container.scrollWidth === container.clientWidth))
-    ) {
-        container = document.body
-    }
+    if (!container) return noop as VoidFunction
 
     const optionsWithDefaults = { axis, container, ...options }
 

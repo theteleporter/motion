@@ -14,7 +14,7 @@ function getTargetSize(target: Element) {
 }
 
 export function resolveOffsets(
-    container: HTMLElement,
+    container: Element,
     info: ScrollInfo,
     options: ScrollInfoOptions
 ) {

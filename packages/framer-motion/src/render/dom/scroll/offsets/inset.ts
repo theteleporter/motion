@@ -1,4 +1,4 @@
-export function calcInset(element: Element, container: HTMLElement) {
+export function calcInset(element: Element, container: Element) {
     const inset = { x: 0, y: 0 }
 
     let current: Element | null = element
