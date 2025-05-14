@@ -73,12 +73,7 @@ export function useSpring(
             restSpeed: 0.01,
             ...config,
             onUpdate: latestSetter.current,
-            onComplete: () => {
-                value.isEffectActive = true
-            },
         })
-
-        value.isEffectActive = false
     }
 
     const stopAnimation = () => {
