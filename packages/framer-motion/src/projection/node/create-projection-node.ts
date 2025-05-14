@@ -6,6 +6,7 @@ import {
     frameSteps,
     getValueTransition,
     isSVGElement,
+    isSVGSVGElement,
     JSAnimation,
     microtask,
     mixNumber,
@@ -440,7 +441,7 @@ export function createProjectionNode<I>({
         mount(instance: I) {
             if (this.instance) return
 
-            this.isSVG = isSVGElement(instance)
+            this.isSVG = isSVGElement(instance) && !isSVGSVGElement(instance)
 
             this.instance = instance
 
