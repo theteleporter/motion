@@ -33,7 +33,7 @@ export class HTMLVisualElement extends DOMVisualElement<
         key: string
     ): string | number | null | undefined {
         if (transformProps.has(key)) {
-            return this.projection
+            return this.projection?.isProjecting
                 ? defaultTransformValue(key)
                 : readTransformValue(instance, key)
         } else {
