@@ -90,7 +90,7 @@ export function Component({ isVisible }) {
 
 ### 👩🏻‍⚖️ License
 
--   Motion for React is MIT licensed.
+-   Motion is MIT licensed.
 
 ## ✨ Sponsors
 
