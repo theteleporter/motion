@@ -8,6 +8,7 @@ import {
     fillOffset,
     GeneratorFactory,
     isGenerator,
+    isMotionValue,
     Transition,
     UnresolvedValueKeyframe,
 } from "motion-dom"
@@ -18,7 +19,6 @@ import {
     progress,
     secondsToMilliseconds,
 } from "motion-utils"
-import { isMotionValue } from "../../value/utils/is-motion-value"
 import { resolveSubjects } from "../animate/resolve-subjects"
 import {
     AnimationSequence,

@@ -6,11 +6,11 @@ import {
     ElementOrSelector,
     MotionValue,
     ValueAnimationTransition,
+    isMotionValue,
 } from "motion-dom"
 import { invariant } from "motion-utils"
 import { visualElementStore } from "../../render/store"
 import { GenericKeyframesTarget, TargetAndTransition } from "../../types"
-import { isMotionValue } from "../../value/utils/is-motion-value"
 import { animateTarget } from "../interfaces/visual-element-target"
 import { ObjectTarget } from "../sequence/types"
 import {

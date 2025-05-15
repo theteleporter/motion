@@ -1,6 +1,5 @@
-import { DOMKeyframesResolver, MotionValue } from "motion-dom"
+import { DOMKeyframesResolver, isMotionValue, MotionValue } from "motion-dom"
 import { MotionProps, MotionStyle } from "../../motion/types"
-import { isMotionValue } from "../../value/utils/is-motion-value"
 import { DOMVisualElementOptions } from "../dom/types"
 import { HTMLRenderState } from "../html/types"
 import { VisualElement } from "../VisualElement"
