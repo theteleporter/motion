@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.11.4] 2025-05-15
+
+### Fixed
+
+-   Only read `transform` from the DOM for initial independent transforms when there's no active projection.
+
 ## [12.11.3] 2025-05-14
 
 ### Changed
