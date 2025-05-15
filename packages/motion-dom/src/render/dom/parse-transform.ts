@@ -59,7 +59,7 @@ const matrix3dParsers: MatrixParsers = {
     skew: (v) => (Math.abs(v[1]) + Math.abs(v[4])) / 2,
 } as const
 
-function defaultTransformValue(name: string): number {
+export function defaultTransformValue(name: string): number {
     return name.includes("scale") ? 1 : 0
 }
 

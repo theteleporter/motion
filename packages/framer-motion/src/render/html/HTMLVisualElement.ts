@@ -1,4 +1,5 @@
 import {
+    defaultTransformValue,
     isCSSVariableName,
     readTransformValue,
     transformProps,
@@ -32,7 +33,9 @@ export class HTMLVisualElement extends DOMVisualElement<
         key: string
     ): string | number | null | undefined {
         if (transformProps.has(key)) {
-            return readTransformValue(instance, key)
+            return this.projection
+                ? defaultTransformValue(key)
+                : readTransformValue(instance, key)
         } else {
             const computedStyle = getComputedStyle(instance)
             const value =
