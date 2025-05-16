@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.12.1] 2025-05-16
+
+### Fixed
+
+-   Checks for `instanceof HTMLElement` made compatible with dynamically generated `iframe`s.
+
 ## [12.12.0] 2025-05-16
 
 ### Added
