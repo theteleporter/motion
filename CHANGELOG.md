@@ -4,11 +4,14 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
-## [12.11.5] 2025-05-16
+## [12.12.0] 2025-05-16
+
+### Added
+
+-   `springValue`
 
 ### Fixed
 
--   Fixed various typos in the type definitions along with a stale documentation link.
 -   Fixed various typos in the type definitions along with a stale documentation link.
 
 ## [12.11.4] 2025-05-15
