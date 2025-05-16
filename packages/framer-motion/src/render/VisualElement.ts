@@ -4,6 +4,7 @@ import {
     findValueType,
     frame,
     getAnimatableNone,
+    isMotionValue,
     KeyframeResolver,
     motionValue,
     time,
@@ -33,7 +34,6 @@ import {
     hasReducedMotionListener,
     prefersReducedMotion,
 } from "../utils/reduced-motion/state"
-import { isMotionValue } from "../value/utils/is-motion-value"
 import { visualElementStore } from "./store"
 import {
     ResolvedValues,

@@ -1,6 +1,5 @@
-import { motionValue } from "motion-dom"
+import { isMotionValue, motionValue } from "motion-dom"
 import { MotionStyle } from "../../motion/types"
-import { isMotionValue } from "../../value/utils/is-motion-value"
 import type { VisualElement } from "../VisualElement"
 
 export function updateMotionValuesFromProps(

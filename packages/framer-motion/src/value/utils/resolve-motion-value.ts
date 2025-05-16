@@ -1,5 +1,4 @@
-import { MotionValue } from "motion-dom"
-import { isMotionValue } from "./is-motion-value"
+import { isMotionValue, MotionValue } from "motion-dom"
 
 /**
  * If the provided value is a MotionValue, this returns the actual value, otherwise just the value itself

@@ -1,11 +1,11 @@
 import {
     AnimationPlaybackControlsWithThen,
     motionValue as createMotionValue,
+    isMotionValue,
     MotionValue,
     ValueAnimationTransition,
 } from "motion-dom"
 import { GenericKeyframesTarget } from "../../types"
-import { isMotionValue } from "../../value/utils/is-motion-value"
 import { animateMotionValue } from "../interfaces/motion-value"
 
 export function animateSingleValue<V extends string | number>(

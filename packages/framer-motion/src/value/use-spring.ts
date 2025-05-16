@@ -1,11 +1,13 @@
-import { frame, JSAnimation, MotionValue, SpringOptions } from "motion-dom"
-import { noop } from "motion-utils"
-import { useContext, useInsertionEffect, useRef } from "react"
+import {
+    attachSpring,
+    isMotionValue,
+    MotionValue,
+    SpringOptions,
+} from "motion-dom"
+import { useContext, useInsertionEffect } from "react"
 import { MotionConfigContext } from "../context/MotionConfigContext"
-import { useConstant } from "../utils/use-constant"
-import { useIsomorphicLayoutEffect } from "../utils/use-isomorphic-effect"
 import { useMotionValue } from "./use-motion-value"
-import { isMotionValue } from "./utils/is-motion-value"
+import { useTransform } from "./use-transform"
 
 /**
  * Creates a `MotionValue` that, when `set`, will use a spring animation to animate to its new state.
@@ -28,86 +30,37 @@ import { isMotionValue } from "./utils/is-motion-value"
  */
 export function useSpring(
     source: MotionValue<string>,
-    config?: SpringOptions
+    options?: SpringOptions
 ): MotionValue<string>
 export function useSpring(
     source: string,
-    config?: SpringOptions
+    options?: SpringOptions
 ): MotionValue<string>
 export function useSpring(
     source: MotionValue<number>,
-    config?: SpringOptions
+    options?: SpringOptions
 ): MotionValue<number>
 export function useSpring(
     source: number,
-    config?: SpringOptions
+    options?: SpringOptions
 ): MotionValue<number>
 export function useSpring(
     source: MotionValue<string> | MotionValue<number> | string | number,
-    config: SpringOptions = {}
+    options: SpringOptions = {}
 ) {
     const { isStatic } = useContext(MotionConfigContext)
-    const activeSpringAnimation = useRef<JSAnimation<number> | null>(null)
+    const getFromSource = () => (isMotionValue(source) ? source.get() : source)
 
-    const initialValue = useConstant(() =>
-        isMotionValue(source) ? source.get() : source
-    )
-    const unit = useConstant(() =>
-        typeof initialValue === "string"
-            ? initialValue.replace(/[\d.-]/g, "")
-            : undefined
-    )
-
-    const value = useMotionValue(initialValue)
-    const latestValue = useRef<number | string>(initialValue)
-    const latestSetter = useRef<(v: number) => void>(noop)
-
-    const startAnimation = () => {
-        stopAnimation()
-
-        activeSpringAnimation.current = new JSAnimation({
-            keyframes: [asNumber(value.get()), asNumber(latestValue.current)],
-            velocity: value.getVelocity(),
-            type: "spring",
-            restDelta: 0.001,
-            restSpeed: 0.01,
-            ...config,
-            onUpdate: latestSetter.current,
-        })
+    // isStatic will never change, allowing early hooks return
+    if (isStatic) {
+        return useTransform(getFromSource)
     }
 
-    const stopAnimation = () => {
-        if (activeSpringAnimation.current) {
-            activeSpringAnimation.current.stop()
-        }
-    }
+    const value = useMotionValue(getFromSource())
 
     useInsertionEffect(() => {
-        return value.attach((v, set) => {
-            if (isStatic) return set(v)
-
-            latestValue.current = v
-            latestSetter.current = (latest) => set(parseValue(latest, unit))
-
-            frame.postRender(startAnimation)
-
-            return value.get()
-        }, stopAnimation)
-    }, [JSON.stringify(config)])
-
-    useIsomorphicLayoutEffect(() => {
-        if (isMotionValue(source)) {
-            return source.on("change", (v) => value.set(parseValue(v, unit)))
-        }
-    }, [value, unit])
+        return attachSpring(value, source, options)
+    }, [value, JSON.stringify(options)])
 
     return value
-}
-
-function parseValue(v: string | number, unit?: string) {
-    return unit ? v + unit : v
-}
-
-function asNumber(v: string | number) {
-    return typeof v === "number" ? v : parseFloat(v)
 }
