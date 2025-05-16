@@ -1,5 +1,6 @@
 "use client"
 
+import { isHTMLElement } from "motion-dom"
 import * as React from "react"
 import { useContext, useId, useInsertionEffect, useRef } from "react"
 
@@ -33,8 +34,9 @@ class PopChildMeasure extends React.Component<MeasureProps> {
         const element = this.props.childRef.current
         if (element && prevProps.isPresent && !this.props.isPresent) {
             const parent = element.offsetParent
-            const parentWidth =
-                parent instanceof HTMLElement ? parent.offsetWidth || 0 : 0
+            const parentWidth = isHTMLElement(parent)
+                ? parent.offsetWidth || 0
+                : 0
 
             const size = this.props.sizeRef.current!
             size.height = element.offsetHeight || 0

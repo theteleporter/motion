@@ -1,4 +1,4 @@
-import { isSVGElement } from "../../render/dom/utils/is-svg-element"
+import { isSVGElement, isSVGSVGElement } from "motion-dom"
 import { HTMLVisualElement } from "../../render/html/HTMLVisualElement"
 import { ObjectVisualElement } from "../../render/object/ObjectVisualElement"
 import { visualElementStore } from "../../render/store"
@@ -19,9 +19,10 @@ export function createDOMVisualElement(element: HTMLElement | SVGElement) {
             latestValues: {},
         },
     }
-    const node = isSVGElement(element)
-        ? new SVGVisualElement(options)
-        : new HTMLVisualElement(options)
+    const node =
+        isSVGElement(element) && !isSVGSVGElement(element)
+            ? new SVGVisualElement(options)
+            : new HTMLVisualElement(options)
 
     node.mount(element as any)
 

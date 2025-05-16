@@ -5,6 +5,8 @@ import {
     frameData,
     frameSteps,
     getValueTransition,
+    isSVGElement,
+    isSVGSVGElement,
     JSAnimation,
     microtask,
     mixNumber,
@@ -29,7 +31,6 @@ import { animateSingleValue } from "../../animation/animate/single-value"
 import { getOptimisedAppearId } from "../../animation/optimized-appear/get-appear-id"
 import { MotionStyle } from "../../motion/types"
 import { HTMLVisualElement } from "../../projection"
-import { isSVGElement } from "../../render/dom/utils/is-svg-element"
 import { ResolvedValues } from "../../render/types"
 import { FlatTree } from "../../render/utils/flat-tree"
 import { VisualElement } from "../../render/VisualElement"
@@ -440,7 +441,7 @@ export function createProjectionNode<I>({
         mount(instance: I) {
             if (this.instance) return
 
-            this.isSVG = isSVGElement(instance)
+            this.isSVG = isSVGElement(instance) && !isSVGSVGElement(instance)
 
             this.instance = instance
 
