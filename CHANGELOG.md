@@ -9,6 +9,7 @@ Undocumented APIs should be considered internal and may change without warning.
 ### Fixed
 
 -   Fixed various typos in the type definitions along with a stale documentation link.
+-   Fixed various typos in the type definitions along with a stale documentation link.
 
 ## [12.11.4] 2025-05-15
 
