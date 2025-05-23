@@ -53,6 +53,8 @@ export function scrollInfo(
     if (!scrollListeners.has(container)) {
         const measureAll = () => {
             for (const handler of containerHandlers!) handler.measure()
+            updateAll()
+            frame.preUpdate(notifyAll)
         }
 
         const updateAll = () => {
@@ -67,8 +69,6 @@ export function scrollInfo(
 
         const listener = () => {
             frame.read(measureAll)
-            frame.read(updateAll)
-            frame.preUpdate(notifyAll)
         }
 
         scrollListeners.set(container, listener)
