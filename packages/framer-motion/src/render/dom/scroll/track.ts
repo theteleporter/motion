@@ -52,24 +52,20 @@ export function scrollInfo(
      */
     if (!scrollListeners.has(container)) {
         const measureAll = () => {
-            for (const handler of containerHandlers!) handler.measure()
-        }
-
-        const updateAll = () => {
-            for (const handler of containerHandlers!) {
-                handler.update(frameData.timestamp)
+            for (const handler of containerHandlers) {
+                handler.measure(frameData.timestamp)
             }
+
+            frame.preUpdate(notifyAll)
         }
 
         const notifyAll = () => {
-            for (const handler of containerHandlers!) handler.notify()
+            for (const handler of containerHandlers) {
+                handler.notify()
+            }
         }
 
-        const listener = () => {
-            frame.read(measureAll)
-            frame.read(updateAll)
-            frame.preUpdate(notifyAll)
-        }
+        const listener = () => frame.read(measureAll)
 
         scrollListeners.set(container, listener)
 
