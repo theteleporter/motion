@@ -4,6 +4,12 @@ Motion adheres to [Semantic Versioning](http://semver.org/).
 
 Undocumented APIs should be considered internal and may change without warning.
 
+## [12.12.2] 2025-05-23
+
+### Fixed
+
+-   Ensure scroll updates are only triggered after a scroll read.
+
 ## [12.12.1] 2025-05-16
 
 ### Fixed
